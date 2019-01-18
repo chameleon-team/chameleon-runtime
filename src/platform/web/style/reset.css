@@ -1,0 +1,29 @@
+
+.cml-root {
+    width: 100%;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    font-family: BlinkMacSystemFont, 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.cml-base {
+    text-align: left;
+    font-size: 0.4rem; /*15px*/
+    letter-spacing: 0.02rem;
+}
+
+.cml-base,
+.cml-base::before,
+.cml-base::after {
+    box-sizing: border-box;
+    text-size-adjust: none;
+}
+
+input,textarea {
+    -webkit-appearance: none;
+    resize: none;
+}
+input:focus,textarea:focus {
+    outline: none;
+}
+

@@ -1,0 +1,64 @@
+<script cml-type="interface">
+    // 定义模块的interface
+    interface createAppInterface {
+      createApp(options: CMLObject) : CMLObject;
+    }
+</script>
+
+<script cml-type="web">
+    import {App} from '../../platform/web'
+
+    class Method implements createAppInterface {
+      createApp(options) {
+        return new App(options)
+      }
+    }
+    export default new Method();
+</script>
+
+<script cml-type="weex">
+    import {App} from '../../platform/weex'
+
+    class Method implements createAppInterface {
+      createApp(options) {
+        return new App(options)
+      }
+    }
+    export default new Method();
+</script>
+
+<script cml-type="wx">
+    import {App} from '../../platform/wx'
+
+    class Method implements createAppInterface {
+      createApp(options) {
+        return new App(options)
+      }
+    }
+
+    export default new Method();
+</script>
+
+<script cml-type="alipay">
+    import {App} from '../../platform/alipay'
+
+    class Method implements createAppInterface {
+      createApp(options) {
+        return new App(options)
+      }
+    }
+
+    export default new Method();
+</script>
+
+<script cml-type="baidu">
+    import {App} from '../../platform/baidu'
+
+    class Method implements createAppInterface {
+      createApp(options) {
+        return new App(options)
+      }
+    }
+
+    export default new Method();
+</script>

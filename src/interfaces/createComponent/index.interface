@@ -1,0 +1,59 @@
+<script cml-type="interface">
+    // 定义模块的interface
+    interface createCmptInterface {
+      createComponent(options: CMLObject) : CMLObject;
+    }
+</script>
+
+<script cml-type="web">
+    import {Component} from '../../platform/web'
+    class Method implements createCmptInterface {
+      createComponent(options) {
+        return new Component(options)
+      }
+    }
+    export default new Method();
+</script>
+
+<script cml-type="weex">
+    import {Component} from '../../platform/weex'
+    class Method implements createCmptInterface {
+      createComponent(options) {
+        return new Component(options)
+      }
+    }
+    export default new Method();
+</script>
+
+<script cml-type="wx">
+    import {Component} from '../../platform/wx'
+    class Method implements createCmptInterface {
+       createComponent(options) {
+        return new Component(options)
+      }
+    }
+
+    export default new Method();
+</script>
+
+<script cml-type="alipay">
+    import {Component} from '../../platform/alipay'
+    class Method implements createCmptInterface {
+       createComponent(options) {
+        return new Component(options)
+      }
+    }
+
+    export default new Method();
+</script>
+
+<script cml-type="baidu">
+    import {Component} from '../../platform/baidu'
+    class Method implements createCmptInterface {
+       createComponent(options) {
+        return new Component(options)
+      }
+    }
+
+    export default new Method();
+</script>

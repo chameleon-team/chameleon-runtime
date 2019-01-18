@@ -1,0 +1,62 @@
+<script cml-type="interface">
+    // 定义模块的interface
+    interface createPgInterface {
+      createPage(options: CMLObject) : CMLObject;
+    }
+</script>
+
+<script cml-type="web">
+    import {Page} from '../../platform/web'
+    class Method implements createPgInterface {
+      createPage(options) {
+        return new Page(options)
+      }
+    }
+    export default new Method();
+</script>
+
+<script cml-type="weex">
+    import {Page} from '../../platform/weex'
+    class Method implements createPgInterface {
+      createPage(options) {
+        return new Page(options)
+      }
+    }
+    export default new Method();
+</script>
+
+<script cml-type="wx">
+    import {Page} from '../../platform/wx'
+
+    class Method implements createPgInterface {
+      createPage(options) {
+        return new Page(options)
+      }
+    }
+
+    export default new Method();
+</script>
+
+<script cml-type="alipay">
+    import {Page} from '../../platform/alipay'
+
+    class Method implements createPgInterface {
+      createPage(options) {
+        return new Page(options)
+      }
+    }
+
+    export default new Method();
+</script>
+
+<script cml-type="baidu">
+    import {Page} from '../../platform/baidu'
+
+    class Method implements createPgInterface {
+      createPage(options) {
+        return new Page(options)
+      }
+    }
+
+    export default new Method();
+</script>

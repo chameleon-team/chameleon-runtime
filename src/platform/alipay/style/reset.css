@@ -1,0 +1,16 @@
+.cml-base {
+    text-align: left;
+    font-size: 32rpx;
+    letter-spacing: 1rpx;
+    font-family: BlinkMacSystemFont, 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.cml-base,
+.cml-base::before,
+.cml-base::after {
+    box-sizing: border-box;
+    text-size-adjust: none;
+}
+  
+
+
