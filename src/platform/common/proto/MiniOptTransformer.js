@@ -1,6 +1,5 @@
 import BaseOptionsTransformer from './BaseOptionsTransformer'
 
-import wxMixins from 'chameleon-mixins/wx-mixins.js'
 import { extend, rename, enumerableKeys } from '../util/util'
 import { type } from '../util/type'
 import {mergeDefault, mergeHooks, mergeSimpleProps, mergeData, mergeWatch} from '../util/resolve'
@@ -153,7 +152,7 @@ class MiniOptTransformer extends BaseOptionsTransformer {
   
   mergeBuiltinMixins () {
     const btMixin = [
-      wxMixins.mixins,
+      this.baseMixins,
       this.builtinMixins
     ].filter(item => item)
   
