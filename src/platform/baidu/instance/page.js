@@ -23,8 +23,12 @@ export class Page extends BaseCtor {
           runtimeWidget
             .setContext(this)
             .init()
-            .initRefs()
             .start('page-view-render')
+        },
+        onReady() {
+          runtimeWidget
+            .setContext(this)
+            .initRefs()
         },
         onUnload() {
           // stop
