@@ -64,16 +64,13 @@
       let vueOptions = {el: '#root', router, store}
 
       if(options.createVM) {
-        let bridge = require('chameleon-bridge').default;
         let cmlApi = require('chameleon-api').default;
-        setTimeout(() => {
-          let query = bridge.getQueryObjSync();
-          let {path} = query;
-          new Vue(Vue.util.extend(vueOptions, app));
-          cmlApi.navigateTo({
-            path
-          });
-        }, 50);
+        let launchOpt = cmlApi.getLaunchOptionsSync();
+        let {path} = launchOpt.query;
+        new Vue(Vue.util.extend(vueOptions, app));
+        cmlApi.navigateTo({
+          path
+        });
       }
     }
     getInfo() {
