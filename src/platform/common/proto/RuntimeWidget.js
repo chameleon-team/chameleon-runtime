@@ -95,6 +95,9 @@ export default class RuntimeWidget {
     query.exec((res) => {
       context.$refs = {}
       let doms = res[0]
+      if (!doms) {
+        return
+      }
       for (let i=0; i<doms.length; i++) {
         let refItem = doms[i]
         context.$refs[refItem.id] = {
