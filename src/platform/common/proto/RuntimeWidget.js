@@ -311,26 +311,25 @@ function setDataFactory(context, self) {
 
     data = toJS(data)
 
-    // if (_firstAction) {
-    //   _firstAction = false
+    if (_firstAction) {
+      _firstAction = false
 
-    //   _cache = data
-    //   _render(data)
-    // } else {
+      _cache = data
+      _render(data)
+    } else {
 
-    //   let dataDiff = diff(data, _cache)
-      
-    //   _cache = data
-    //   _render(dataDiff)
-    // }
-    _render(data)
+      let dataDiff = diff(data, _cache)
+
+      _cache = data
+      _render(dataDiff)
+    }
   }
 
   function _render(data) {
     // style 处理
     styleHandle(data)
 
-    context.setData(data, () => walkUpdatedCb(context))
+    context.setData(data, walkUpdatedCb(context))
   }
 }
 

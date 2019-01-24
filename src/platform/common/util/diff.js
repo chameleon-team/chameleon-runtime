@@ -1,6 +1,7 @@
 
 import { type } from './type'
-import Trie from '../proto/Trie'
+import Trie from './Trie'
+import { getByPath } from './util';
 
 export default function diff(newData, oldData) {
 
@@ -9,6 +10,9 @@ export default function diff(newData, oldData) {
   let oldDataFlag = []
   let newFlatData = {}
   let oldFlatData = {}
+  
+  flatten(newData, '', newDataFlag, newFlatData)
+  flatten(oldData, '', oldDataFlag, oldFlatData)
   
   newDataFlag.forEach((path) => {
     let nVal = newFlatData[path]
@@ -29,16 +33,32 @@ export default function diff(newData, oldData) {
 
   const updateFlags = trie.getShortPaths().map((path) => {
     // 获取parent path
-    return path.split('.').pop().join('.')
-  })
+    let ary = path.split('.')
+
+
+    let len = ary.length
+    let last = ary[len-1]
+    let pattern = /\[[0-9]+\]$/
+
+    if (pattern.test(last)) {
+      // 数组
+      ary[len-1] = last.replace(pattern, '')
+    } else {
+      if (len > 1) {
+        ary.pop()
+      }
+    }
+
+    return ary.join('.')
+  }).filter(item => item)
 
   updateFlags.forEach(path => {
     if (path) {
-      let nVal = newFlatData[path]
+      let nVal = newData[path]
       updateDiff(nVal, path)
     }
   })
-
+  
   return diffData
 
   function hasFlag(collectAry, path) {
@@ -48,7 +68,7 @@ export default function diff(newData, oldData) {
   function deleFlag(collectAry, path) {
     let index = hasFlag(collectAry, path)
     if (index !== -1) {
-      collectAry.splice(index)
+      collectAry.splice(index, 1)
     }
   }
 
@@ -71,11 +91,27 @@ export default function diff(newData, oldData) {
     if (type(d) === 'Array') {
       check(pathStr)
 
+      if (d.length === 0) {
+        collectAry.push(pathStr)
+        if (flatData) {
+          flatData[pathStr] = d
+        }
+        return 
+      }
+
       d.forEach((item, i) => {
         const path = `${pathStr}[${i}]`
         flatten(item, path, collectAry, flatData)
       })
     } else if (type(d) === 'Object') {
+      if (Object.keys(d).length === 0) {
+        collectAry.push(pathStr)
+        if (flatData) {
+          flatData[pathStr] = d
+        }
+        return 
+      }
+
       Object.keys(d).forEach(k => {
         const v = d[k]
         const path = pathStr ? `${pathStr}.${k}` : k
