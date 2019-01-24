@@ -160,7 +160,7 @@ export function flatten(obj = {}) {
       check(pathStr)
 
       d.forEach((item, i) => {
-        const path = `${pathStr}.[${i}]`
+        const path = `${pathStr}[${i}]`
         flattenRe(item, path)
       })
     } else if (type(d) === 'Object') {

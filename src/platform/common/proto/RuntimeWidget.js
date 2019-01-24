@@ -25,6 +25,8 @@ import lifecycle from '../util/lifecycle'
 
 import KEY from '../util/KEY'
 
+import diff from '../util/diff'
+
 export default class RuntimeWidget {
   constructor(config) {
     this.platform = config.platform || ''
@@ -309,23 +311,19 @@ function setDataFactory(context, self) {
 
     data = toJS(data)
 
-    if (_firstAction) {
-      _firstAction = false
+    // if (_firstAction) {
+    //   _firstAction = false
 
-      _cache = flatten(data)
-      _render(data)
-    } else {
-      const flatData = flatten(data)
+    //   _cache = data
+    //   _render(data)
+    // } else {
 
-      const dataDiff = {}
-      Object.keys(flatData).forEach(key => {
-        if (flatData[key] !== _cache[key]) {
-          dataDiff[key] = _cache[key] = flatData[key]
-        }
-      })
-
-      _render(dataDiff)
-    }
+    //   let dataDiff = diff(data, _cache)
+      
+    //   _cache = data
+    //   _render(dataDiff)
+    // }
+    _render(data)
   }
 
   function _render(data) {
