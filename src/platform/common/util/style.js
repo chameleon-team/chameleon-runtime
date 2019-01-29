@@ -24,7 +24,7 @@ function pxTransform(s) {
     return s
   }
   
-  return s.replace(/(([\s:(]|^)-?)(\d*\.?\d*)cpx/ig, (m) => {
+  return s.replace(/(([\s:(]|^)-?)(\d*\.?\d+)cpx/ig, (m) => {
     return m.replace('cpx', 'rpx')
   })
 }

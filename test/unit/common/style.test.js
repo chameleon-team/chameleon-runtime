@@ -20,6 +20,11 @@ const input = {
     a6: ' -21cpx',
     a7: '.8cpx',
     a8: 'transform(8cpx)',
+    a9: 'px 转 cpx',
+    a10: 'px2cpx',
+    a11: 'cpx 转 px',
+    a12: 'cpx2px',
+    a13: 'cpx',
     a: 'font-size:20cpx;margin: 4cpx;border:0cpx;padding:4rpx', // String
     b: { // Object
       b1: 'font-size:20cpx;margin: 4cpx;border:0cpx;padding:4rpx',
@@ -58,6 +63,11 @@ const output = {
     a6: ' -21rpx',
     a7: '.8rpx',
     a8: 'transform(8rpx)',
+    a9: 'px 转 cpx',
+    a10: 'px2cpx',
+    a11: 'cpx 转 px',
+    a12: 'cpx2px',
+    a13: 'cpx',
     a: 'font-size:20rpx;margin: 4rpx;border:0rpx;padding:4rpx', // String
     b: { // Object
       b1: 'font-size:20rpx;margin: 4rpx;border:0rpx;padding:4rpx',

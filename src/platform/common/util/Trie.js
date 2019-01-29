@@ -46,7 +46,6 @@ export default class Trie {
     for (let i in this.root.children) {
       this.getHelper(this.root.children[i], [this.root.children[i].key]);
     }
-    console.log(this)
     return this.ret
   }
 
