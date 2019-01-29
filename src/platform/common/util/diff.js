@@ -4,7 +4,8 @@ import Trie from './Trie'
 import { getByPath } from './util';
 
 export default function diff(newData, oldData) {
-
+  return newData
+  
   let diffData = {}
   let newDataFlag = []
   let oldDataFlag = []
