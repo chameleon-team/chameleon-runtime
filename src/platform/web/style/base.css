@@ -1,4 +1,4 @@
-.cml-view {
+.cml-root, .cml-view {
     display: flex;
     box-sizing: border-box;
     position: relative;
