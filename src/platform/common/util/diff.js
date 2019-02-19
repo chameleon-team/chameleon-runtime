@@ -1,11 +1,9 @@
 
 import { type } from './type'
 import Trie from './Trie'
-import { getByPath } from './util';
 
 export default function diff(newData, oldData) {
-  return newData
-  
+
   let diffData = {}
   let newDataFlag = []
   let oldDataFlag = []
@@ -14,7 +12,7 @@ export default function diff(newData, oldData) {
   
   flatten(newData, '', newDataFlag, newFlatData)
   flatten(oldData, '', oldDataFlag, oldFlatData)
-  
+
   newDataFlag.forEach((path) => {
     let nVal = newFlatData[path]
     let oVal = oldFlatData[path]
@@ -27,105 +25,94 @@ export default function diff(newData, oldData) {
   })
 
   const trie = new Trie()
-
+  
   oldDataFlag.forEach(path => {
     trie.insertData(path)
   })
 
-  const updateFlags = trie.getShortPaths().map((path) => {
-    // 获取parent path
-    let ary = path.split('.')
-
-
-    let len = ary.length
-    let last = ary[len-1]
-    let pattern = /\[[0-9]+\]$/
-
-    if (pattern.test(last)) {
-      // 数组
-      ary[len-1] = last.replace(pattern, '')
-    } else {
-      if (len > 1) {
-        ary.pop()
-      }
-    }
-
-    return ary.join('.')
-  }).filter(item => item)
-
-  updateFlags.forEach(path => {
-    if (path) {
-      let nVal = newData[path]
-      updateDiff(nVal, path)
-    }
+  trie.getShortPaths().filter(item => item).forEach(path => {
+    // update delete item
+    updateDiff('', path)
   })
-  
-  return diffData
-
-  function hasFlag(collectAry, path) {
-    return collectAry.indexOf(path)
-  }
-
-  function deleFlag(collectAry, path) {
-    let index = hasFlag(collectAry, path)
-    if (index !== -1) {
-      collectAry.splice(index, 1)
-    }
-  }
 
   function updateDiff(val, path) {
     if (val !== undefined) {
       diffData[path] = val;
     }
   }
+  
+  return diffData
+}
 
+function hasFlag(collectAry, path) {
+  return collectAry.indexOf(path)
+}
 
-  function check(str) {
-    if (!str) {
-      console.error('pathStr should not be null!')
-      return false
-    }
-    return true
+function deleFlag(collectAry, path) {
+  let index = hasFlag(collectAry, path)
+  if (index !== -1) {
+    collectAry.splice(index, 1)
   }
+}
 
-  function flatten(d, pathStr = '', collectAry, flatData) {
-    if (type(d) === 'Array') {
-      check(pathStr)
 
-      if (d.length === 0) {
-        collectAry.push(pathStr)
-        if (flatData) {
-          flatData[pathStr] = d
-        }
-        return 
-      }
+function check(str) {
+  if (!str) {
+    console.error('pathStr should not be null!')
+    return false
+  }
+  return true
+}
 
-      d.forEach((item, i) => {
-        const path = `${pathStr}[${i}]`
-        flatten(item, path, collectAry, flatData)
-      })
-    } else if (type(d) === 'Object') {
-      if (Object.keys(d).length === 0) {
-        collectAry.push(pathStr)
-        if (flatData) {
-          flatData[pathStr] = d
-        }
-        return 
-      }
+function flatten(d, pathStr = '', collectAry, flatData) {
+  if (type(d) === 'Array') {
+    check(pathStr)
 
-      Object.keys(d).forEach(k => {
-        const v = d[k]
-        const path = pathStr ? `${pathStr}.${k}` : k
-        flatten(v, path, collectAry, flatData)
-      })
-    } else {
-      check(pathStr)
+    if (d.length === 0) {
       collectAry.push(pathStr)
       if (flatData) {
         flatData[pathStr] = d
       }
+      return 
+    }
+
+    d.forEach((item, i) => {
+      const path = `${pathStr}[${i}]`
+      flatten(item, path, collectAry, flatData)
+    })
+  } else if (type(d) === 'Object') {
+    if (Object.keys(d).length === 0) {
+      collectAry.push(pathStr)
+      if (flatData) {
+        flatData[pathStr] = d
+      }
+      return 
+    }
+
+    Object.keys(d).forEach(k => {
+      const v = d[k]
+      const path = pathStr ?
+                    isNum(k) ?
+                      `${pathStr}[${k}]`: `${pathStr}.${k}`
+                    : k
+      flatten(v, path, collectAry, flatData)
+    })
+  } else {
+    check(pathStr)
+    collectAry.push(pathStr)
+    if (flatData) {
+      flatData[pathStr] = d
     }
   }
+}
+
+function isNaN(value) {
+  let n = Number(value)
+  return n !== n
+}
+
+function isNum(value) {
+  return !isNaN(Number(value))
 }
 
 /**
