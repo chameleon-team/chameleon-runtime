@@ -62,7 +62,8 @@ const LIFECYCLE = {
         'onReachBottom',
         'onShareAppMessage',
         'onPageScroll',
-        'onTabItemTap'
+        'onTabItemTap',
+        'onHide'
       ]
     },
     component: {
@@ -125,7 +126,8 @@ const LIFECYCLE = {
         'onPullDownRefresh',
         'onReachBottom',
         'onShareAppMessage',
-        'onTitleClick'
+        'onTitleClick',
+        'onHide'
       ]
     },
     component: {
@@ -187,7 +189,8 @@ const LIFECYCLE = {
         'onShareAppMessage',
         'onShareAppMessage',
         'onPageScroll',
-        'onTabItemTap'
+        'onTabItemTap',
+        'onHide'
       ]
     },
     component: {
