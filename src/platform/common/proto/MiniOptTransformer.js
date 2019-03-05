@@ -36,6 +36,10 @@ class MiniOptTransformer extends BaseOptionsTransformer {
     this.transformHooks()
     this.needResolveAttrs && this.resolveAttrs()
     this.needTransformProperties && this.transformProperties()
+
+    if (this.platform === 'alipay') {
+      delete this.options['computed']
+    }
   }
 
 /**

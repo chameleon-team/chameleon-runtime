@@ -3,7 +3,7 @@ import { type } from './type'
 import Trie from './Trie'
 
 export default function diff(newData, oldData) {
-
+  return newData
   let diffData = {}
   let newDataFlag = []
   let oldDataFlag = []

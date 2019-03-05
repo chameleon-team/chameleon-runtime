@@ -1,5 +1,5 @@
 # chameleon-runtime
-本仓库为 chameleon 框架的运行时相关代码
+本仓库为 `cml` 框架的运行时相关代码
 
 ## 提供运行时能力
 
