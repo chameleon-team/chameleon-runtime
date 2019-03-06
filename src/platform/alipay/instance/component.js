@@ -27,16 +27,13 @@ export class Component extends BaseCtor {
             .initRefs()
             .start('component-view-render')
         },
-        didUpdate (prevProps) {
-          if (prevProps && prevProps !== this.props) {
-            Object.keys(prevProps).forEach(key => {
-              if (!extras.deepEqual(this.props[key], prevProps[key])) {
-                const prop = this.props[key]
-                if (Object.prototype.toString.call(prop).slice(8, -1) === 'Object') {
-                  this[key] = prop['default']
-                } else {
-                  this[key] = prop
-                }
+        didUpdate (preProps) {
+          const nextProps = this.props
+
+          if (preProps && preProps !== this.props) {
+            Object.keys(nextProps).forEach(key => {
+              if (!extras.deepEqual(nextProps[key], preProps[key])) {
+                this[key] = nextProps[key]
               }
             })
           }

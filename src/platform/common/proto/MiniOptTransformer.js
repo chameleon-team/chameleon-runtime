@@ -52,19 +52,81 @@ class MiniOptTransformer extends BaseOptionsTransformer {
     if (!obj['props']) {
       return
     }
-
+    
     Object.getOwnPropertyNames(obj['props']).forEach((name) => {
       const self = this
       let prop = obj['props'][name]
+      // Number: 0
+      // Boolean: false
+      // Array: false
+      // String: ''
+      // Object: null
+      // null: null
+      function make(type) {
+        if (!knowType(type)) {
+          return
+        }
 
-      if (type(prop) === 'Object' && prop.hasOwnProperty('default')) {
-        check(prop['default'], prop['type'])
+        switch (type) {
+          case Number:
+            prop = obj['props'][name] = {
+              type: Number,
+              default: 0
+            }
+            break
+          case Boolean:
+            prop = obj['props'][name] = {
+              type: Boolean,
+              default: false
+            }
+            break
+          case Array:
+            prop = obj['props'][name] = {
+              type: Array,
+              default: []
+            }
+            break
+          case String:
+            prop = obj['props'][name] = {
+              type: String,
+              default: ''
+            }
+            break
+          case Object:
+            prop = obj['props'][name] = {
+              type: Object,
+              default: null
+            }
+            break
+          case null:
+            prop = obj['props'][name] = {
+              type: null,
+              default: null
+            }
+            break
+          default:
+            break
+        }
+      }
 
+      function knowType(type) {
+        return type === Number || type === Boolean || type === Array || type === String || type === Object || type === null
+      }
+      
+      // 处理 props = { a: String, b: Boolean }
+      make(prop)
+
+      if (type(prop) === 'Object') {
         if (this.platform === 'alipay') {
+          if (!prop.hasOwnProperty('default')) {
+            // alipay 处理 // 处理 props = { a: {type:String}, b: {type:Boolean} }
+            make(prop.type)
+          }
+          
           obj['props'][name] = prop['default']
-          // todo 收集自定义事件
+          
         } else {
-          rename(prop, 'default', 'value')
+          rename(obj['props'][name], 'default', 'value')
         }
       }
     })
@@ -257,8 +319,10 @@ class MiniOptTransformer extends BaseOptionsTransformer {
   transformProperties () {
     let originProperties = this.options[this.propsName]
     const newProps = {}
+    
     enumerableKeys(originProperties).forEach(key => {
       const rawFiled = originProperties[key]
+      
       const rawObserver = rawFiled.observer
       let newFiled = null
       if (typeof rawFiled === 'function') {
