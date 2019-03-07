@@ -1,4 +1,7 @@
 
+import { type } from '../util/type'
+import { invariant } from '../util/warn'
+
 // options transform 基类
 class BaseOptionsTransformer {
   constructor(config) {
@@ -9,6 +12,12 @@ class BaseOptionsTransformer {
     this.hooks = config.hooks
     this.hooksMap = config.hooksMap
     this.platform = ''
+
+    if (process.env.media !== "build") {
+        const mix = this.options.mixins
+        invariant(type(mix) === 'Undefined' || type(mix) === "Array",
+        "mixins expects an Array")
+    }
   }
 
   getOptions () {
