@@ -326,10 +326,12 @@ function setDataFactory(context, self) {
   }
 
   function _render(data) {
-    // style 处理
-    styleHandle(data)
-    
-    type(context.setData) === 'Function' && context.setData(data, walkUpdatedCb(context))
+    if (type(context.setData) === 'Function') {
+      // style 处理
+      styleHandle(data)
+      
+      context.setData(data, walkUpdatedCb(context))
+    }
   }
 }
 
