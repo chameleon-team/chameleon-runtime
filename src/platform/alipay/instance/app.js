@@ -22,7 +22,7 @@ export class App extends BaseCtor {
           runtimeWidget
             .setContext(this)
             .init()
-            .start('app-view-render')
+            // .start('app-view-render')
         }
       },
       needResolveAttrs: ['methods'],
