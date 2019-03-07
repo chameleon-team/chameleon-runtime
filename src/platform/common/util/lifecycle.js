@@ -44,16 +44,16 @@ const LIFECYCLE = {
     page: {
       hooks: [
         'onLoad',
-        'onReady',
         'onShow',
+        'onReady',
         'onHide',
         'onUnload'
       ],
       hooksMap: {
         'beforeCreate': 'onLoad',
         'created': 'onLoad',
-        'beforeMount': 'onShow',
-        'mounted': 'onReady',
+        'beforeMount': 'onLoad',
+        'mounted': 'onShow',
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload'
       },
@@ -63,6 +63,7 @@ const LIFECYCLE = {
         'onShareAppMessage',
         'onPageScroll',
         'onTabItemTap',
+        'onReady',
         'onHide'
       ]
     },
@@ -75,7 +76,7 @@ const LIFECYCLE = {
       ],
       hooksMap: {
         'beforeCreate': 'created',
-        'created': 'created',
+        'created': 'attached',
         'beforeMount': 'attached',
         'mounted': 'ready',
         'beforeDestroy': 'detached',
@@ -117,8 +118,8 @@ const LIFECYCLE = {
       hooksMap: {
         'beforeCreate': 'onLoad',
         'created': 'onLoad',
-        'beforeMount': 'onShow',
-        'mounted': 'onReady',
+        'beforeMount': 'onLoad',
+        'mounted': 'onShow',
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload'
       },
@@ -127,6 +128,7 @@ const LIFECYCLE = {
         'onReachBottom',
         'onShareAppMessage',
         'onTitleClick',
+        'onReady',
         'onHide'
       ]
     },
@@ -177,8 +179,8 @@ const LIFECYCLE = {
       hooksMap: {
         'beforeCreate': 'onLoad',
         'created': 'onLoad',
-        'beforeMount': 'onShow',
-        'mounted': 'onReady',
+        'beforeMount': 'onLoad',
+        'mounted': 'onShow',
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload'
       },
@@ -190,6 +192,7 @@ const LIFECYCLE = {
         'onShareAppMessage',
         'onPageScroll',
         'onTabItemTap',
+        'onReady',
         'onHide'
       ]
     },
@@ -202,8 +205,8 @@ const LIFECYCLE = {
       ],
       hooksMap: {
         'beforeCreate': 'created',
-        'created': 'created',
-        'beforeMount': 'created',
+        'created': 'attached',
+        'beforeMount': 'attached',
         'mounted': 'ready',
         'beforeDestroy': 'detached',
         'destroyed': 'detached'
