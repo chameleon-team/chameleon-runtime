@@ -1,9 +1,10 @@
 
 import { type } from './type'
 import Trie from './Trie'
+import { extras } from 'mobx'
 
 export default function diff(newData, oldData) {
-  return newData
+  return innerDiff(newData, oldData)
   let diffData = {}
   let newDataFlag = []
   let oldDataFlag = []
@@ -113,6 +114,19 @@ function isNaN(value) {
 
 function isNum(value) {
   return !isNaN(Number(value))
+}
+
+function innerDiff(newData, oldData) {
+  
+  let diffData = {}
+  Object.keys(newData).forEach(key => {
+    debugger
+    if(!extras.deepEqual(newData[key], oldData[key])) {
+      diffData[key] = newData[key]
+    }
+  })
+  
+  return diffData
 }
 
 /**

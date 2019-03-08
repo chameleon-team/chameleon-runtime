@@ -314,13 +314,13 @@ function setDataFactory(context, self) {
     if (_firstAction) {
       _firstAction = false
 
-      _cache = data
+      _cache = Object.assign({}, data)
       _render(data)
     } else {
 
       let dataDiff = diff(data, _cache)
 
-      _cache = data
+      _cache = Object.assign({}, data)
       _render(dataDiff)
     }
   }
