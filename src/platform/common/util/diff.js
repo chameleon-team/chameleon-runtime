@@ -120,7 +120,6 @@ function innerDiff(newData, oldData) {
   
   let diffData = {}
   Object.keys(newData).forEach(key => {
-    debugger
     if(!extras.deepEqual(newData[key], oldData[key])) {
       diffData[key] = newData[key]
     }
