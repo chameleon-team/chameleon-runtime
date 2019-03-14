@@ -1,62 +1,53 @@
 import { type } from '../../common/util/type'
+import { toJS } from 'mobx'
 
-export function styleHandle(source, detectCycles, __alreadySeen) {
-  if (detectCycles === void 0) { detectCycles = true; }
-  if (__alreadySeen === void 0) { __alreadySeen = []; }
+export function styleHandle(source, detectCycles = true, __alreadySeen = []) {
 
   function cache(value) {
-    if (detectCycles)
-        __alreadySeen.push([source, value]);
-    return value;
+    if (detectCycles) {
+      __alreadySeen.push([source, value])
+    }
+    return value
   }
 
-  if (detectCycles && __alreadySeen === null)
-          __alreadySeen = [];
-  if (detectCycles && source !== null && typeof source === "object") {
-      for (var i = 0, l = __alreadySeen.length; i < l; i++)
-          if (__alreadySeen[i][0] === source)
-              return __alreadySeen[i][1];
+  if (detectCycles && __alreadySeen === null) {
+    __alreadySeen = []
   }
+
+  if (detectCycles && source !== null && typeof source === "object") {
+      for (let i = 0, l = __alreadySeen.length; i < l; i++) {
+        if (__alreadySeen[i][0] === source) {
+          return __alreadySeen[i][1];
+        }
+      }
+  }
+
+  source = toJS(source)
 
   if (type(source) === 'Array') {
-      var res = cache([]);
-      var toAdd = source.map(function (value) { return styleHandle(value, detectCycles, __alreadySeen); });
+      let res = cache([]);
+      let toAdd = source.map((value) => {
+        return styleHandle(value, detectCycles, __alreadySeen)
+      });
+
       res.length = toAdd.length;
-      for (var i = 0, l = toAdd.length; i < l; i++)
-          res[i] = toAdd[i];
-      return res;
-  }
-  if (type(source) === 'Object') {
-      var res = cache({});
-      for (var key in source)
-          res[key] = styleHandle(source[key], detectCycles, __alreadySeen);
-      return res;
-  }
+      for (let i = 0, l = toAdd.length; i < l; i++) {
+        res[i] = toAdd[i]
+      }
 
-  if (type(source) === 'String')
-      return pxTransform(source)
-  
-  return source
+      return res;
+  } else if (type(source) === 'Object') {
+      let res = cache({});
+      for (let key in source) {
+        res[key] = styleHandle(source[key], detectCycles, __alreadySeen)
+      }
+      return res;
+  } else if (type(source) === 'String') {
+    return pxTransform(source)
+  } else {
+    return source 
+  }
 }
-
-// export function styleHandle(d) {
-
-//   if (type(d) === 'Array') {
-//     d.forEach((item, i) => {
-//       d[i] = styleHandle(item)
-//     })
-//   } else if (type(d) === 'Object') {
-//     Object.keys(d).forEach(k => {
-//       const v = d[k]
-
-//       d[k] = styleHandle(v)
-//     })
-//   } else if (type(d) === 'String') {
-//     return pxTransform(d)
-//   }
-  
-//   return d
-// }
 
 function pxTransform(s) {
   if (!~s.indexOf('cpx')) {
