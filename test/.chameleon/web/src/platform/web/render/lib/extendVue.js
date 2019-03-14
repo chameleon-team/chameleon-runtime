@@ -1,6 +1,6 @@
 import { base, event } from '../mixins'
 
-import webMixins from '@didi/chameleon-mixins/web-mixins.js'
+import webMixins from 'chameleon-mixins/web-mixins.js'
 
 export default function extendVue(Vue) {
   

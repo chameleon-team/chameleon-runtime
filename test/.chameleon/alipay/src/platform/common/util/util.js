@@ -1,4 +1,17 @@
-import { type } from './type'
+import { type, isObject } from './type'
+
+  // transfer 对象的`${name}`属性值 to function
+export function propToFn (obj, name) {
+  if (obj && isObject(obj[name])) {
+    var _temp = obj[name]
+
+    obj[name] = function() {
+      return {
+        ..._temp
+      }
+    }
+  }
+}
 
 /**
  * 对象键名重定义
@@ -143,6 +156,42 @@ export function enumerableKeys(obj) {
     keys.push(key)
   }
   return keys
+}
+
+export function flatten(obj = {}) {
+
+  function check(str) {
+    if (!str) {
+      console.error('pathStr should not be null!')
+      return false
+    }
+    return true
+  }
+
+  function flattenRe(d, pathStr = '') {
+    if (type(d) === 'Array') {
+      check(pathStr)
+
+      d.forEach((item, i) => {
+        const path = `${pathStr}[${i}]`
+        flattenRe(item, path)
+      })
+    } else if (type(d) === 'Object') {
+      Object.keys(d).forEach(k => {
+        const v = d[k]
+        const path = pathStr ? `${pathStr}.${k}` : k
+        flattenRe(v, path)
+      })
+    } else {
+      check(pathStr)
+      ret[pathStr] = d
+    }
+  }
+
+  const ret = {}
+  flattenRe(obj)
+
+  return ret
 }
 
 

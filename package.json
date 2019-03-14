@@ -1,6 +1,6 @@
 {
   "name": "chameleon-runtime",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "多端代码框架运行时",
   "main": "index.js",
   "scripts": {
@@ -40,9 +40,9 @@
     "mobx": "3.6.1"
   },
   "devDependencies": {
-    "chameleon-mixins": "^0.0.1",
-    "chameleon-api": "^0.0.1",
-    "weex-bridge": "^0.0.1",
+    "chameleon-mixins": "0.1.0-alpha.4",
+    "chameleon-css-loader": "0.1.0-alpha.4",
+    "chameleon-api": "^0.3.0-alpha.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-plugin-istanbul": "^5.1.0",

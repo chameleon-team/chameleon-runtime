@@ -1,14 +1,14 @@
-import { type } from './type'
+import { type, isObject } from './type'
 
   // transfer 对象的`${name}`属性值 to function
 export function propToFn (obj, name) {
-  if (!obj) return
-  
-  var _temp = obj[name]
+  if (obj && isObject(obj[name])) {
+    var _temp = obj[name]
 
-  obj[name] = function() {
-    return {
-      ..._temp
+    obj[name] = function() {
+      return {
+        ..._temp
+      }
     }
   }
 }

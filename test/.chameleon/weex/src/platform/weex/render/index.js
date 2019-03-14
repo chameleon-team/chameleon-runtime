@@ -1,5 +1,5 @@
 /*global Vue*/
-import weexMixins from '@didi/chameleon-mixins/weex-mixins.js'
+import weexMixins from 'chameleon-mixins/weex-mixins.js'
 
 Vue.mixin(weexMixins.mixins)
 

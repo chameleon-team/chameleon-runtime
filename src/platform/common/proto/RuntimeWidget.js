@@ -328,9 +328,9 @@ function setDataFactory(context, self) {
   function _render(data) {
     if (type(context.setData) === 'Function') {
       // style 处理
-      styleHandle(data)
+      const after = styleHandle(data)
       
-      context.setData(data, walkUpdatedCb(context))
+      context.setData(after, walkUpdatedCb(context))
     }
   }
 }

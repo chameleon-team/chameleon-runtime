@@ -10,7 +10,7 @@ class OptTransformer extends WexOptTransformer {
   beforeCreateArgsMixin(...args) {
     args = args || []
 
-    let obj = weex.config.query
+    let obj = this.$route && this.$route.query
   
     args[0] = Object.assign({}, args[0], obj)
   

@@ -13,7 +13,8 @@ import {
   enumerable,
   proxy,
   deleteProperties,
-  enumerableKeys
+  enumerableKeys,
+  flatten
 } from '../util/util'
 
 import { type } from '../util/type'
@@ -23,6 +24,8 @@ import { styleHandle } from '../util/style'
 import lifecycle from '../util/lifecycle'
 
 import KEY from '../util/KEY'
+
+import diff from '../util/diff'
 
 export default class RuntimeWidget {
   constructor(config) {
@@ -94,6 +97,9 @@ export default class RuntimeWidget {
     query.exec((res) => {
       context.$refs = {}
       let doms = res[0]
+      if (!doms) {
+        return
+      }
       for (let i=0; i<doms.length; i++) {
         let refItem = doms[i]
         context.$refs[refItem.id] = {
@@ -287,28 +293,45 @@ function updatedCbFactory(context) {
  * @param {[type]} context [description]
  */
 function setDataFactory(context, self) {
+  let _firstAction = true
+  let _cache
+  
   return function (reaction = {}) {
     if (type(reaction.schedule) !== 'Function') {
       return
     }
+
     // 缓存reaction
     context.__cml_reaction__ = reaction
 
     let properties = context.__cml_originOptions__[self.propsName]
     let propKeys = enumerableKeys(properties)
-    /**
-     * delete CustomKeys
-     * 目前微信小程序对实例数据的深拷贝存在bug, 会导致数据实例的引用属性被篡改
-     * 防止原生小程序未来支持这些属性导致冲突
-    */
-    let newData = deleteProperties(context.__cml_ob_data__, propKeys)
     
-    let cloneData = toJS(newData)
+    let data = deleteProperties(context.__cml_ob_data__, propKeys)
 
-    // style 处理
-    styleHandle(cloneData)
+    data = toJS(data)
 
-    context.setData(cloneData, () => walkUpdatedCb(context))
+    if (_firstAction) {
+      _firstAction = false
+
+      _cache = Object.assign({}, data)
+      _render(data)
+    } else {
+
+      let dataDiff = diff(data, _cache)
+
+      _cache = Object.assign({}, data)
+      _render(dataDiff)
+    }
+  }
+
+  function _render(data) {
+    if (type(context.setData) === 'Function') {
+      // style 处理
+      const after = styleHandle(data)
+      
+      context.setData(after, walkUpdatedCb(context))
+    }
   }
 }
 
@@ -344,7 +367,6 @@ function forceUpdateFactory(context) {
 
     type(cb) === 'Function' && context.$collect(cb)
 
-    // 无论是否改变，强制将状态置为stale，从而触发render
     context.__cml_reaction__.dependenciesState = 2
     context.__cml_reaction__.schedule()
   }

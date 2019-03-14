@@ -18,10 +18,10 @@ export let json2query = function(obj, isEncode){
   isEncode = isEncode !== false
   let url = ''
   if (isObject(obj)) {
-    for (let [k,v] of Object.entries(obj)) {
-      let value = v !== undefined ? v : ''
-      url += '&' + k + '=' + (isEncode ? encodeURIComponent(value) : value)
-    }
+    Object.keys(obj).forEach(key => {
+      let value = obj[key] !== undefined ? obj[key] : ''
+      url += '&' + key + '=' + (isEncode ? encodeURIComponent(value) : value)
+    })
   }
   return url ? url.substring(1) : ''
 }

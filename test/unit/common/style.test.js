@@ -58,7 +58,7 @@ const output = {
     a1: '8rpx',
     a2: '0.0rpx',
     a3: ' .8rpx',
-    a4: ' 8.rpx',
+    a4: ' 8.cpx',
     a5: '-21rpx',
     a6: ' -21rpx',
     a7: '.8rpx',

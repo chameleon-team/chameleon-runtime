@@ -18,10 +18,9 @@
       let vueOptions = {el: '#root', router, store}
 
       if(options.createVM) {
-        let bridge = require('@didi/weex-bridge').default;
-        let cmlApi = require('@didi/chameleon-api').default;
-        let query = bridge.getQueryObjSync();
-        let {path} = query;
+        let cmlApi = require('chameleon-api').default;
+        let launchOpt = cmlApi.getLaunchOptionsSync();
+        let {path} = launchOpt.query;
         new Vue(Vue.util.extend(vueOptions, app));
         cmlApi.navigateTo({
           path

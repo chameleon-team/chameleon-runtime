@@ -1,5 +1,6 @@
 import BaseOptionsTransformer from './BaseOptionsTransformer'
-import { type } from '../util/type'
+import { type, isObject } from '../util/type'
+import { propToFn } from '../util/util'
 
 // web&&weex options transform 基类
 class WexOptTransformer extends BaseOptionsTransformer {
@@ -9,21 +10,37 @@ class WexOptTransformer extends BaseOptionsTransformer {
   }
 
   init () {
-    this.transformData()
+    this.initProps(this.options)
+    propToFn(this.options, 'data')
+    this.handleMixins(this.options)
     this.needAddHookMixin && this.addHookMixin()
   }
 
-  // 对象属性 `data` 的 映射
-  transformData () {
-    if (this.options['data']) {
-      var _temp = this.options['data']
-  
-      this.options['data'] = function() {
-        return {
-          ..._temp
-        }
+  /**
+   * 处理组件props属性
+   * @param  {Object} vmObj 组件options
+   * @return {[type]}     [description]
+   */
+  initProps (vmObj) {
+    if (!vmObj['props']) return
+    
+    Object.getOwnPropertyNames(vmObj['props']).forEach((name) => {
+      let prop = vmObj['props'][name]
+
+      if (type(prop) === 'Object' && isObject(prop['default'])) {
+        propToFn(prop, 'default')
       }
-    }
+    })
+  }
+
+  handleMixins (vmObj) {
+    if (!vmObj.mixins) return
+
+    const mixins = vmObj.mixins
+
+    mixins.forEach((mix) => {
+      propToFn(mix, 'data')
+    })
   }
 
   addHookMixin () {
@@ -40,7 +57,7 @@ class WexOptTransformer extends BaseOptionsTransformer {
           switch(key) {
             case 'beforeCreate':
               // 钩子函数参数mixin
-              args = self.beforeCreateArgsMixin ? self.beforeCreateArgsMixin(...args) : args
+              args = self.beforeCreateArgsMixin ? self.beforeCreateArgsMixin.apply(this, args) : args
               break
             default:
               break

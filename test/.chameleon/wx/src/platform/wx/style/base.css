@@ -1,4 +1,8 @@
-  .cml-view {
+page {
+  height: 100%;
+}
+
+page, .cml-view {
     display: flex;
     box-sizing: border-box;
     position: relative;

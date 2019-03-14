@@ -62,6 +62,7 @@ const LIFECYCLE = {
         'onReachBottom',
         'onShareAppMessage',
         'onPageScroll',
+        'onResize',
         'onTabItemTap',
         'onReady',
         'onHide'
@@ -188,7 +189,6 @@ const LIFECYCLE = {
         'onForceReLaunch',
         'onPullDownRefresh',
         'onReachBottom',
-        'onShareAppMessage',
         'onShareAppMessage',
         'onPageScroll',
         'onTabItemTap',

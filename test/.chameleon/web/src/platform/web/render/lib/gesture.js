@@ -1,4 +1,4 @@
-var isInitialized = false
+
 
 // major events supported:
 //   panstart
@@ -488,7 +488,7 @@ function touchcancelHandler(event) {
   }
 }
 
-if (!isInitialized) {
+if (!window.__cml_isInitialized) {
   docEl.addEventListener('touchstart', touchstartHandler, true)
-  isInitialized = true
+  window.__cml_isInitialized = true
 }

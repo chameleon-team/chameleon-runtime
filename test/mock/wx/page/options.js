@@ -13,7 +13,8 @@ class Button {
     }
     this.methods = {
       changeCheck: function(){},
-      onLoad: function() {}
+      onLoad: function() {},
+      onReady: function() {}
     }
     this.components = {}
   }

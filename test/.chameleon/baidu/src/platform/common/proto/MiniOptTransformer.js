@@ -1,6 +1,5 @@
 import BaseOptionsTransformer from './BaseOptionsTransformer'
 
-import wxMixins from '@didi/chameleon-mixins/wx-mixins.js'
 import { extend, rename, enumerableKeys } from '../util/util'
 import { type } from '../util/type'
 import {mergeDefault, mergeHooks, mergeSimpleProps, mergeData, mergeWatch} from '../util/resolve'
@@ -24,50 +23,114 @@ class MiniOptTransformer extends BaseOptionsTransformer {
     this.propsName = this.platform ? KEY.get(`${this.platform}.props`) : ''
     this.whitelist = this.platform ? lifecycle.get(`${this.platform}.${this.type}.whitelist`) : []
     
-    this.needPropsHandler && this.propsHandler()
+    this.needPropsHandler && this.initProps(this.options)
     // 生命周期映射
-    this.lifecycleHandler()
+    this.transferLifecycle(this.options)
+    this.handleMixins(this.options)
+    
     // 各端差异化生命周期
     this.extendWhitelistHooks()
     
     // init 顺序很重要
-    this.mergeInjectedMixins()
+    // this.mergeInjectedMixins()
     this.mergeBuiltinMixins()
     this.resolveOptions()
     this.transformHooks()
     this.needResolveAttrs && this.resolveAttrs()
     this.needTransformProperties && this.transformProperties()
+
+    if (this.platform === 'alipay') {
+      delete this.options['computed']
+    }
   }
 
 /**
    * 处理组件props属性
-   * @param  {Object} obj 组件options
+   * @param  {Object} vmObj 组件options
    * @return {[type]}     [description]
    */
-  propsHandler () {
-    let obj = this.options
-    if (!obj['props']) {
-      return
-    }
+  initProps (vmObj) {
+    if (!vmObj['props']) return
+    
+    Object.getOwnPropertyNames(vmObj['props']).forEach((name) => {
+      let prop = vmObj['props'][name]
+      // Number: 0
+      // Boolean: false
+      // Array: false
+      // String: ''
+      // Object: null
+      // null: null
+      function make(type) {
+        if (!knowType(type)) {
+          return
+        }
 
-    Object.getOwnPropertyNames(obj['props']).forEach((name) => {
-      const self = this
-      let prop = obj['props'][name]
+        switch (type) {
+          case Number:
+            prop = vmObj['props'][name] = {
+              type: Number,
+              default: 0
+            }
+            break
+          case Boolean:
+            prop = vmObj['props'][name] = {
+              type: Boolean,
+              default: false
+            }
+            break
+          case Array:
+            prop = vmObj['props'][name] = {
+              type: Array,
+              default: []
+            }
+            break
+          case String:
+            prop = vmObj['props'][name] = {
+              type: String,
+              default: ''
+            }
+            break
+          case Object:
+            prop = vmObj['props'][name] = {
+              type: Object,
+              default: null
+            }
+            break
+          case null:
+            prop = vmObj['props'][name] = {
+              type: null,
+              default: null
+            }
+            break
+          default:
+            break
+        }
+      }
 
-      if (type(prop) === 'Object' && prop.hasOwnProperty('default')) {
-        check(prop['default'], prop['type'])
+      function knowType(type) {
+        return type === Number || type === Boolean || type === Array || type === String || type === Object || type === null
+      }
+      
+      // 处理 props = { a: String, b: Boolean }
+      make(prop)
 
+      if (type(prop) === 'Object') {
         if (this.platform === 'alipay') {
-          obj['props'][name] = prop['default']
-          // todo 收集自定义事件
+          if (!prop.hasOwnProperty('default')) {
+            // alipay 处理 // 处理 props = { a: {type:String}, b: {type:Boolean} }
+            make(prop.type)
+          }
+          
+          vmObj['props'][name] = prop['default']
+          
         } else {
-          rename(prop, 'default', 'value')
+          rename(vmObj['props'][name], 'default', 'value')
         }
       }
     })
 
     if (this.platform !== 'alipay') {
-      rename(obj, 'props', 'properties')
+      rename(vmObj, 'props', 'properties')
     }
 
     function check(value, type) {
@@ -83,42 +146,52 @@ class MiniOptTransformer extends BaseOptionsTransformer {
 
   /**
    * 生命周期映射
-   * @param  {Object} obj 待添加属性对象
+   * @param  {Object} vmObj vm对象
    * @param  {Object} map 映射表
    * @param  {Object} lifecycle 生命周期序列 确保顺序遍历
    * @return {Object}     修改后值
    */
-  lifecycleHandler() {
+  transferLifecycle(vmObj) {
     // 将生命周期 键名 处理成 ['_' + key]
     let cmlHooks = lifecycle.get('cml.hooks').map(key => '_' + key)
-    let obj = this.options
     let _map = {}
 
     Object.keys(this.hooksMap).forEach(key => {
       _map['_' + key] = this.hooksMap[key]
       
-      if (obj.hasOwnProperty(key)) {
-        obj['_' + key] = obj[key]
-        delete obj[key]
+      if (vmObj.hasOwnProperty(key)) {
+        vmObj['_' + key] = vmObj[key]
+        delete vmObj[key]
       }
     })
 
     cmlHooks.forEach(function(key) {
       var mapVal = _map[key]
-      var objVal = obj[key]
+      var objVal = vmObj[key]
   
-      if (obj.hasOwnProperty(key)) {
-        if (obj.hasOwnProperty(mapVal)) {
-          if (type(obj[mapVal]) !== 'Array') {
-            obj[mapVal] = [obj[mapVal], objVal]
+      if (vmObj.hasOwnProperty(key)) {
+        if (vmObj.hasOwnProperty(mapVal)) {
+          if (type(vmObj[mapVal]) !== 'Array') {
+            vmObj[mapVal] = [vmObj[mapVal], objVal]
           } else {
-            obj[mapVal].push(objVal)
+            vmObj[mapVal].push(objVal)
           }
         } else {
-          obj[mapVal] = [objVal]
+          vmObj[mapVal] = [objVal]
         }
-        delete obj[key]
+        delete vmObj[key]
       }
+    })
+  }
+
+  handleMixins (vmObj) {
+    if (!vmObj.mixins) return
+
+    const mixins = vmObj.mixins
+
+    mixins.forEach((mix) => {
+      // 生命周期映射
+      this.transferLifecycle(mix)
     })
   }
 
@@ -153,12 +226,12 @@ class MiniOptTransformer extends BaseOptionsTransformer {
   
   mergeBuiltinMixins () {
     const btMixin = [
-      wxMixins.mixins,
+      this.baseMixins,
       this.builtinMixins
     ].filter(item => item)
   
     this.options.mixins = this.options.mixins
-      ? this.options.mixins.concat(btMixin)
+      ? btMixin.concat(this.options.mixins)
       : btMixin
   }
   
@@ -254,8 +327,10 @@ class MiniOptTransformer extends BaseOptionsTransformer {
   transformProperties () {
     let originProperties = this.options[this.propsName]
     const newProps = {}
+    
     enumerableKeys(originProperties).forEach(key => {
       const rawFiled = originProperties[key]
+      
       const rawObserver = rawFiled.observer
       let newFiled = null
       if (typeof rawFiled === 'function') {

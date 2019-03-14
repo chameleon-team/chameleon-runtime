@@ -1,4 +1,4 @@
-.cml-view {
+.cml-root, .cml-view {
     display: flex;
     box-sizing: border-box;
     position: relative;
@@ -37,6 +37,7 @@
 .border-bottom-1px,
 .border-left-1px {
   position: relative;
+  overflow: visible;
 }
 
 .border-top-1px:before,

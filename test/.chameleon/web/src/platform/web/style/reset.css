@@ -3,13 +3,13 @@
     width: 100%;
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
+    font-family: BlinkMacSystemFont, 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .cml-base {
     text-align: left;
     font-size: 0.4rem; /*15px*/
     letter-spacing: 0.02rem;
-    font-family: BlinkMacSystemFont, 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .cml-base,
