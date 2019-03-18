@@ -1,5 +1,6 @@
-import { type } from '../../common/util/type'
-import { toJS } from 'mobx'
+import { type } from './type'
+// import { toJS } from 'mobx'
+
 
 export function styleHandle(source, detectCycles = true, __alreadySeen = []) {
 
@@ -22,7 +23,7 @@ export function styleHandle(source, detectCycles = true, __alreadySeen = []) {
       }
   }
 
-  source = toJS(source)
+  // source = toJS(source)
 
   if (type(source) === 'Array') {
       let res = cache([]);

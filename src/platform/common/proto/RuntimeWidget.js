@@ -2,10 +2,12 @@ import {
   observable,
   computed,
   reaction,
-  toJS,
+  // toJS,
   isObservableArray,
   Reaction
 } from 'mobx'
+
+import toJS from '../util/toPureData'
 
 import {
   extend,
