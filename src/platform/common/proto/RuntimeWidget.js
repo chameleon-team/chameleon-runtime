@@ -14,13 +14,10 @@ import {
   enumerable,
   proxy,
   deleteProperties,
-  enumerableKeys,
-  flatten
+  enumerableKeys
 } from '../util/util'
 
 import { type } from '../util/type'
-
-import { styleHandle } from '../util/style'
 
 import lifecycle from '../util/lifecycle'
 
@@ -294,8 +291,8 @@ function updatedCbFactory(context) {
  * @param {[type]} context [description]
  */
 function setDataFactory(context, self) {
-  let _firstAction = true
-  let _cache
+  let _cached = false
+  let cacheData
   
   return function (reaction = {}) {
     if (type(reaction.schedule) !== 'Function') {
@@ -308,30 +305,24 @@ function setDataFactory(context, self) {
     let properties = context.__cml_originOptions__[self.propsName]
     let propKeys = enumerableKeys(properties)
     
-    let data = deleteProperties(context.__cml_ob_data__, propKeys)
+    const obData = deleteProperties(context.__cml_ob_data__, propKeys)
 
-    data = toJS(data)
+    const data = toJS(obData)
 
-    if (_firstAction) {
-      _firstAction = false
-
-      _cache = Object.assign({}, data)
-      _render(data)
+    if (_cached) {
+      update(diff(data, cacheData))
     } else {
+      _cached = true
 
-      let dataDiff = diff(data, _cache)
-
-      _cache = Object.assign({}, data)
-      _render(dataDiff)
+      update(data)
     }
+
+    cacheData = Object.assign({}, data)
   }
 
-  function _render(data) {
+  function update(d) {
     if (type(context.setData) === 'Function') {
-      // style 处理
-      const after = styleHandle(data)
-      
-      context.setData(after, walkUpdatedCb(context))
+      context.setData(d, walkUpdatedCb(context))
     }
   }
 }
