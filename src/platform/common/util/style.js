@@ -1,5 +1,4 @@
 import { type } from './type'
-// import { toJS } from 'mobx'
 
 
 export function styleHandle(source, detectCycles = true, __alreadySeen = []) {
@@ -22,8 +21,6 @@ export function styleHandle(source, detectCycles = true, __alreadySeen = []) {
         }
       }
   }
-
-  // source = toJS(source)
 
   if (type(source) === 'Array') {
       let res = cache([]);
@@ -50,7 +47,7 @@ export function styleHandle(source, detectCycles = true, __alreadySeen = []) {
   }
 }
 
-function pxTransform(s) {
+export function pxTransform(s) {
   if (!~s.indexOf('cpx')) {
     return s
   }

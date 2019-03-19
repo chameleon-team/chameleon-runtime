@@ -1,5 +1,5 @@
-import { merge, extend } from '../../common/util/util'
-import { type } from '../../common/util/type'
+import { merge, extend } from './util'
+import { type } from './type'
 
 export function mergeDefault(parent, child, key) {
   parent[key] = child[key]

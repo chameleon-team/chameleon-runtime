@@ -8,8 +8,8 @@
 
 .cml-base {
     text-align: left;
-    font-size: 0.4rem; /*15px*/
-    letter-spacing: 0.02rem;
+    font-size: 30cpx; /*15px*/
+    letter-spacing: 1.5cpx;
 }
 
 .cml-base,
