@@ -8,7 +8,7 @@ class OptTransformer extends WexOptTransformer {
     this.init()
   }
 
-  beforeCreateArgsMixin(...args) {
+  extendLifecycleArgs(...args) {
     args = args || []
 
     let searchObj = query2json(location.search)

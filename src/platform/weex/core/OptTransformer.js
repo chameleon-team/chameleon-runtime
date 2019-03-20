@@ -7,7 +7,7 @@ class OptTransformer extends WexOptTransformer {
     this.init()
   }
 
-  beforeCreateArgsMixin(...args) {
+  extendLifecycleArgs(...args) {
     args = args || []
 
     let obj = this.$route && this.$route.query
