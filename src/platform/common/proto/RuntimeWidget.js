@@ -293,7 +293,7 @@ function updatedCbFactory(context) {
 function setDataFactory(context, self) {
   let _cached = false
   let cacheData
-  
+
   return function (reaction = {}) {
     if (type(reaction.schedule) !== 'Function') {
       return
@@ -309,21 +309,33 @@ function setDataFactory(context, self) {
 
     const data = toJS(obData)
 
+    let diffV
     if (_cached) {
-      update(diff(data, cacheData))
+      diffV = diff(data, cacheData)
+
+      // emit 'beforeUpdate' hook ，第一次不触发
+      emit('beforeUpdate', context, data, cacheData, diffV)
     } else {
       _cached = true
-
-      update(data)
+      diffV = data
     }
 
+    update(diffV)
     cacheData = Object.assign({}, data)
   }
 
-  function update(d) {
+  function update(diff) {
     if (type(context.setData) === 'Function') {
-      context.setData(d, walkUpdatedCb(context))
+      context.setData(diff, walkUpdatedCb(context))
     }
+  }
+}
+
+function emit(name, context, ...data) {
+  const cmlVM = context.__cml_originOptions__
+
+  if (typeof cmlVM[name] === 'function') {
+    cmlVM[name].apply(context, data)
   }
 }
 
@@ -333,6 +345,9 @@ function setDataFactory(context, self) {
  * @return {[type]}       [description]
  */
 function walkUpdatedCb(context) {
+  // emit 'updated' hook
+  emit('updated', context)
+
   let cb
   const pendingList = context.__cml_cbCollection__.slice(0)
   context.__cml_cbCollection__.length = 0
