@@ -1,5 +1,8 @@
+
+var toString = Object.prototype.toString;
+
 export function type(n) {
-  return Object.prototype.toString.call(n).slice(8, -1)
+  return toString.call(n).slice(8, -1)
 }
 
 /**
@@ -9,4 +12,12 @@ export function type(n) {
  */
 export function isObject (obj) {
   return obj !== null && typeof obj === 'object'
+}
+
+/**
+ * Strict object type check. Only returns true
+ * for plain JavaScript objects.
+ */
+export function isPlainObject (obj) {
+  return type(obj) === 'Object'
 }

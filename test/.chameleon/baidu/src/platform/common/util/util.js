@@ -1,13 +1,19 @@
-import { type, isObject } from './type'
+import { type, isObject, isPlainObject } from './type'
 
   // transfer 对象的`${name}`属性值 to function
 export function propToFn (obj, name) {
   if (obj && isObject(obj[name])) {
     var _temp = obj[name]
 
-    obj[name] = function() {
-      return {
-        ..._temp
+    if (isPlainObject(_temp)) {
+      obj[name] = function() {
+        return {
+          ..._temp
+        }
+      }
+    } else {
+      obj[name] = function() {
+        return _temp
       }
     }
   }

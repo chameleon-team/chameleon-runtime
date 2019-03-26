@@ -19,6 +19,14 @@ class Button {
       textNoDefault: {
         type: String
       },
+      list: {
+        type: Array,
+        default: []
+      },
+      datas: {
+        type: Object,
+        default: {}
+      }
     }
     this.data = {
       checkedImg: 'http://172.22.13'
@@ -63,6 +71,18 @@ export const case1 = new Config({
       textNoDefault: {
         type: String
       },
+      list: {
+        type: Array,
+        default: function() {
+          return []
+        }
+      },
+      datas: {
+        type: Object,
+        default: function() {
+          return {}
+        }
+      }
     },
     data: function() {
       return {

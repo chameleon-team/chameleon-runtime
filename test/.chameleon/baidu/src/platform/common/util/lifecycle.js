@@ -7,6 +7,8 @@ const LIFECYCLE = {
       'created',
       'beforeMount',
       'mounted',
+      'beforeUpdate',
+      'updated',
       'beforeDestroy',
       'destroyed'
     ]
@@ -17,6 +19,8 @@ const LIFECYCLE = {
       'created',
       'beforeMount',
       'mounted',
+      'beforeUpdate',
+      'updated',
       'beforeDestroy',
       'destroyed'
     ]

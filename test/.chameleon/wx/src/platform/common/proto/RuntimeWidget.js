@@ -14,13 +14,10 @@ import {
   enumerable,
   proxy,
   deleteProperties,
-  enumerableKeys,
-  flatten
+  enumerableKeys
 } from '../util/util'
 
 import { type } from '../util/type'
-
-import { styleHandle } from '../util/style'
 
 import lifecycle from '../util/lifecycle'
 
@@ -294,9 +291,9 @@ function updatedCbFactory(context) {
  * @param {[type]} context [description]
  */
 function setDataFactory(context, self) {
-  let _firstAction = true
-  let _cache
-  
+  let _cached = false
+  let cacheData
+
   return function (reaction = {}) {
     if (type(reaction.schedule) !== 'Function') {
       return
@@ -308,31 +305,37 @@ function setDataFactory(context, self) {
     let properties = context.__cml_originOptions__[self.propsName]
     let propKeys = enumerableKeys(properties)
     
-    let data = deleteProperties(context.__cml_ob_data__, propKeys)
+    const obData = deleteProperties(context.__cml_ob_data__, propKeys)
 
-    data = toJS(data)
+    const data = toJS(obData)
 
-    if (_firstAction) {
-      _firstAction = false
+    let diffV
+    if (_cached) {
+      diffV = diff(data, cacheData)
 
-      _cache = Object.assign({}, data)
-      _render(data)
+      // emit 'beforeUpdate' hook ，第一次不触发
+      emit('beforeUpdate', context, data, cacheData, diffV)
     } else {
-
-      let dataDiff = diff(data, _cache)
-
-      _cache = Object.assign({}, data)
-      _render(dataDiff)
+      _cached = true
+      diffV = data
     }
+
+    update(diffV)
+    cacheData = Object.assign({}, data)
   }
 
-  function _render(data) {
+  function update(diff) {
     if (type(context.setData) === 'Function') {
-      // style 处理
-      const after = styleHandle(data)
-      
-      context.setData(after, walkUpdatedCb(context))
+      context.setData(diff, walkUpdatedCb(context))
     }
+  }
+}
+
+function emit(name, context, ...data) {
+  const cmlVM = context.__cml_originOptions__
+
+  if (typeof cmlVM[name] === 'function') {
+    cmlVM[name].apply(context, data)
   }
 }
 
@@ -342,6 +345,9 @@ function setDataFactory(context, self) {
  * @return {[type]}       [description]
  */
 function walkUpdatedCb(context) {
+  // emit 'updated' hook
+  emit('updated', context)
+
   let cb
   const pendingList = context.__cml_cbCollection__.slice(0)
   context.__cml_cbCollection__.length = 0

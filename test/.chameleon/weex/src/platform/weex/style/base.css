@@ -6,20 +6,20 @@
     
 }
 
-.border-1px {
+.cml-border-1px {
     border: 1px solid #ccc;
 }
 
-.border-top-1px {
+.cml-border-top-1px {
     border-top: 1px solid #ccc;
 }
-.border-right-1px {
+.cml-border-right-1px {
     border-right: 1px solid #ccc;
 }
-.border-bottom-1px {
+.cml-border-bottom-1px {
     border-bottom: 1px solid #ccc;
 }
-.border-left-1px {
+.cml-border-left-1px {
     border-left: 1px solid #ccc;
 }
 

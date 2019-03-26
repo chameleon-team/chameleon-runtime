@@ -56,8 +56,10 @@ class WexOptTransformer extends BaseOptionsTransformer {
         if (type(hook) === 'Function') {
           switch(key) {
             case 'beforeCreate':
+            case 'created':
+            case 'beforeMount':
               // 钩子函数参数mixin
-              args = self.beforeCreateArgsMixin ? self.beforeCreateArgsMixin.apply(this, args) : args
+              args = self.extendLifecycleArgs ? self.extendLifecycleArgs.apply(this, args) : args
               break
             default:
               break

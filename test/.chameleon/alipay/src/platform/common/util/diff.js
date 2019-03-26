@@ -11,7 +11,7 @@ export default function diff(current, old) {
     out = out['']
   }
 
-  console.log('diff------:', out)
+  // console.log('diff------:', out)
   return out
 }
 

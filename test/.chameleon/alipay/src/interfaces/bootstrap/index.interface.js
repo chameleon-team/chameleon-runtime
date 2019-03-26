@@ -1,4 +1,5 @@
 
+    import './shim.js';
     /* istanbul ignore next */
     class Method {
       bootstrap(options) {
