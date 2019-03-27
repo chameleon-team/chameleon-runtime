@@ -273,7 +273,6 @@ class MiniOptTransformer extends BaseOptionsTransformer {
   
   transformHooks () {
     if (!this.hooks || !this.hooks.length) return
-  
     const self = this
     this.hooks.forEach(key => {
       const hooksArr = self.options[key]
@@ -288,17 +287,17 @@ class MiniOptTransformer extends BaseOptionsTransformer {
 
               result = hooksArr[i].apply(this, args)
     
-              if (result && result.enableAsync) {
-                asyncQuene = hooksArr.slice(i + 1)
-                break
-              }
+              // if (result && result.enableAsync) {
+              //   asyncQuene = hooksArr.slice(i + 1)
+              //   break
+              // }
             }
           }
-          Promise.resolve().then(() => {
-            asyncQuene.forEach(fn => {
-              fn.apply(this, args)
-            })
-          })
+          // Promise.resolve().then(() => {
+          //   asyncQuene.forEach(fn => {
+          //     fn.apply(this, args)
+          //   })
+          // })
         }
         return result
       })
