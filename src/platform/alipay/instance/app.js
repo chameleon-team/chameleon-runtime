@@ -27,7 +27,8 @@ export class App extends BaseCtor {
       },
       needResolveAttrs: ['methods'],
       hooks: lifecycle.get('alipay.app.hooks'),
-      hooksMap: lifecycle.get('alipay.app.hooksMap')
+      hooksMap: lifecycle.get('alipay.app.hooksMap'),
+      polyHooks: lifecycle.get('alipay.app.polyHooks')
     })
 
     __CML__GLOBAL.App(this.options)

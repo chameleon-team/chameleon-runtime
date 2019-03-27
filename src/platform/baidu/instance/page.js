@@ -39,7 +39,8 @@ export class Page extends BaseCtor {
       },
       needResolveAttrs: ['methods'],
       hooks: lifecycle.get('baidu.page.hooks'),
-      hooksMap: lifecycle.get('baidu.page.hooksMap')
+      hooksMap: lifecycle.get('baidu.page.hooksMap'),
+      polyHooks: lifecycle.get('baidu.page.polyHooks')
     })
 
     __CML__GLOBAL.Page(this.options)

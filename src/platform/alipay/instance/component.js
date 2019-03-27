@@ -47,6 +47,7 @@ export class Component extends BaseCtor {
       },
       hooks: lifecycle.get('alipay.component.hooks'),
       hooksMap: lifecycle.get('alipay.component.hooksMap'),
+      polyHooks: lifecycle.get('alipay.component.polyHooks'),
       needPropsHandler: true,
       needTransformProperties: false
     })

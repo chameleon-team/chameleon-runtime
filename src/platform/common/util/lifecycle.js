@@ -30,7 +30,9 @@ const LIFECYCLE = {
       hooks: [
         'onLaunch',
         'onShow',
-        'onHide'
+        'onHide',
+        'onError',
+        'onPageNotFound'
       ],
       hooksMap: {
         'beforeCreate': 'onLaunch',
@@ -51,7 +53,13 @@ const LIFECYCLE = {
         'onShow',
         'onReady',
         'onHide',
-        'onUnload'
+        'onUnload',
+        'onPullDownRefresh',
+        'onReachBottom',
+        'onShareAppMessage',
+        'onPageScroll',
+        'onResize',
+        'onTabItemTap'
       ],
       hooksMap: {
         'beforeCreate': 'onLoad',
@@ -62,14 +70,14 @@ const LIFECYCLE = {
         'destroyed': 'onUnload'
       },
       polyHooks: [
+        'onReady',
+        'onHide',
         'onPullDownRefresh',
         'onReachBottom',
         'onShareAppMessage',
         'onPageScroll',
         'onResize',
-        'onTabItemTap',
-        'onReady',
-        'onHide'
+        'onTabItemTap'
       ]
     },
     component: {
@@ -77,7 +85,8 @@ const LIFECYCLE = {
         'created',
         'attached',
         'ready',
-        'detached'
+        'detached',
+        'moved'
       ],
       hooksMap: {
         'beforeCreate': 'created',
@@ -97,7 +106,9 @@ const LIFECYCLE = {
       hooks: [
         'onLaunch',
         'onShow',
-        'onHide'
+        'onHide',
+        'onError',
+        'onPageNotFound'
       ],
       hooksMap: {
         'beforeCreate': 'onLaunch',
@@ -118,7 +129,11 @@ const LIFECYCLE = {
         'onReady',
         'onShow',
         'onHide',
-        'onUnload'
+        'onUnload',
+        'onPullDownRefresh',
+        'onReachBottom',
+        'onShareAppMessage',
+        'onTitleClick'
       ],
       hooksMap: {
         'beforeCreate': 'onLoad',
@@ -129,12 +144,12 @@ const LIFECYCLE = {
         'destroyed': 'onUnload'
       },
       polyHooks: [
+        'onReady',
+        'onHide',
         'onPullDownRefresh',
         'onReachBottom',
         'onShareAppMessage',
-        'onTitleClick',
-        'onReady',
-        'onHide'
+        'onTitleClick'
       ]
     },
     component: {
@@ -158,7 +173,9 @@ const LIFECYCLE = {
       hooks: [
         'onLaunch',
         'onShow',
-        'onHide'
+        'onHide',
+        'onError',
+        'onPageNotFound'
       ],
       hooksMap: {
         'beforeCreate': 'onLaunch',
@@ -179,7 +196,13 @@ const LIFECYCLE = {
         'onReady',
         'onShow',
         'onHide',
-        'onUnload'
+        'onUnload',
+        'onForceReLaunch',
+        'onPullDownRefresh',
+        'onReachBottom',
+        'onShareAppMessage',
+        'onPageScroll',
+        'onTabItemTap'
       ],
       hooksMap: {
         'beforeCreate': 'onLoad',
@@ -190,14 +213,14 @@ const LIFECYCLE = {
         'destroyed': 'onUnload'
       },
       polyHooks: [
+        'onReady',
+        'onHide',
         'onForceReLaunch',
         'onPullDownRefresh',
         'onReachBottom',
         'onShareAppMessage',
         'onPageScroll',
-        'onTabItemTap',
-        'onReady',
-        'onHide'
+        'onTabItemTap'
       ]
     },
     component: {

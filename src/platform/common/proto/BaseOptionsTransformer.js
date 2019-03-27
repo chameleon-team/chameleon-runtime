@@ -11,6 +11,7 @@ class BaseOptionsTransformer {
     this.builtinMixins = config.builtinMixins
     this.hooks = config.hooks
     this.hooksMap = config.hooksMap
+    this.polyHooks = config.polyHooks
     this.platform = ''
 
     if (process.env.media !== "build") {

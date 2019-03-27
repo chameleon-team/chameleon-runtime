@@ -39,7 +39,8 @@ export class Page extends BaseCtor {
       },
       needResolveAttrs: ['methods'],
       hooks: lifecycle.get('alipay.page.hooks'),
-      hooksMap: lifecycle.get('alipay.page.hooksMap')
+      hooksMap: lifecycle.get('alipay.page.hooksMap'),
+      polyHooks: lifecycle.get('alipay.page.polyHooks')
     })
 
     __CML__GLOBAL.Page(this.options)

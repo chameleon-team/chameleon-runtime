@@ -46,6 +46,7 @@ export class Component extends BaseCtor {
       },
       hooks: lifecycle.get('baidu.component.hooks'),
       hooksMap: lifecycle.get('baidu.component.hooksMap'),
+      polyHooks: lifecycle.get('baidu.component.polyHooks'),
       needPropsHandler: true,
       needTransformProperties: true
     })
