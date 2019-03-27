@@ -298,7 +298,6 @@ function setDataFactory(context, self) {
     if (type(reaction.schedule) !== 'Function') {
       return
     }
-
     // 缓存reaction
     context.__cml_reaction__ = reaction
 
@@ -307,6 +306,7 @@ function setDataFactory(context, self) {
     
     const obData = deleteProperties(context.__cml_ob_data__, propKeys)
 
+    // setData 的数据不包括 props
     const data = toJS(obData)
 
     let diffV

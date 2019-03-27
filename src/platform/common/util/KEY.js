@@ -1,16 +1,19 @@
 import Config from './config'
+import apiInterface from './api.interface'
+
+const instanceAPI = apiInterface.getInstance()
 
 const KEY = {
   wx: {
-    instance: typeof wx !== 'undefined' ? wx : undefined,
+    instance: instanceAPI,
     props: 'properties'
   },
   alipay: {
-    instance: typeof my !== 'undefined' ? my : undefined,
+    instance: instanceAPI,
     props: 'props'
   },
   baidu: {
-    instance: typeof swan !== 'undefined' ? swan : undefined,
+    instance: instanceAPI,
     props: 'properties'
   }
 }

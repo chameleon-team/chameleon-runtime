@@ -1,0 +1,59 @@
+<script cml-type="interface">
+    // 定义模块的interface
+    interface getInstanceInterface {
+      getInstance() : CMLObject;
+    }
+</script>
+
+<script cml-type="web">
+
+    class Method implements getInstanceInterface {
+      getInstance() {
+        return {}
+      }
+    }
+    export default new Method();
+</script>
+
+<script cml-type="weex">
+
+    class Method implements getInstanceInterface {
+      getInstance() {
+        return weex
+      }
+    }
+    export default new Method();
+</script>
+
+<script cml-type="wx">
+
+    class Method implements getInstanceInterface {
+      getInstance() {
+        return wx
+      }
+    }
+
+    export default new Method();
+</script>
+
+<script cml-type="alipay">
+
+    class Method implements getInstanceInterface {
+      getInstance() {
+        return my
+      }
+    }
+
+    export default new Method();
+</script>
+
+<script cml-type="baidu">
+
+    class Method implements getInstanceInterface {
+      getInstance() {
+        return swan
+      }
+    }
+
+    export default new Method();
+</script>
