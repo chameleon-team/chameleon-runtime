@@ -1,6 +1,6 @@
 {
   "name": "chameleon-runtime",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "多端代码框架运行时",
   "main": "index.js",
   "scripts": {
