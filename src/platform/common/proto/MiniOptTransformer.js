@@ -21,8 +21,8 @@ class MiniOptTransformer extends BaseOptionsTransformer {
 
   init () {
     this.propsName = this.platform ? KEY.get(`${this.platform}.props`) : ''
-    this.whitelist = this.platform ? lifecycle.get(`${this.platform}.${this.type}.whitelist`) : []
-    this.allHooks = this.hooks.concat(this.whitelist)
+    this.polyHooks = this.platform ? lifecycle.get(`${this.platform}.${this.type}.polyHooks`) : []
+    this.allHooks = this.hooks.concat(this.polyHooks)
     
     this.needPropsHandler && this.initProps(this.options)
     // 生命周期映射

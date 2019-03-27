@@ -40,7 +40,7 @@ const LIFECYCLE = {
         'beforeDestroy': 'onHide',
         'destroyed': 'onHide'
       },
-      whitelist: [
+      polyHooks: [
         'onError',
         'onPageNotFound'
       ]
@@ -61,7 +61,7 @@ const LIFECYCLE = {
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload'
       },
-      whitelist: [
+      polyHooks: [
         'onPullDownRefresh',
         'onReachBottom',
         'onShareAppMessage',
@@ -87,7 +87,7 @@ const LIFECYCLE = {
         'beforeDestroy': 'detached',
         'destroyed': 'detached'
       },
-      whitelist: [
+      polyHooks: [
         'moved'
       ]
     }
@@ -107,7 +107,7 @@ const LIFECYCLE = {
         'beforeDestroy': 'onHide',
         'destroyed': 'onHide'
       },
-      whitelist: [
+      polyHooks: [
         'onError',
         'onPageNotFound'
       ]
@@ -128,7 +128,7 @@ const LIFECYCLE = {
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload'
       },
-      whitelist: [
+      polyHooks: [
         'onPullDownRefresh',
         'onReachBottom',
         'onShareAppMessage',
@@ -150,7 +150,7 @@ const LIFECYCLE = {
         'beforeDestroy': 'didUnmount',
         'destroyed': 'didUnmount'
       },
-      whitelist: []
+      polyHooks: []
     }
   },
   baidu: {
@@ -168,7 +168,7 @@ const LIFECYCLE = {
         'beforeDestroy': 'onHide',
         'destroyed': 'onHide'
       },
-      whitelist: [
+      polyHooks: [
         'onError',
         'onPageNotFound'
       ]
@@ -189,7 +189,7 @@ const LIFECYCLE = {
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload'
       },
-      whitelist: [
+      polyHooks: [
         'onForceReLaunch',
         'onPullDownRefresh',
         'onReachBottom',
@@ -215,7 +215,7 @@ const LIFECYCLE = {
         'beforeDestroy': 'detached',
         'destroyed': 'detached'
       },
-      whitelist: []
+      polyHooks: []
     }
   },
   cml: {
