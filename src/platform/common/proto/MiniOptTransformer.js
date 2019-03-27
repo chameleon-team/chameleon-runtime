@@ -168,7 +168,7 @@ class MiniOptTransformer extends BaseOptionsTransformer {
       var mapVal = _map[key]
       var objVal = vmObj[key]
   
-      if (vmObj.hasOwnProperty(key)) {
+      if (vmObj.hasOwnProperty(key) && mapVal) {
         if (vmObj.hasOwnProperty(mapVal)) {
           if (type(vmObj[mapVal]) !== 'Array') {
             vmObj[mapVal] = [vmObj[mapVal], objVal]
@@ -280,26 +280,26 @@ class MiniOptTransformer extends BaseOptionsTransformer {
       hooksArr && (self.options[key] = function (...args) {
         let result
         let asyncQuene = []
-        for (let i = 0; i < hooksArr.length; i++) {
-          if (type(hooksArr[i]) === 'Function') {
-            // page 的 onload 生命周期，获取页面参数处理下
-            if (key === 'onload') {
-  
-            }
-  
-            result = hooksArr[i].apply(this, args)
-  
-            if (result && result.enableAsync) {
-              asyncQuene = hooksArr.slice(i + 1)
-              break
+        if (type(hooksArr) === 'Function') {
+          result = hooksArr.apply(this, args)
+        } else if (type(hooksArr) === 'Array') {
+          for (let i = 0; i < hooksArr.length; i++) {
+            if (type(hooksArr[i]) === 'Function') {
+
+              result = hooksArr[i].apply(this, args)
+    
+              if (result && result.enableAsync) {
+                asyncQuene = hooksArr.slice(i + 1)
+                break
+              }
             }
           }
-        }
-        Promise.resolve().then(() => {
-          asyncQuene.forEach(fn => {
-            fn.apply(this, args)
+          Promise.resolve().then(() => {
+            asyncQuene.forEach(fn => {
+              fn.apply(this, args)
+            })
           })
-        })
+        }
         return result
       })
     })
