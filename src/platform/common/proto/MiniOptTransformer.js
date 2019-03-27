@@ -22,6 +22,7 @@ class MiniOptTransformer extends BaseOptionsTransformer {
   init () {
     this.propsName = this.platform ? KEY.get(`${this.platform}.props`) : ''
     this.whitelist = this.platform ? lifecycle.get(`${this.platform}.${this.type}.whitelist`) : []
+    this.allHooks = this.hooks.concat(this.whitelist)
     
     this.needPropsHandler && this.initProps(this.options)
     // 生命周期映射
@@ -199,16 +200,15 @@ class MiniOptTransformer extends BaseOptionsTransformer {
    * 小程序端差异化生命周期 hooks mixins
    */
   extendWhitelistHooks() {
-    let allHooks = this.hooks.concat(this.whitelist)
     let methods = this.options.methods
 
     if (!methods) {
       return
     }
 
-    allHooks.forEach((hook) => {
+    this.allHooks.forEach((hook) => {
       if (type(methods[hook]) === 'Function') {
-        if (this.options[hook]) {
+        if (type(this.options[hook]) === 'Array') {
           this.options[hook].push(methods[hook])
         } else {
           this.options[hook] = [methods[hook]]
@@ -249,7 +249,7 @@ class MiniOptTransformer extends BaseOptionsTransformer {
   
     let mergeMixins = function (parent, child) {
       for (let key in child) {
-        if (self.hooks.indexOf(key) > -1) {
+        if (self.allHooks.indexOf(key) > -1) {
           mergeHooks(parent, child, key)
         } else if (key === 'data') {
           mergeData(parent, child, key)
@@ -274,10 +274,10 @@ class MiniOptTransformer extends BaseOptionsTransformer {
   }
   
   transformHooks () {
-    if (!this.hooks || !this.hooks.length) return
+    if (!this.allHooks || !this.allHooks.length) return
   
     const self = this
-    this.hooks.forEach(key => {
+    this.allHooks.forEach(key => {
       const hooksArr = self.options[key]
       hooksArr && (self.options[key] = function (...args) {
         let result
