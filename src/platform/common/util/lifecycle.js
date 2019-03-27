@@ -133,7 +133,12 @@ const LIFECYCLE = {
         'onPullDownRefresh',
         'onReachBottom',
         'onShareAppMessage',
-        'onTitleClick'
+        'onTitleClick',
+        'onPageScroll',
+        'onTabItemTap',
+        'onOptionMenuClick',
+        'onPopMenuClick',
+        'onPullIntercept'
       ],
       hooksMap: {
         'beforeCreate': 'onLoad',
@@ -149,7 +154,12 @@ const LIFECYCLE = {
         'onPullDownRefresh',
         'onReachBottom',
         'onShareAppMessage',
-        'onTitleClick'
+        'onTitleClick',
+        'onPageScroll',
+        'onTabItemTap',
+        'onOptionMenuClick',
+        'onPopMenuClick',
+        'onPullIntercept'
       ]
     },
     component: {
