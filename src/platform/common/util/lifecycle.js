@@ -10,8 +10,14 @@ const LIFECYCLE = {
       'beforeUpdate',
       'updated',
       'beforeDestroy',
-      'destroyed'
-    ]
+      'destroyed',
+      'viewappear',
+      'viewdisappear'
+    ],
+    hooksMap: {
+      'viewappear': 'beforeRouteEnter',
+      'viewdisappear': 'beforeRouteLeave'
+    }
   },
   weex: {
     hooks: [
@@ -22,7 +28,9 @@ const LIFECYCLE = {
       'beforeUpdate',
       'updated',
       'beforeDestroy',
-      'destroyed'
+      'destroyed',
+      'viewappear',
+      'viewdisappear'
     ]
   },
   wx: {
@@ -67,7 +75,9 @@ const LIFECYCLE = {
         'beforeMount': 'onLoad',
         'mounted': 'onShow',
         'beforeDestroy': 'onUnload',
-        'destroyed': 'onUnload'
+        'destroyed': 'onUnload',
+        'viewappear': 'onShow',
+        'viewdisappear': 'onHide'
       },
       polyHooks: [
         'onReady',
@@ -257,8 +267,12 @@ const LIFECYCLE = {
       'created',
       'beforeMount',
       'mounted',
+      'beforeUpdate',
+      'updated',
       'beforeDestroy',
-      'destroyed'
+      'destroyed',
+      'viewappear',
+      'viewdisappear'
     ]
   }
 }

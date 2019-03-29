@@ -165,18 +165,18 @@ class MiniOptTransformer extends BaseOptionsTransformer {
     })
 
     cmlHooks.forEach(function(key) {
-      var mapVal = _map[key]
-      var objVal = vmObj[key]
+      var mapKey = _map[key]
+      var hookVal = vmObj[key]
   
-      if (vmObj.hasOwnProperty(key) && mapVal) {
-        if (vmObj.hasOwnProperty(mapVal)) {
-          if (type(vmObj[mapVal]) !== 'Array') {
-            vmObj[mapVal] = [vmObj[mapVal], objVal]
+      if (vmObj.hasOwnProperty(key) && mapKey && hookVal) {
+        if (vmObj.hasOwnProperty(mapKey)) {
+          if (type(vmObj[mapKey]) !== 'Array') {
+            vmObj[mapKey] = [vmObj[mapKey], hookVal]
           } else {
-            vmObj[mapVal].push(objVal)
+            vmObj[mapKey].push(hookVal)
           }
         } else {
-          vmObj[mapVal] = [objVal]
+          vmObj[mapKey] = [hookVal]
         }
         delete vmObj[key]
       }

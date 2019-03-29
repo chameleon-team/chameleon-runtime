@@ -321,7 +321,7 @@ function setDataFactory(context, self) {
     }
 
     update(diffV)
-    cacheData = Object.assign({}, data)
+    cacheData = { ...data }
   }
 
   function update(diff) {
