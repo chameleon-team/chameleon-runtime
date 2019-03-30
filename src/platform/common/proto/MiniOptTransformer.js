@@ -4,7 +4,6 @@ import { extend, rename, enumerableKeys } from '../util/util'
 import { type } from '../util/type'
 import {mergeDefault, mergeHooks, mergeSimpleProps, mergeData, mergeWatch} from '../util/resolve'
 import { extras } from 'mobx'
-import lifecycle from '../util/lifecycle'
 import KEY from '../util/KEY'
 
 // 各种小程序options transform 基类
@@ -141,57 +140,6 @@ class MiniOptTransformer extends BaseOptionsTransformer {
       // todo type 校验
 
     }
-  }
-
-  /**
-   * 生命周期映射
-   * @param  {Object} vmObj vm对象
-   * @param  {Object} map 映射表
-   * @param  {Object} lifecycle 生命周期序列 确保顺序遍历
-   * @return {Object}     修改后值
-   */
-  transferLifecycle(vmObj) {
-    // 将生命周期 键名 处理成 ['_' + key]
-    let cmlHooks = lifecycle.get('cml.hooks').map(key => '_' + key)
-    let _map = {}
-
-    Object.keys(this.hooksMap).forEach(key => {
-      _map['_' + key] = this.hooksMap[key]
-      
-      if (vmObj.hasOwnProperty(key)) {
-        vmObj['_' + key] = vmObj[key]
-        delete vmObj[key]
-      }
-    })
-
-    cmlHooks.forEach(function(key) {
-      var mapKey = _map[key]
-      var hookVal = vmObj[key]
-  
-      if (vmObj.hasOwnProperty(key) && mapKey && hookVal) {
-        if (vmObj.hasOwnProperty(mapKey)) {
-          if (type(vmObj[mapKey]) !== 'Array') {
-            vmObj[mapKey] = [vmObj[mapKey], hookVal]
-          } else {
-            vmObj[mapKey].push(hookVal)
-          }
-        } else {
-          vmObj[mapKey] = [hookVal]
-        }
-        delete vmObj[key]
-      }
-    })
-  }
-
-  handleMixins (vmObj) {
-    if (!vmObj.mixins) return
-
-    const mixins = vmObj.mixins
-
-    mixins.forEach((mix) => {
-      // 生命周期映射
-      this.transferLifecycle(mix)
-    })
   }
 
   /**
