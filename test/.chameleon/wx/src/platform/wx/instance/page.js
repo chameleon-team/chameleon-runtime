@@ -35,7 +35,8 @@ export class Page extends BaseCtor {
       },
       needResolveAttrs: ['methods'],
       hooks: lifecycle.get('wx.page.hooks'),
-      hooksMap: lifecycle.get('wx.page.hooksMap')
+      hooksMap: lifecycle.get('wx.page.hooksMap'),
+      polyHooks: lifecycle.get('wx.page.polyHooks')
     })
 
     __CML__GLOBAL.Page(this.options)

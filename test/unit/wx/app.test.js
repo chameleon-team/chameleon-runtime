@@ -47,7 +47,10 @@ describe('createApp', function () {
   describe('runtime widgets', function () {
     describe('onLaunch', function() {
        const onLaunch = actualOut.onLaunch()
-
+    })
+    describe('onHide', function() {
+      const onHide = actualOut.onHide.bind(__CML__GLOBAL.App)
+      onHide()
     })
   })
 })

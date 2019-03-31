@@ -16,7 +16,6 @@ describe('common diff 工具方法', function () {
     for (let key in mock) {
       let input = mock[key].get('in')
       let output = mock[key].get('out')
-      debugger
       let act = diff(input['new'], input['old'])
 
       expect(output).to.deep.equal(act)

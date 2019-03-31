@@ -15,7 +15,7 @@ class OptTransformer extends WexOptTransformer {
   
     let hashObj = query2json(location.hash)
   
-    args[0] = Object.assign({}, args[0], searchObj, hashObj)
+    args[0] = { ...args[0], ...searchObj, ...hashObj}
   
     return args
   }

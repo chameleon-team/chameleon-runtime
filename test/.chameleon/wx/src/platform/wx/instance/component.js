@@ -28,9 +28,6 @@ export class Component extends BaseCtor {
           runtimeWidget
             .setContext(this)
             .start('component-view-render')
-          return {
-            enableAsync: true
-          }
         },
         ready() {
           runtimeWidget
@@ -46,6 +43,7 @@ export class Component extends BaseCtor {
       },
       hooks: lifecycle.get('wx.component.hooks'),
       hooksMap: lifecycle.get('wx.component.hooksMap'),
+      polyHooks: lifecycle.get('wx.component.polyHooks'),
       needPropsHandler: true,
       needTransformProperties: true
     })

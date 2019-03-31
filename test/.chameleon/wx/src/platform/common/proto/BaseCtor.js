@@ -5,7 +5,9 @@ class BaseCtor {
     // 拷贝原型链上属性
     copyProtoProperty(options)
 
-    this.options = Object.assign({}, options)
+    this.options = {
+      ...options
+    }
     this.originalOptions = options
   }
 

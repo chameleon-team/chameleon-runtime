@@ -73,8 +73,9 @@ async function build() {
 
     // delete 其他端代码
     deleteUseless()
-
-    PLMake(testInterfacePath + '/**/*.{js,interface}');
+    // PLMake(testPlatfromPath + '/common/util/interface/*.{js,interface}');
+    PLMake(testSrcPath + '/**/**/*.{js,interface}');
+    
   } catch (err) {
     console.error(err)
   }
@@ -105,7 +106,6 @@ function PLMake(globMatch) {
       }
     }
   }
-
   // 流水线针对单文件要做的处理
   PL.match(globMatch).hooks(hooks).pipe([
     makeInterfaceFile,

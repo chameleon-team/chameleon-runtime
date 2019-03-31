@@ -12,7 +12,7 @@ class OptTransformer extends WexOptTransformer {
 
     let obj = this.$route && this.$route.query
   
-    args[0] = Object.assign({}, args[0], obj)
+    args[0] = {...args[0], ...obj}
   
     return args
   }

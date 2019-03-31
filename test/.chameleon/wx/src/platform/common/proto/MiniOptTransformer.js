@@ -4,7 +4,6 @@ import { extend, rename, enumerableKeys } from '../util/util'
 import { type } from '../util/type'
 import {mergeDefault, mergeHooks, mergeSimpleProps, mergeData, mergeWatch} from '../util/resolve'
 import { extras } from 'mobx'
-import lifecycle from '../util/lifecycle'
 import KEY from '../util/KEY'
 
 // 各种小程序options transform 基类
@@ -21,15 +20,14 @@ class MiniOptTransformer extends BaseOptionsTransformer {
 
   init () {
     this.propsName = this.platform ? KEY.get(`${this.platform}.props`) : ''
-    this.whitelist = this.platform ? lifecycle.get(`${this.platform}.${this.type}.whitelist`) : []
     
     this.needPropsHandler && this.initProps(this.options)
     // 生命周期映射
     this.transferLifecycle(this.options)
     this.handleMixins(this.options)
     
-    // 各端差异化生命周期
-    this.extendWhitelistHooks()
+    // 扩展各端多态生命周期
+    this.extendPolyHooks()
     
     // init 顺序很重要
     // this.mergeInjectedMixins()
@@ -145,70 +143,18 @@ class MiniOptTransformer extends BaseOptionsTransformer {
   }
 
   /**
-   * 生命周期映射
-   * @param  {Object} vmObj vm对象
-   * @param  {Object} map 映射表
-   * @param  {Object} lifecycle 生命周期序列 确保顺序遍历
-   * @return {Object}     修改后值
-   */
-  transferLifecycle(vmObj) {
-    // 将生命周期 键名 处理成 ['_' + key]
-    let cmlHooks = lifecycle.get('cml.hooks').map(key => '_' + key)
-    let _map = {}
-
-    Object.keys(this.hooksMap).forEach(key => {
-      _map['_' + key] = this.hooksMap[key]
-      
-      if (vmObj.hasOwnProperty(key)) {
-        vmObj['_' + key] = vmObj[key]
-        delete vmObj[key]
-      }
-    })
-
-    cmlHooks.forEach(function(key) {
-      var mapVal = _map[key]
-      var objVal = vmObj[key]
-  
-      if (vmObj.hasOwnProperty(key)) {
-        if (vmObj.hasOwnProperty(mapVal)) {
-          if (type(vmObj[mapVal]) !== 'Array') {
-            vmObj[mapVal] = [vmObj[mapVal], objVal]
-          } else {
-            vmObj[mapVal].push(objVal)
-          }
-        } else {
-          vmObj[mapVal] = [objVal]
-        }
-        delete vmObj[key]
-      }
-    })
-  }
-
-  handleMixins (vmObj) {
-    if (!vmObj.mixins) return
-
-    const mixins = vmObj.mixins
-
-    mixins.forEach((mix) => {
-      // 生命周期映射
-      this.transferLifecycle(mix)
-    })
-  }
-
-  /**
    * 小程序端差异化生命周期 hooks mixins
    */
-  extendWhitelistHooks() {
-    let allHooks = this.hooks.concat(this.whitelist)
+  extendPolyHooks() {
     let methods = this.options.methods
 
     if (!methods) {
       return
     }
 
-    allHooks.forEach((hook) => {
+    this.polyHooks.forEach((hook) => {
       if (type(methods[hook]) === 'Function') {
-        if (this.options[hook]) {
+        if (type(this.options[hook]) === 'Array') {
           this.options[hook].push(methods[hook])
         } else {
           this.options[hook] = [methods[hook]]
@@ -275,33 +221,44 @@ class MiniOptTransformer extends BaseOptionsTransformer {
   
   transformHooks () {
     if (!this.hooks || !this.hooks.length) return
-  
     const self = this
     this.hooks.forEach(key => {
       const hooksArr = self.options[key]
       hooksArr && (self.options[key] = function (...args) {
         let result
         let asyncQuene = []
-        for (let i = 0; i < hooksArr.length; i++) {
-          if (type(hooksArr[i]) === 'Function') {
-            // page 的 onload 生命周期，获取页面参数处理下
-            if (key === 'onload') {
-  
-            }
-  
-            result = hooksArr[i].apply(this, args)
-  
-            if (result && result.enableAsync) {
-              asyncQuene = hooksArr.slice(i + 1)
-              break
+        
+        // 多态生命周期需要统一回调参数
+        if (self.polyHooks.indexOf(key) > -1) {
+          let res = args[0]
+          if (type(res) !== 'Object') {
+            res = {
+              'detail': args[0]
             }
           }
+          args = [res]
         }
-        Promise.resolve().then(() => {
-          asyncQuene.forEach(fn => {
-            fn.apply(this, args)
-          })
-        })
+
+        if (type(hooksArr) === 'Function') {
+          result = hooksArr.apply(this, args)
+        } else if (type(hooksArr) === 'Array') {
+          for (let i = 0; i < hooksArr.length; i++) {
+            if (type(hooksArr[i]) === 'Function') {
+
+              result = hooksArr[i].apply(this, args)
+    
+              // if (result && result.enableAsync) {
+              //   asyncQuene = hooksArr.slice(i + 1)
+              //   break
+              // }
+            }
+          }
+          // Promise.resolve().then(() => {
+          //   asyncQuene.forEach(fn => {
+          //     fn.apply(this, args)
+          //   })
+          // })
+        }
         return result
       })
     })
