@@ -21,7 +21,7 @@ export default function extendVue(Vue) {
   }
 
   Vue.mixin(base)
-  Vue.mixin(event)
+  // Vue.mixin(event)
   
   Vue.mixin(webMixins.mixins)
 }
