@@ -2,6 +2,7 @@
     // 定义模块的interface
     interface bootstrapInterface {
       bootstrap(options: CMLObject) : Undefined;
+      getInfo(): CMLObject;
     }
 </script>
 
