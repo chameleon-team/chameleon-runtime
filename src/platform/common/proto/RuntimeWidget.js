@@ -66,7 +66,7 @@ export default class RuntimeWidget {
     context.__cml_disposerList__ = []
     // update后，回调函数收集器
     context.__cml_cbCollection__ = []
-    console.log('this.polyHooks', this.polyHooks)
+
     context['$cmlPolyHooks'] = this.polyHooks
   
     //  effect computed
