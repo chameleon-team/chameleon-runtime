@@ -275,7 +275,7 @@ class MiniOptTransformer extends BaseOptionsTransformer {
       const value = this.options[key]
       if (type(value) !== 'Object') return
       
-      extendWithIgnore(this.options, value)
+      extendWithIgnore(this.options, value, this.usedHooks)
       delete this.options[key]
     })
   }

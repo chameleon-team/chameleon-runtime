@@ -45,6 +45,7 @@ export class Component extends BaseCtor {
       hooks: lifecycle.get('wx.component.hooks'),
       hooksMap: lifecycle.get('wx.component.hooksMap'),
       polyHooks: lifecycle.get('wx.component.polyHooks'),
+      usedHooks: lifecycle.get('wx.component.usedHooks'),
       needPropsHandler: true,
       needTransformProperties: true
     })

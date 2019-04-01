@@ -29,7 +29,8 @@ export class App extends BaseCtor {
       needResolveAttrs: ['methods'],
       hooks: lifecycle.get('wx.app.hooks'),
       hooksMap: lifecycle.get('wx.app.hooksMap'),
-      polyHooks: lifecycle.get('wx.app.polyHooks')
+      polyHooks: lifecycle.get('wx.app.polyHooks'),
+      usedHooks: lifecycle.get('wx.app.usedHooks')
     })
 
     __CML__GLOBAL.App(this.options)

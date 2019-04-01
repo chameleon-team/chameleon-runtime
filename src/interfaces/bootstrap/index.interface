@@ -92,6 +92,9 @@
       bootstrap(options) {
         //  小程序端启动入口为src/app/app.cml
       }
+      getInfo() {
+        return {}
+      }
     }
 
     export default new Method();
@@ -103,6 +106,9 @@
       bootstrap(options) {
         //  小程序端启动入口为src/app/app.cml
       }
+      getInfo() {
+        return {}
+      }
     }
 
     export default new Method();
@@ -113,6 +119,9 @@
     class Method implements bootstrapInterface {
       bootstrap(options) {
         //  小程序端启动入口为src/app/app.cml
+      }
+      getInfo() {
+        return {}
       }
     }
 
