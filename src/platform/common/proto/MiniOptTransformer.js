@@ -229,15 +229,15 @@ class MiniOptTransformer extends BaseOptionsTransformer {
         let asyncQuene = []
         
         // 多态生命周期需要统一回调参数
-        if (self.polyHooks.indexOf(key) > -1) {
-          let res = args[0]
-          if (type(res) !== 'Object') {
-            res = {
-              'detail': args[0]
-            }
-          }
-          args = [res]
-        }
+        // if (self.polyHooks.indexOf(key) > -1) {
+        //   let res = args[0]
+        //   if (type(res) !== 'Object') {
+        //     res = {
+        //       'detail': args[0]
+        //     }
+        //   }
+        //   args = [res]
+        // }
 
         if (type(hooksArr) === 'Function') {
           result = hooksArr.apply(this, args)
