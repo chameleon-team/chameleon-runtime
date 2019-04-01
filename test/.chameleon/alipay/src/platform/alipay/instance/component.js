@@ -12,6 +12,7 @@ export class Component extends BaseCtor {
     this.cmlType = 'alipay'
 
     const runtimeWidget = new RuntimeWidget({
+      polyHooks: lifecycle.get('alipay.component.polyHooks'),
       platform: this.cmlType,
       options: this.options
     })
@@ -48,6 +49,7 @@ export class Component extends BaseCtor {
       hooks: lifecycle.get('alipay.component.hooks'),
       hooksMap: lifecycle.get('alipay.component.hooksMap'),
       polyHooks: lifecycle.get('alipay.component.polyHooks'),
+      usedHooks: lifecycle.get('alipay.component.usedHooks'),
       needPropsHandler: true,
       needTransformProperties: false
     })

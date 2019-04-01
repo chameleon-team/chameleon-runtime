@@ -50,6 +50,11 @@ const LIFECYCLE = {
         'beforeDestroy': 'onHide',
         'destroyed': 'onHide'
       },
+      usedHooks: [
+        'onLaunch',
+        'onShow',
+        'onHide'
+      ],
       polyHooks: [
         'onError',
         'onPageNotFound'
@@ -79,6 +84,12 @@ const LIFECYCLE = {
         'viewappear': 'onShow',
         'viewdisappear': 'onHide'
       },
+      usedHooks: [
+        'onLoad',
+        'onShow',
+        'onHide',
+        'onUnload'
+      ],
       polyHooks: [
         'onReady',
         'onPullDownRefresh',
@@ -105,6 +116,12 @@ const LIFECYCLE = {
         'beforeDestroy': 'detached',
         'destroyed': 'detached'
       },
+      usedHooks: [
+        'created',
+        'attached',
+        'ready',
+        'detached'
+      ],
       polyHooks: [
         'moved'
       ]
@@ -127,6 +144,11 @@ const LIFECYCLE = {
         'beforeDestroy': 'onHide',
         'destroyed': 'onHide'
       },
+      usedHooks: [
+        'onLaunch',
+        'onShow',
+        'onHide'
+      ],
       polyHooks: [
         'onError',
         'onPageNotFound'
@@ -159,6 +181,12 @@ const LIFECYCLE = {
         'viewappear': 'onShow',
         'viewdisappear': 'onHide'
       },
+      usedHooks: [
+        'onLoad',
+        'onShow',
+        'onHide',
+        'onUnload'
+      ],
       polyHooks: [
         'onReady',
         'onPullDownRefresh',
@@ -185,6 +213,10 @@ const LIFECYCLE = {
         'beforeDestroy': 'didUnmount',
         'destroyed': 'didUnmount'
       },
+      usedHooks: [
+        'didMount',
+        'didUnmount'
+      ],
       polyHooks: []
     }
   },
@@ -205,6 +237,11 @@ const LIFECYCLE = {
         'beforeDestroy': 'onHide',
         'destroyed': 'onHide'
       },
+      usedHooks: [
+        'onLaunch',
+        'onShow',
+        'onHide'
+      ],
       polyHooks: [
         'onError',
         'onPageNotFound'
@@ -234,6 +271,12 @@ const LIFECYCLE = {
         'viewappear': 'onShow',
         'viewdisappear': 'onHide'
       },
+      usedHooks: [
+        'onLoad',
+        'onShow',
+        'onHide',
+        'onUnload'
+      ],
       polyHooks: [
         'onReady',
         'onForceReLaunch',
@@ -259,6 +302,12 @@ const LIFECYCLE = {
         'beforeDestroy': 'detached',
         'destroyed': 'detached'
       },
+      usedHooks: [
+        'created',
+        'attached',
+        'ready',
+        'detached'
+      ],
       polyHooks: []
     }
   },

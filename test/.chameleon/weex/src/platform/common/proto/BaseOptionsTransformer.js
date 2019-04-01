@@ -13,6 +13,7 @@ class BaseOptionsTransformer {
     this.hooks = config.hooks
     this.hooksMap = config.hooksMap
     this.polyHooks = config.polyHooks
+    this.usedHooks = config.usedHooks
     this.platform = ''
 
     if (process.env.media !== "build") {

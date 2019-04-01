@@ -10,6 +10,7 @@ export class Component extends BaseCtor {
     this.cmlType = 'wx'
 
     const runtimeWidget = new RuntimeWidget({
+      polyHooks: lifecycle.get('wx.component.polyHooks'),
       platform: this.cmlType,
       options: this.options
     })
@@ -44,6 +45,7 @@ export class Component extends BaseCtor {
       hooks: lifecycle.get('wx.component.hooks'),
       hooksMap: lifecycle.get('wx.component.hooksMap'),
       polyHooks: lifecycle.get('wx.component.polyHooks'),
+      usedHooks: lifecycle.get('wx.component.usedHooks'),
       needPropsHandler: true,
       needTransformProperties: true
     })

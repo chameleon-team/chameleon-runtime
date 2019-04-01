@@ -29,6 +29,7 @@ export default class RuntimeWidget {
   constructor(config) {
     this.platform = config.platform || ''
     this.options = config.options
+    this.polyHooks = config.polyHooks
 
     this.propsName = KEY.get(`${this.platform}.props`)
     this.instance = KEY.get(`${this.platform}.instance`)
@@ -65,6 +66,8 @@ export default class RuntimeWidget {
     context.__cml_disposerList__ = []
     // update后，回调函数收集器
     context.__cml_cbCollection__ = []
+
+    context['$cmlPolyHooks'] = this.polyHooks
   
     //  effect computed
     context.__cml_computed__ = transformComputed(context)

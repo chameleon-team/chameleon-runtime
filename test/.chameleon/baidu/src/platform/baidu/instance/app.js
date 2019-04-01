@@ -10,6 +10,7 @@ export class App extends BaseCtor {
     this.cmlType = 'baidu'
 
     const runtimeWidget = new RuntimeWidget({
+      polyHooks: lifecycle.get('baidu.app.polyHooks'),
       platform: this.cmlType,
       options: this.options
     })
@@ -28,7 +29,8 @@ export class App extends BaseCtor {
       needResolveAttrs: ['methods'],
       hooks: lifecycle.get('baidu.app.hooks'),
       hooksMap: lifecycle.get('baidu.app.hooksMap'),
-      polyHooks: lifecycle.get('baidu.app.polyHooks')
+      polyHooks: lifecycle.get('baidu.app.polyHooks'),
+      usedHooks: lifecycle.get('baidu.app.usedHooks')
     })
 
     __CML__GLOBAL.App(this.options)

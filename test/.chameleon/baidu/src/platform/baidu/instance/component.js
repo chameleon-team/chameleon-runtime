@@ -10,6 +10,7 @@ export class Component extends BaseCtor {
     this.cmlType = 'baidu'
 
     const runtimeWidget = new RuntimeWidget({
+      polyHooks: lifecycle.get('baidu.component.polyHooks'),
       platform: this.cmlType,
       options: this.options
     })
@@ -44,6 +45,7 @@ export class Component extends BaseCtor {
       hooks: lifecycle.get('baidu.component.hooks'),
       hooksMap: lifecycle.get('baidu.component.hooksMap'),
       polyHooks: lifecycle.get('baidu.component.polyHooks'),
+      usedHooks: lifecycle.get('baidu.component.usedHooks'),
       needPropsHandler: true,
       needTransformProperties: true
     })
