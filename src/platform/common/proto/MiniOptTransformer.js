@@ -1,6 +1,6 @@
 import BaseOptionsTransformer from './BaseOptionsTransformer'
 
-import { extend, rename, enumerableKeys } from '../util/util'
+import { extend, extendWithIgnore, rename, enumerableKeys } from '../util/util'
 import { type } from '../util/type'
 import {mergeDefault, mergeHooks, mergeSimpleProps, mergeData, mergeWatch} from '../util/resolve'
 import { extras } from 'mobx'
@@ -266,19 +266,18 @@ class MiniOptTransformer extends BaseOptionsTransformer {
   
   resolveAttrs () {
     if (!this.needResolveAttrs.length) return
-    const self = this
     let keys = this.needResolveAttrs
     if (type(keys) === 'String') {
       keys = [keys]
     }
-    const newOptions = extend({}, self.options)
+
     keys.forEach(key => {
-      const value = self.options[key]
+      const value = this.options[key]
       if (type(value) !== 'Object') return
-      delete newOptions[key]
-      extend(newOptions, value)
+      
+      extendWithIgnore(this.options, value)
+      delete this.options[key]
     })
-    this.options = newOptions
   }
   
   transformProperties () {

@@ -10,6 +10,7 @@ export class App extends BaseCtor {
     this.cmlType = 'wx'
 
     const runtimeWidget = new RuntimeWidget({
+      polyHooks: lifecycle.get('wx.app.polyHooks'),
       platform: this.cmlType,
       options: this.options
     })

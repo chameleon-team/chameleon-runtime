@@ -10,6 +10,7 @@ export class Page extends BaseCtor {
     this.cmlType = 'alipay'
 
     const runtimeWidget = new RuntimeWidget({
+      polyHooks: lifecycle.get('alipay.page.polyHooks'),
       platform: this.cmlType,
       options: this.options
     })

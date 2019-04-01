@@ -10,6 +10,7 @@ export class Page extends BaseCtor {
     this.cmlType = 'baidu'
 
     const runtimeWidget = new RuntimeWidget({
+      polyHooks: lifecycle.get('baidu.page.polyHooks'),
       platform: this.cmlType,
       options: this.options
     })

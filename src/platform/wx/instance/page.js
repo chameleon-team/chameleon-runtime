@@ -10,6 +10,7 @@ export class Page extends BaseCtor {
     this.cmlType = 'wx'
 
     const runtimeWidget = new RuntimeWidget({
+      polyHooks: lifecycle.get('wx.page.polyHooks'),
       platform: this.cmlType,
       options: this.options
     })

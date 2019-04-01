@@ -77,6 +77,18 @@ export function extend(target, ...froms) {
   return target
 }
 
+export function extendWithIgnore (target, from, ignore = []) {
+  if (type(from) === 'Object') {
+    // for in 能遍历原型链上的属性
+    for (const key in from) {
+      if (!~ignore.indexOf(key)) {
+        target[key] = from[key]
+      }
+    }
+  }
+  return target
+}
+
 
 export function isExistAttr(obj, attr) {
   const type = typeof obj
