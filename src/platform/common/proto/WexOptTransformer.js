@@ -1,6 +1,6 @@
 import BaseOptionsTransformer from './BaseOptionsTransformer'
 import { type, isObject } from '../util/type'
-import { propToFn } from '../util/util'
+import { propToFn, transferLifecycle } from '../util/util'
 
 // web&&weex options transform 基类
 class WexOptTransformer extends BaseOptionsTransformer {
@@ -12,6 +12,8 @@ class WexOptTransformer extends BaseOptionsTransformer {
   init () {
     this.initProps(this.options)
     propToFn(this.options, 'data')
+    // 生命周期映射
+    transferLifecycle(this.options, this.hooksMap)
     this.handleMixins(this.options)
     this.needAddHookMixin && this.addHookMixin()
   }
@@ -40,6 +42,7 @@ class WexOptTransformer extends BaseOptionsTransformer {
 
     mixins.forEach((mix) => {
       propToFn(mix, 'data')
+      transferLifecycle(mix, this.hooksMap)
     })
   }
 
