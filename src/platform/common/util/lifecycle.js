@@ -11,13 +11,19 @@ const LIFECYCLE = {
       'updated',
       'beforeDestroy',
       'destroyed',
-      'viewappear',
-      'viewdisappear'
+      'beforeRouteEnter',
+      'beforeRouteLeave',
+      'beforeRouteUpdate'
     ],
     hooksMap: {
       'viewappear': 'beforeRouteEnter',
       'viewdisappear': 'beforeRouteLeave'
-    }
+    },
+    polyHooks: [
+      'beforeRouteEnter',
+      'beforeRouteLeave',
+      'beforeRouteUpdate'
+    ]
   },
   weex: {
     hooks: [

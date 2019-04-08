@@ -9,7 +9,9 @@ export class App extends BaseCtor {
 
     this.initOptTransformer(OptTransformer, {
       type: 'app',
-      hooks: lifecycle.get('cml.hooks')
+      hooks: lifecycle.get('web.hooks'),
+      hooksMap: lifecycle.get('web.hooksMap'),
+      polyHooks: lifecycle.get('web.polyHooks')
     })
   }
 }

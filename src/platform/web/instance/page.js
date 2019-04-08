@@ -9,7 +9,9 @@ export class Page extends BaseCtor {
 
     this.initOptTransformer(OptTransformer, {
       type: 'page',
-      hooks: lifecycle.get('cml.hooks'),
+      hooks: lifecycle.get('web.hooks'),
+      hooksMap: lifecycle.get('web.hooksMap'),
+      polyHooks: lifecycle.get('web.polyHooks'),
       needAddHookMixin: true
     })
   }

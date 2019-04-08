@@ -15,6 +15,9 @@ class WexOptTransformer extends BaseOptionsTransformer {
     // 生命周期映射
     transferLifecycle(this.options, this.hooksMap)
     this.handleMixins(this.options)
+
+    this.extendPolyHooks()
+
     this.needAddHookMixin && this.addHookMixin()
   }
 
@@ -46,29 +49,36 @@ class WexOptTransformer extends BaseOptionsTransformer {
     })
   }
 
+  /**
+   * 类web端差异化生命周期 hooks mixins
+   */
+  extendPolyHooks() {
+    let methods = this.options.methods
+
+    if (!methods || !this.polyHooks) {
+      return
+    }
+    
+    this.polyHooks.forEach((hook) => {
+      // 目前是 给web的beforeRouteEnter|beforeRouteLeave 自定义生命钩子开一个口子
+      if (type(methods[hook]) === 'Function') {
+        this.options[hook] = methods[hook]
+      }
+    })
+  }
+
   addHookMixin () {
     if (!this.hooks || !this.hooks.length) return
-
-    let self = this
     
+    let self = this
     this.hooks.forEach(key => {
       const hook = this.options[key]
       hook && (this.options[key] = function (...args) {
         let result
-  
-        if (type(hook) === 'Function') {
-          switch(key) {
-            case 'beforeCreate':
-            case 'created':
-            case 'beforeMount':
-              // 钩子函数参数mixin
-              args = self.extendLifecycleArgs ? self.extendLifecycleArgs.apply(this, args) : args
-              break
-            default:
-              break
-          }
-          // 这里的 this 是指向运行时上下文的
-          result = hook.apply(this, args)
+        if (type(hook) === 'Function' || type(hook) === 'Array') {
+          // 钩子函数参数mixin
+          const proxyHook = self.proxyLifecycle(key, hook, this)
+          result = proxyHook.apply(this, args)
         }
   
         return result
