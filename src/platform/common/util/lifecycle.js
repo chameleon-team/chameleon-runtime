@@ -24,8 +24,8 @@ const LIFECYCLE = {
       'destroyed'
     ],
     hooksMap: {
-      'pageShow': 'beforeRouteEnter',
-      'pageHide': 'beforeRouteLeave'
+      'onShow': 'beforeRouteEnter',
+      'onHide': 'beforeRouteLeave'
     },
     polyHooks: [
       'beforeRouteEnter',
@@ -107,8 +107,8 @@ const LIFECYCLE = {
         'mounted': 'onReady',
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload',
-        'pageShow': 'onShow',
-        'pageHide': 'onHide'
+        'onShow': 'onShow',
+        'onHide': 'onHide'
       },
       usedHooks: [
         'onLoad',
@@ -204,8 +204,8 @@ const LIFECYCLE = {
         'mounted': 'onReady',
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload',
-        'pageShow': 'onShow',
-        'pageHide': 'onHide'
+        'onShow': 'onShow',
+        'onHide': 'onHide'
       },
       usedHooks: [
         'onLoad',
@@ -294,8 +294,8 @@ const LIFECYCLE = {
         'mounted': 'onReady',
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload',
-        'pageShow': 'onShow',
-        'pageHide': 'onHide'
+        'onShow': 'onShow',
+        'onHide': 'onHide'
       },
       usedHooks: [
         'onLoad',
@@ -347,8 +347,8 @@ const LIFECYCLE = {
       'updated',
       'beforeDestroy',
       'destroyed',
-      'pageShow',
-      'pageHide'
+      'onShow',
+      'onHide'
     ]
   }
 }
