@@ -15,6 +15,14 @@ const LIFECYCLE = {
       'beforeRouteLeave',
       'beforeRouteUpdate'
     ],
+    usedHooks: [
+      'beforeCreate',
+      'created',
+      'beforeMount',
+      'mounted',
+      'beforeDestroy',
+      'destroyed'
+    ],
     hooksMap: {
       'pageShow': 'beforeRouteEnter',
       'pageHide': 'beforeRouteLeave'
@@ -34,9 +42,21 @@ const LIFECYCLE = {
       'beforeUpdate',
       'updated',
       'beforeDestroy',
-      'destroyed',
-      'pageShow',
-      'pageHide'
+      'destroyed'
+    ],
+    usedHooks: [
+      'beforeCreate',
+      'created',
+      'beforeMount',
+      'mounted',
+      'beforeDestroy',
+      'destroyed'
+    ],
+    hooksMap: {
+    },
+    polyHooks: [
+      'viewappear',
+      'viewdisappear'
     ]
   },
   wx: {
@@ -84,20 +104,20 @@ const LIFECYCLE = {
         'beforeCreate': 'onLoad',
         'created': 'onLoad',
         'beforeMount': 'onLoad',
-        'mounted': 'onShow',
+        'mounted': 'onReady',
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload',
-        
+        'pageShow': 'onShow',
+        'pageHide': 'onHide'
       },
       usedHooks: [
         'onLoad',
+        'onReady',
         'onShow',
-        
+        'onHide',
         'onUnload'
       ],
       polyHooks: [
-        'onReady',
-        'onHide',
         'onPullDownRefresh',
         'onReachBottom',
         'onShareAppMessage',
@@ -181,20 +201,20 @@ const LIFECYCLE = {
         'beforeCreate': 'onLoad',
         'created': 'onLoad',
         'beforeMount': 'onLoad',
-        'mounted': 'onShow',
+        'mounted': 'onReady',
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload',
-        
+        'pageShow': 'onShow',
+        'pageHide': 'onHide'
       },
       usedHooks: [
         'onLoad',
+        'onReady',
         'onShow',
-        
+        'onHide',
         'onUnload'
       ],
       polyHooks: [
-        'onReady',
-        'onHide',
         'onPullDownRefresh',
         'onReachBottom',
         'onShareAppMessage',
@@ -271,20 +291,20 @@ const LIFECYCLE = {
         'beforeCreate': 'onLoad',
         'created': 'onLoad',
         'beforeMount': 'onLoad',
-        'mounted': 'onShow',
+        'mounted': 'onReady',
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload',
-        
+        'pageShow': 'onShow',
+        'pageHide': 'onHide'
       },
       usedHooks: [
         'onLoad',
+        'onReady',
         'onShow',
-        
+        'onHide',
         'onUnload'
       ],
       polyHooks: [
-        'onReady',
-        'onHide',
         'onForceReLaunch',
         'onPullDownRefresh',
         'onReachBottom',
