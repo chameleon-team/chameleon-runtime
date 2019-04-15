@@ -48,13 +48,12 @@ describe('createPage', function () {
   describe('runtime widgets', function () {
     describe('onLoad', function() {
        const onLoad = actualOut.onLoad.bind(__CML__GLOBAL.Page)
-       onLoad()
+       
+       const query = {
+          a: 'a'
+       }
 
-    })
-
-    describe('onReady', function() {
-      const onReady = actualOut.onReady.bind(__CML__GLOBAL.Page)
-      onReady()
+       expect(onLoad(query)).to.equal(shouldOut.onLoad(query));
 
     })
 
@@ -64,9 +63,26 @@ describe('createPage', function () {
 
     })
 
+    describe('onReady', function() {
+      const onReady = actualOut.onReady.bind(__CML__GLOBAL.Page)
+  
+      expect(onReady()).to.equal(shouldOut.onReady());
+    })
+
+    describe('onShareAppMessage', function() {
+      const onShareAppMessage = actualOut.onShareAppMessage.bind(__CML__GLOBAL.Page)
+  
+      expect(onShareAppMessage()).to.equal(shouldOut.onShareAppMessage());
+    })
+
+    describe('onHide', function() {
+      const onHide = actualOut.onHide.bind(__CML__GLOBAL.Page)
+      expect(onHide()).to.equal(shouldOut.onHide());
+    })
+
     describe('onUnload', function() {
       const onUnload = actualOut.onUnload.bind(__CML__GLOBAL.Page)
-      onUnload()
+      expect(onUnload()).to.equal(shouldOut.onUnload());
     })
   })
 })

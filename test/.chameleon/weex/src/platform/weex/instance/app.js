@@ -10,7 +10,7 @@ export class App extends BaseCtor {
 
     this.initOptTransformer(OptTransformer, {
       type: 'app',
-      hooks: lifecycle.get('cml.hooks')
+      hooks: lifecycle.get('weex.hooks')
     })
   }
 }

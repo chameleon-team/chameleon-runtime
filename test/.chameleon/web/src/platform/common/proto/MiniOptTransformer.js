@@ -1,6 +1,6 @@
 import BaseOptionsTransformer from './BaseOptionsTransformer'
 
-import { extend, extendWithIgnore, rename, enumerableKeys } from '../util/util'
+import { transferLifecycle, extend, extendWithIgnore, rename, enumerableKeys } from '../util/util'
 import { type } from '../util/type'
 import {mergeDefault, mergeHooks, mergeSimpleProps, mergeData, mergeWatch} from '../util/resolve'
 import { extras } from 'mobx'
@@ -23,7 +23,7 @@ class MiniOptTransformer extends BaseOptionsTransformer {
     
     this.needPropsHandler && this.initProps(this.options)
     // 生命周期映射
-    this.transferLifecycle(this.options)
+    transferLifecycle(this.options, this.hooksMap)
     this.handleMixins(this.options)
     
     // 扩展各端多态生命周期
@@ -140,6 +140,17 @@ class MiniOptTransformer extends BaseOptionsTransformer {
       // todo type 校验
 
     }
+  }
+
+  handleMixins (VMObj) {
+    if (!VMObj.mixins) return
+
+    const mixins = VMObj.mixins
+
+    mixins.forEach((mix) => {
+      // 生命周期映射
+      transferLifecycle(mix, this.hooksMap)
+    })
   }
 
   /**

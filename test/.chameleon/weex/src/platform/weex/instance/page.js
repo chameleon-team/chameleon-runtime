@@ -10,7 +10,7 @@ export class Page extends BaseCtor {
 
     this.initOptTransformer(OptTransformer, {
       type: 'page',
-      hooks: lifecycle.get('cml.hooks'),
+      hooks: lifecycle.get('weex.hooks'),
       needAddHookMixin: true
     })
   }

@@ -9,7 +9,9 @@ export class Component extends BaseCtor {
 
     this.initOptTransformer(OptTransformer, {
       type: 'component',
-      hooks: lifecycle.get('cml.hooks')
+      hooks: lifecycle.get('web.hooks'),
+      hooksMap: lifecycle.get('web.hooksMap'),
+      polyHooks: lifecycle.get('web.polyHooks')
     })
   }
 }

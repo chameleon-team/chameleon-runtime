@@ -101,3 +101,7 @@ page, .cml-view {
     display: none;
 }
 
+.cml-c-button {
+  align-self: stretch;
+}
+

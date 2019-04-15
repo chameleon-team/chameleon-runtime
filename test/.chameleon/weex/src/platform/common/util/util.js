@@ -20,6 +20,50 @@ export function propToFn (obj, name) {
 }
 
 /**
+ * 生命周期映射
+ * @param  {Object} VMObj vm对象
+ * @param  {Object} hooksMap 映射表
+ * @return {Object}     修改后值
+ */
+export function transferLifecycle (VMObj, hooksMap) {
+  if (!hooksMap) {
+    return
+  }
+
+  let _hooksTemp = []
+  let _mapTemp = {}
+  // 将生命周期 键名 处理成 [`$_${key}`]
+  Object.keys(hooksMap).forEach(key => {
+    const uniKey = `$_${key}`
+    _hooksTemp.push(uniKey)
+    _mapTemp[uniKey] = hooksMap[key]
+    
+    if (VMObj.hasOwnProperty(key)) {
+      VMObj[uniKey] = VMObj[key]
+      delete VMObj[key]
+    }
+  })
+
+  _hooksTemp.forEach(function(uniKey) {
+    const mapKey = _mapTemp[uniKey]
+    const hook = VMObj[uniKey]
+
+    if (VMObj.hasOwnProperty(uniKey) && mapKey && hook) {
+      if (VMObj.hasOwnProperty(mapKey)) {
+        if (type(VMObj[mapKey]) !== 'Array') {
+          VMObj[mapKey] = [VMObj[mapKey], hook]
+        } else {
+          VMObj[mapKey].push(hook)
+        }
+      } else {
+        VMObj[mapKey] = [hook]
+      }
+      delete VMObj[uniKey]
+    }
+  })
+}
+
+/**
  * 对象键名重定义
  * @param  {Object} obj     对象
  * @param  {String} oldKey    原键名

@@ -11,13 +11,27 @@ const LIFECYCLE = {
       'updated',
       'beforeDestroy',
       'destroyed',
-      'viewappear',
-      'viewdisappear'
+      'beforeRouteEnter',
+      'beforeRouteLeave',
+      'beforeRouteUpdate'
+    ],
+    usedHooks: [
+      'beforeCreate',
+      'created',
+      'beforeMount',
+      'mounted',
+      'beforeDestroy',
+      'destroyed'
     ],
     hooksMap: {
-      'viewappear': 'beforeRouteEnter',
-      'viewdisappear': 'beforeRouteLeave'
-    }
+      'onShow': 'beforeRouteEnter',
+      'onHide': 'beforeRouteLeave'
+    },
+    polyHooks: [
+      'beforeRouteEnter',
+      'beforeRouteLeave',
+      'beforeRouteUpdate'
+    ]
   },
   weex: {
     hooks: [
@@ -28,7 +42,19 @@ const LIFECYCLE = {
       'beforeUpdate',
       'updated',
       'beforeDestroy',
-      'destroyed',
+      'destroyed'
+    ],
+    usedHooks: [
+      'beforeCreate',
+      'created',
+      'beforeMount',
+      'mounted',
+      'beforeDestroy',
+      'destroyed'
+    ],
+    hooksMap: {
+    },
+    polyHooks: [
       'viewappear',
       'viewdisappear'
     ]
@@ -78,20 +104,20 @@ const LIFECYCLE = {
         'beforeCreate': 'onLoad',
         'created': 'onLoad',
         'beforeMount': 'onLoad',
-        'mounted': 'onShow',
+        'mounted': 'onReady',
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload',
-        'viewappear': 'onShow',
-        'viewdisappear': 'onHide'
+        'onShow': 'onShow',
+        'onHide': 'onHide'
       },
       usedHooks: [
         'onLoad',
+        'onReady',
         'onShow',
         'onHide',
         'onUnload'
       ],
       polyHooks: [
-        'onReady',
         'onPullDownRefresh',
         'onReachBottom',
         'onShareAppMessage',
@@ -175,20 +201,20 @@ const LIFECYCLE = {
         'beforeCreate': 'onLoad',
         'created': 'onLoad',
         'beforeMount': 'onLoad',
-        'mounted': 'onShow',
+        'mounted': 'onReady',
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload',
-        'viewappear': 'onShow',
-        'viewdisappear': 'onHide'
+        'onShow': 'onShow',
+        'onHide': 'onHide'
       },
       usedHooks: [
         'onLoad',
+        'onReady',
         'onShow',
         'onHide',
         'onUnload'
       ],
       polyHooks: [
-        'onReady',
         'onPullDownRefresh',
         'onReachBottom',
         'onShareAppMessage',
@@ -265,20 +291,20 @@ const LIFECYCLE = {
         'beforeCreate': 'onLoad',
         'created': 'onLoad',
         'beforeMount': 'onLoad',
-        'mounted': 'onShow',
+        'mounted': 'onReady',
         'beforeDestroy': 'onUnload',
         'destroyed': 'onUnload',
-        'viewappear': 'onShow',
-        'viewdisappear': 'onHide'
+        'onShow': 'onShow',
+        'onHide': 'onHide'
       },
       usedHooks: [
         'onLoad',
+        'onReady',
         'onShow',
         'onHide',
         'onUnload'
       ],
       polyHooks: [
-        'onReady',
         'onForceReLaunch',
         'onPullDownRefresh',
         'onReachBottom',
@@ -321,8 +347,8 @@ const LIFECYCLE = {
       'updated',
       'beforeDestroy',
       'destroyed',
-      'viewappear',
-      'viewdisappear'
+      'onShow',
+      'onHide'
     ]
   }
 }

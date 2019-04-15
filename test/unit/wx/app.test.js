@@ -46,7 +46,13 @@ describe('createApp', function () {
 
   describe('runtime widgets', function () {
     describe('onLaunch', function() {
-       const onLaunch = actualOut.onLaunch()
+       const onLaunch = actualOut.onLaunch.bind(__CML__GLOBAL.App)
+       onLaunch({
+         scene: '1001',
+         referinfo: {
+
+         }
+       })
     })
     describe('onHide', function() {
       const onHide = actualOut.onHide.bind(__CML__GLOBAL.App)
