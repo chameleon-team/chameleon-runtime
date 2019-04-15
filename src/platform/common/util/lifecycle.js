@@ -16,8 +16,8 @@ const LIFECYCLE = {
       'beforeRouteUpdate'
     ],
     hooksMap: {
-      'viewappear': 'beforeRouteEnter',
-      'viewdisappear': 'beforeRouteLeave'
+      'pageShow': 'beforeRouteEnter',
+      'pageHide': 'beforeRouteLeave'
     },
     polyHooks: [
       'beforeRouteEnter',
@@ -35,8 +35,8 @@ const LIFECYCLE = {
       'updated',
       'beforeDestroy',
       'destroyed',
-      'viewappear',
-      'viewdisappear'
+      'pageShow',
+      'pageHide'
     ]
   },
   wx: {
@@ -327,8 +327,8 @@ const LIFECYCLE = {
       'updated',
       'beforeDestroy',
       'destroyed',
-      'viewappear',
-      'viewdisappear'
+      'pageShow',
+      'pageHide'
     ]
   }
 }
