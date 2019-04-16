@@ -19,7 +19,7 @@ class OptTransformer extends WexOptTransformer {
       case 'created':
       case 'beforeMount':
         closure = function (...args) {
-          args = self.addQueryArgs(...args)
+          args = addQueryArgs.apply(ctx, args)
           return hook.apply(ctx, args)
         }
         break
@@ -29,17 +29,16 @@ class OptTransformer extends WexOptTransformer {
 
     return closure
   }
+}
 
-  addQueryArgs(...args) {
-    args = args || []
+function addQueryArgs(...args) {
+  args = args || []
 
-    let obj = this.$route && this.$route.query
-  
-    args[0] = {...args[0], ...obj}
-  
-    return args
-  }
+  let obj = this.$route && this.$route.query
 
+  args[0] = {...args[0], ...obj}
+
+  return args
 }
 
 export default OptTransformer
