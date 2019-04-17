@@ -31,9 +31,7 @@ export class Component extends BaseCtor {
             .start('component-view-render')
         },
         ready() {
-          runtimeWidget
-            .setContext(this)
-            .initRefs()
+
         },
         detached() {
           // stop

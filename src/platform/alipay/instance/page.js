@@ -27,9 +27,7 @@ export class Page extends BaseCtor {
             .start('page-view-render')
         },
         onReady() {
-          runtimeWidget
-            .setContext(this)
-            .initRefs()
+
         },
         onUnload() {
           // stop

@@ -25,7 +25,6 @@ export class Component extends BaseCtor {
           runtimeWidget
             .setContext(this)
             .init()
-            .initRefs()
             .start('component-view-render')
         },
         didUpdate (preProps) {

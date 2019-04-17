@@ -91,38 +91,6 @@ export default class RuntimeWidget {
     }
   }
   
-  /**
-   *     **给小程序增加refs功能**
-   * 
-   * 在cml编译阶段给所有带有ref属性的元素添加 class="_cml_ref_lmc_" 
-   * 通过在Page的onLoad阶段以及comoponent的attached阶段初始化当前实例的$refs (执行时机选定标准: 可以通过createSelectorQuery选取元素之后)
-   * $refs只提供id, 不提供其他属性, $refs本身初始化是在onLoad阶段, 此时获得的节点数据(例如top), 并不会随页面滚动进行变化. 所以意义不大
-   * 通过this.$refs.ref获取元素class后在interface内部通过wxApi实时获取各元素信息
-   */
-  initRefs () {
-    if (!this.context) return
-    const context = this.context
-    const query = this.platform === 'alipay' 
-        ? this.instance.createSelectorQuery()
-        : this.instance.createSelectorQuery().in(context)
-        
-    query.selectAll('._cml_ref_lmc_').boundingClientRect()
-    query.exec((res) => {
-      context.$refs = {}
-      let doms = res[0]
-      if (!doms) {
-        return
-      }
-      for (let i=0; i<doms.length; i++) {
-        let refItem = doms[i]
-        context.$refs[refItem.id] = {
-          id: refItem.id
-        }
-      }
-    })
-    return this
-  }
-  
   initInterface () {
     const context = this.context
     // 构造 watch 能力
