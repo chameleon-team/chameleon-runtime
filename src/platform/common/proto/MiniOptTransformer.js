@@ -20,21 +20,28 @@ class MiniOptTransformer extends BaseOptionsTransformer {
 
   init () {
     this.propsName = this.platform ? KEY.get(`${this.platform}.props`) : ''
-    
+    // 处理 props
     this.needPropsHandler && this.initProps(this.options)
-    // 生命周期映射
+    // 处理 生命周期映射
     transferLifecycle(this.options, this.hooksMap)
+    // 处理 mixins 生命周期映射
     this.handleMixins(this.options)
     
-    // 扩展各端多态生命周期
+    // 处理 生命周期多态
     this.extendPolyHooks()
     
-    // init 顺序很重要
+    // init 顺序很重要、
+
+    // 添加各种mixins
     // this.mergeInjectedMixins()
     this.mergeBuiltinMixins()
+    // 处理 mixins
     this.resolveOptions()
+    // 添加 生命周期代理
     this.transformHooks()
+    // 处理 methods
     this.needResolveAttrs && this.resolveAttrs()
+    // 处理 props 添加监听
     this.needTransformProperties && this.transformProperties()
 
     if (this.platform === 'alipay') {

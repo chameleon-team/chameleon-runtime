@@ -10,14 +10,17 @@ class WexOptTransformer extends BaseOptionsTransformer {
   }
 
   init () {
+    // 处理 props
     this.initProps(this.options)
+    // 处理 data
     propToFn(this.options, 'data')
-    // 生命周期映射
+    // 处理 生命周期映射
     transferLifecycle(this.options, this.hooksMap)
+    // 处理 mixins
     this.handleMixins(this.options)
-
+    // 处理 生命周期多态
     this.extendPolyHooks()
-
+    // 添加生命周期代理
     this.needAddHookMixin && this.addHookMixin()
   }
 
