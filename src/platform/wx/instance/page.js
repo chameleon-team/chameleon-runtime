@@ -32,6 +32,11 @@ export class Page extends BaseCtor {
           runtimeWidget
             .setContext(this)
             .destory()
+        },
+        onPullDownRefresh() {
+          const path = this.route
+          
+          this.$cmlEventBus.emit(`${path}_onPullDownRefresh`)
         }
       },
       needResolveAttrs: ['methods'],

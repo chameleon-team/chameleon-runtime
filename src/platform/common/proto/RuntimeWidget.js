@@ -25,6 +25,10 @@ import KEY from '../util/KEY'
 
 import diff from '../util/diff'
 
+import { invariant } from '../util/warn'
+
+import EventBus from '../util/EventBus'
+
 export default class RuntimeWidget {
   constructor(config) {
     this.platform = config.platform || ''
@@ -44,6 +48,11 @@ export default class RuntimeWidget {
     return this
   }
   init () {
+    if (process.env.media !== "build") {
+        invariant(!!this.context, "【chameleon-runtime】runtime context should not undefined")
+    }
+
+    this.extendContext()
     // 属性
     this.initData()
   
@@ -57,9 +66,12 @@ export default class RuntimeWidget {
     this.watchesHandler()
     return this
   }
+
+  extendContext() {
+    this.context['$cmlEventBus'] = EventBus
+  }
   
   initData () {
-    if (!this.context) return
     const context = this.context
     context.__cml_originOptions__ = this.options
     // 清理函数列表
@@ -112,7 +124,6 @@ export default class RuntimeWidget {
   }
   
   initInterface () {
-    if (!this.context) return
     const context = this.context
     // 构造 watch 能力
     context.$watch = watchFnFactory(context)
@@ -128,7 +139,6 @@ export default class RuntimeWidget {
   }
   
   proxyHandler () {
-    if (!this.context) return
     const context = this.context
     context.__cml_ob_data__ = observable(context.__cml_data__)
   
@@ -146,7 +156,6 @@ export default class RuntimeWidget {
    * @return {[type]}       [description]
    */
   watchesHandler () {
-    if (!this.context) return
     const context = this.context
     let options = context.__cml_originOptions__
   
