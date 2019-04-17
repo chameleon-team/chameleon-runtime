@@ -1,15 +1,18 @@
-import { type, isObject, isPlainObject } from './type'
+import { type, isObject } from './type'
+import { deepExtend, deepCloneArray } from './deep-extend'
 
   // transfer 对象的`${name}`属性值 to function
 export function propToFn (obj, name) {
   if (obj && isObject(obj[name])) {
     var _temp = obj[name]
 
-    if (isPlainObject(_temp)) {
+    if (type(_temp) === 'Object') {
       obj[name] = function() {
-        return {
-          ..._temp
-        }
+        return deepExtend({}, _temp)
+      }
+    } else if (type(_temp) === 'Array') {
+      obj[name] = function() {
+        return deepCloneArray(_temp)
       }
     } else {
       obj[name] = function() {
@@ -119,6 +122,10 @@ export function extend(target, ...froms) {
     }
   }
   return target
+}
+
+export function deepExtend() {
+  
 }
 
 export function extendWithIgnore (target, from, ignore = []) {
