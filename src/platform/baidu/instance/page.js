@@ -40,7 +40,9 @@ export class Page extends BaseCtor {
         onPullDownRefresh() {
           const path = this.route
           
-          this.$cmlEventBus.emit(`${path}_onPullDownRefresh`)
+          this.$cmlEventBus.emit(`${path}_onPullDownRefresh`, {
+            path
+          })
         }
       },
       needResolveAttrs: ['methods'],
