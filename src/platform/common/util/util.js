@@ -1,5 +1,5 @@
 import { type, isObject } from './type'
-import { deepClone } from './deep-extend'
+import { deepClone } from './clone'
 
   // transfer 对象的`${name}`属性值 to function
 export function propToFn (obj, name) {
