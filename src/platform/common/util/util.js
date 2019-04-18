@@ -1,23 +1,13 @@
 import { type, isObject } from './type'
-import { deepExtend, deepCloneArray } from './deep-extend'
+import { deepClone } from './deep-extend'
 
   // transfer 对象的`${name}`属性值 to function
 export function propToFn (obj, name) {
   if (obj && isObject(obj[name])) {
     var _temp = obj[name]
 
-    if (type(_temp) === 'Object') {
-      obj[name] = function() {
-        return deepExtend({}, _temp)
-      }
-    } else if (type(_temp) === 'Array') {
-      obj[name] = function() {
-        return deepCloneArray(_temp)
-      }
-    } else {
-      obj[name] = function() {
-        return _temp
-      }
+    obj[name] = function() {
+      return deepClone(_temp)
     }
   }
 }
