@@ -124,10 +124,6 @@ export function extend(target, ...froms) {
   return target
 }
 
-export function deepExtend() {
-  
-}
-
 export function extendWithIgnore (target, from, ignore = []) {
   if (type(from) === 'Object') {
     // for in 能遍历原型链上的属性
