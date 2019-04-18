@@ -23,6 +23,20 @@ class OptTransformer extends WexOptTransformer {
           return hook.apply(ctx, args)
         }
         break
+      case 'mounted':
+        closure = function (...args) {
+          const showHook = self.options['onShow']
+          typeof showHook === 'function' && showHook.call(ctx)
+          return hook.apply(ctx, args)
+        }
+        break
+      case 'beforeDestroy':
+        closure = function (...args) {
+          const hideHook = self.options['onHide']
+          typeof hideHook === 'function' && hideHook.call(ctx)
+          return hook.apply(ctx, args)
+        }
+        break
       default:
         break
     }

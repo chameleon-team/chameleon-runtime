@@ -28,18 +28,18 @@ class OptTransformer extends WexOptTransformer {
           return hook.apply(ctx, args)
         }
         break
-      case 'beforeRouteEnter':
-      case 'beforeRouteLeave':
-      
-        if (type(self.options.methods[name]) !== 'Function') {
-          // interface: beforeRouteEnter|beforeRouteLeave 需要特殊定制
-          closure = function (...args) {
-            // 使用 route 钩子需要执行next回调
-            const next = args[args.length - 1]
-            type(next) === 'Function' && next()
-
-            return hook.apply(ctx, args)
-          }
+      case 'mounted':
+        closure = function (...args) {
+          const showHook = self.options['onShow']
+          typeof showHook === 'function' && showHook.call(ctx)
+          return hook.apply(ctx, args)
+        }
+        break
+      case 'beforeDestroy':
+        closure = function (...args) {
+          const hideHook = self.options['onHide']
+          typeof hideHook === 'function' && hideHook.call(ctx)
+          return hook.apply(ctx, args)
         }
         break
       default:

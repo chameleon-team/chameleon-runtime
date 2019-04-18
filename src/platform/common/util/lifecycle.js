@@ -24,8 +24,8 @@ const LIFECYCLE = {
       'destroyed'
     ],
     hooksMap: {
-      'onShow': 'beforeRouteEnter',
-      'onHide': 'beforeRouteLeave'
+      // 'onShow': 'beforeRouteEnter',
+      // 'onHide': 'beforeRouteLeave'
     },
     polyHooks: [
       'beforeRouteEnter',
