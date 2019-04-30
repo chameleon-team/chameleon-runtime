@@ -1,6 +1,7 @@
 import BaseVmAdapter from './BaseVmAdapter'
 import { type, isObject } from '../util/type'
 import { propToFn, transferLifecycle } from '../util/util'
+import { mergeHooks } from '../util/resolve'
 
 // web&&weex options transform 基类
 class WexVmAdapter extends BaseVmAdapter {
@@ -23,7 +24,7 @@ class WexVmAdapter extends BaseVmAdapter {
 
     // 添加各种mixins
     this.mergeBuiltinMixins()
-    // 处理 mixins
+    // 修改 vue options 的合并策略
     this.resolveOptions()
 
     // 添加生命周期代理
@@ -89,7 +90,21 @@ class WexVmAdapter extends BaseVmAdapter {
   
   
   resolveOptions () {
-    
+    function mergeHook (parentVal, childVal) {
+      const res = childVal
+        ? parentVal
+          ? parentVal.concat(childVal)
+          : Array.isArray(childVal)
+            ? childVal
+            : [childVal]
+        : parentVal
+      return res
+    }
+
+    const strats = Vue.config.optionMergeStrategies
+    this.hooks.forEach(hook => {
+      strats[hook] = mergeHook
+    })
   }
 
   addHookMixin () {
