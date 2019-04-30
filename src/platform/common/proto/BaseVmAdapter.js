@@ -8,7 +8,7 @@ class BaseVmAdapter {
     this.type = config.type
     this.options = config.options
     this.injectMixins = config.injectMixins || []
-    this.builtinMixins = config.builtinMixins
+    this.runtimeMixins = config.runtimeMixins
     this.hooks = config.hooks
     this.hooksMap = config.hooksMap
     this.polyHooks = config.polyHooks

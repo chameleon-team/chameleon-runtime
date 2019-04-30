@@ -16,10 +16,16 @@ class WexVmAdapter extends BaseVmAdapter {
     propToFn(this.options, 'data')
     // 处理 生命周期映射
     transferLifecycle(this.options, this.hooksMap)
-    // 处理 mixins
+    // 处理 mixins 里的data 和lifecycle映射
     this.handleMixins(this.options)
     // 处理 生命周期多态
     this.extendPolyHooks()
+
+    // 添加各种mixins
+    this.mergeBuiltinMixins()
+    // 处理 mixins
+    this.resolveOptions()
+
     // 添加生命周期代理
     this.needAddHookMixin && this.addHookMixin()
   }
@@ -68,6 +74,22 @@ class WexVmAdapter extends BaseVmAdapter {
         this.options[hook] = methods[hook]
       }
     })
+  }
+
+  mergeBuiltinMixins () {
+    const btMixin = [
+      this.baseMixins,
+      this.runtimeMixins
+    ].filter(item => item)
+  
+    this.options.mixins = this.options.mixins
+      ? btMixin.concat(this.options.mixins)
+      : btMixin
+  }
+  
+  
+  resolveOptions () {
+    
   }
 
   addHookMixin () {

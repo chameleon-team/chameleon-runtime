@@ -18,7 +18,7 @@ export class Page extends BaseCtor {
     this.initVmAdapter(VmAdapter, {
       options: this.options,
       type: 'page',
-      builtinMixins: {
+      runtimeMixins: {
         onLoad() {
           // 初始化
           runtimeCore

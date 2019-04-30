@@ -6,6 +6,7 @@ class VmAdapter extends MiniVmAdapter {
     super(config)
 
     this.platform = 'wx'
+    // 样式、事件代理 mixins
     this.baseMixins = wxMixins.mixins
     this.init()
   }

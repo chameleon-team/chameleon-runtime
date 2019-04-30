@@ -19,7 +19,7 @@ export class Component extends BaseCtor {
 
     this.initVmAdapter(VmAdapter, {
       type: 'component',
-      builtinMixins: {
+      runtimeMixins: {
         didMount() {
           // 初始化
           runtimeCore

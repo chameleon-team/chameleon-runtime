@@ -191,7 +191,7 @@ class MiniVmAdapter extends BaseVmAdapter {
   mergeBuiltinMixins () {
     const btMixin = [
       this.baseMixins,
-      this.builtinMixins
+      this.runtimeMixins
     ].filter(item => item)
   
     this.options.mixins = this.options.mixins
