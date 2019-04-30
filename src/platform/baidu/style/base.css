@@ -44,7 +44,7 @@
 .cml-border-1px:after,
 .cml-border-right-1px:after,
 .cml-border-bottom-1px:after {
-  content: "";
+  content: "\00a0";
   display: block;
   position: absolute;
   -webkit-transform-origin: 0 0;
