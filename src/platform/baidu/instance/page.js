@@ -1,7 +1,7 @@
 import BaseCtor from '../../common/proto/BaseCtor'
 import lifecycle from '../../common/util/lifecycle'
 import VmAdapter from '../core/VmAdapter'
-import RuntimeWidget from '../../common/proto/RuntimeWidget'
+import MiniRuntimeCore from '../../common/proto/MiniRuntimeCore'
 
 export class Page extends BaseCtor {
   constructor (options) {
@@ -9,7 +9,7 @@ export class Page extends BaseCtor {
 
     this.cmlType = 'baidu'
 
-    const runtimeWidget = new RuntimeWidget({
+    const runtimeCore = new MiniRuntimeCore({
       polyHooks: lifecycle.get('baidu.page.polyHooks'),
       platform: this.cmlType,
       options: this.options
@@ -21,7 +21,7 @@ export class Page extends BaseCtor {
       builtinMixins: {
         onLoad() {
           // 初始化
-          runtimeWidget
+          runtimeCore
             .setContext(this)
             .init()
             .start('page-view-render')
@@ -31,7 +31,7 @@ export class Page extends BaseCtor {
         },
         onUnload() {
           // stop
-          runtimeWidget
+          runtimeCore
             .setContext(this)
             .destory()
         },

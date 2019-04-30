@@ -29,7 +29,7 @@ import { invariant } from '../util/warn'
 
 import EventBus from '../util/EventBus'
 
-export default class RuntimeWidget {
+export default class MiniRuntimeCore {
   constructor(config) {
     this.platform = config.platform || ''
     this.options = config.options
