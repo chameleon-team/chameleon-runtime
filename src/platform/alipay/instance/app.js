@@ -1,6 +1,6 @@
 import BaseCtor from '../../common/proto/BaseCtor'
 import lifecycle from '../../common/util/lifecycle'
-import OptTransformer from '../core/OptTransformer.js'
+import VmAdapter from '../core/VmAdapter.js'
 import RuntimeWidget from '../../common/proto/RuntimeWidget'
 
 export class App extends BaseCtor {
@@ -15,7 +15,7 @@ export class App extends BaseCtor {
       options: this.options
     })
 
-    this.initOptTransformer(OptTransformer, {
+    this.initVmAdapter(VmAdapter, {
       type: 'app',
       builtinMixins: {
         onLaunch() {

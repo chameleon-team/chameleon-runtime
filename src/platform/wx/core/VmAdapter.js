@@ -1,7 +1,7 @@
-import MiniOptTransformer from '../../common/proto/MiniOptTransformer'
+import MiniVmAdapter from '../../common/proto/MiniVmAdapter'
 import wxMixins from 'chameleon-mixins/wx-mixins.js'
 
-class OptTransformer extends MiniOptTransformer {
+class VmAdapter extends MiniVmAdapter {
   constructor(config) {
     super(config)
 
@@ -11,4 +11,4 @@ class OptTransformer extends MiniOptTransformer {
   }
 }
   
-export default OptTransformer
+export default VmAdapter

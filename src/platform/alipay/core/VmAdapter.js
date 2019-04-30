@@ -1,7 +1,7 @@
-import MiniOptTransformer from '../../common/proto/MiniOptTransformer'
+import MiniVmAdapter from '../../common/proto/MiniVmAdapter'
 import alipayMixins from 'chameleon-mixins/alipay-mixins.js'
 
-class OptTransformer extends MiniOptTransformer {
+class VmAdapter extends MiniVmAdapter {
   constructor(config) {
     super(config)
 
@@ -11,4 +11,4 @@ class OptTransformer extends MiniOptTransformer {
   }
 }
   
-export default OptTransformer
+export default VmAdapter

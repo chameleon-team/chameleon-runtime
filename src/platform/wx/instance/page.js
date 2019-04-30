@@ -1,6 +1,6 @@
 import BaseCtor from '../../common/proto/BaseCtor'
 import lifecycle from '../../common/util/lifecycle'
-import OptTransformer from '../core/OptTransformer'
+import VmAdapter from '../core/VmAdapter'
 import RuntimeWidget from '../../common/proto/RuntimeWidget'
 
 export class Page extends BaseCtor {
@@ -15,7 +15,7 @@ export class Page extends BaseCtor {
       options: this.options
     })
 
-    this.initOptTransformer(OptTransformer, {
+    this.initVmAdapter(VmAdapter, {
       options: this.options,
       type: 'page',
       builtinMixins: {

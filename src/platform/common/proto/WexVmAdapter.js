@@ -1,9 +1,9 @@
-import BaseOptionsTransformer from './BaseOptionsTransformer'
+import BaseVmAdapter from './BaseVmAdapter'
 import { type, isObject } from '../util/type'
 import { propToFn, transferLifecycle } from '../util/util'
 
 // web&&weex options transform 基类
-class WexOptTransformer extends BaseOptionsTransformer {
+class WexVmAdapter extends BaseVmAdapter {
   constructor(config) {
     super(config)
     this.needAddHookMixin = config.needAddHookMixin
@@ -90,4 +90,4 @@ class WexOptTransformer extends BaseOptionsTransformer {
   }
 }
 
-export default WexOptTransformer
+export default WexVmAdapter

@@ -1,6 +1,8 @@
-import WexOptTransformer from '../../common/proto/WexOptTransformer'
+import WexVmAdapter from '../../common/proto/WexVmAdapter'
+import { query2json } from '../../common/util/url'
+import { type } from '../../common/util/type';
 
-class OptTransformer extends WexOptTransformer {
+class VmAdapter extends WexVmAdapter {
   constructor(config) {
     super(config)
 
@@ -8,18 +10,21 @@ class OptTransformer extends WexOptTransformer {
   }
 
   proxyLifecycle(name, hook, ctx) {
+    if (type(hook) === 'Array') {
+      hook = hook[0]
+    }
+
     const self = this
     let closure = function(...args) {
       // 这里的 ctx 是指向运行时上下文的
       return hook.apply(ctx, args)
     }
-
     switch(name) {
       case 'beforeCreate':
       case 'created':
       case 'beforeMount':
         closure = function (...args) {
-          args = addQueryArgs.apply(ctx, args)
+          args = addQueryArgs(...args)
           return hook.apply(ctx, args)
         }
         break
@@ -43,16 +48,21 @@ class OptTransformer extends WexOptTransformer {
 
     return closure
   }
+
 }
 
 function addQueryArgs(...args) {
   args = args || []
 
-  let obj = this.$route && this.$route.query
+  let searchObj = query2json(location.search)
 
-  args[0] = {...args[0], ...obj}
+  let hashObj = query2json(location.hash)
+
+  args[0] = { ...args[0], ...searchObj, ...hashObj}
 
   return args
 }
 
-export default OptTransformer
+export default VmAdapter
+
+

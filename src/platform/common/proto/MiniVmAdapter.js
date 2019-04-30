@@ -1,4 +1,4 @@
-import BaseOptionsTransformer from './BaseOptionsTransformer'
+import BaseVmAdapter from './BaseVmAdapter'
 
 import { transferLifecycle, extend, extendWithIgnore, rename, enumerableKeys } from '../util/util'
 import { type } from '../util/type'
@@ -7,7 +7,7 @@ import { extras } from 'mobx'
 import KEY from '../util/KEY'
 
 // 各种小程序options transform 基类
-class MiniOptTransformer extends BaseOptionsTransformer {
+class MiniVmAdapter extends BaseVmAdapter {
   constructor(config) {
     super(config)
     
@@ -327,4 +327,4 @@ class MiniOptTransformer extends BaseOptionsTransformer {
   }
 }
 
-export default MiniOptTransformer
+export default MiniVmAdapter

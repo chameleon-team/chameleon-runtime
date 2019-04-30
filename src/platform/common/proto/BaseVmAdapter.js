@@ -3,7 +3,7 @@ import { type } from '../util/type'
 import { invariant } from '../util/warn'
 
 // options transform 基类
-class BaseOptionsTransformer {
+class BaseVmAdapter {
   constructor(config) {
     this.type = config.type
     this.options = config.options
@@ -27,4 +27,4 @@ class BaseOptionsTransformer {
   }
 }
 
-export default BaseOptionsTransformer
+export default BaseVmAdapter
