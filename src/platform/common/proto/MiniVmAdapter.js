@@ -24,7 +24,7 @@ class MiniVmAdapter extends BaseVmAdapter {
     this.propsName = this.platform ? KEY.get(`${this.platform}.props`) : ''
 
     // 处理 CML hooks
-    initHooks(this.options)
+    this.initHooks(this.options)
 
     this.initOptions(this.options)
     // 处理 mixins 
@@ -50,6 +50,9 @@ class MiniVmAdapter extends BaseVmAdapter {
 
   /**
    * merge cml hooks from mixins
+   * handle hooks include:
+   * 1. cml hooks
+   * 2. platforms hooks in resolveOptions function
    * @param {Object} options 
    */
   initHooks(options) {
@@ -57,22 +60,24 @@ class MiniVmAdapter extends BaseVmAdapter {
     const cmlHooks = lifecycle.get('cml.hooks')
     const mixins = options.mixins
 
-    mixins.forEach((mix) => {
+    for (let i = mixins.length - 1; i >= 0; i--) {
+      const mix = mixins[i]
+
       Object.keys(mix).forEach(key => {
         if (cmlHooks.indexOf(key) !== -1) {
+          !Array.isArray(mix[key]) && (mix[key] = [mix[key]])
+
           if (hasOwn(options, key)) {
             !Array.isArray(options[key]) && (options[key] = [options[key]])
-            
-            Array.isArray(mix[key])
-              ? options[key].concat(mix[key])
-              : options[key].push(mix[key])
+
+            options[key] = mix[key].concat(options[key])
           } else {
             options[key] = mix[key]
           }
           delete mix[key]
         }
       })
-    })
+    }
   }
 
   initOptions(options) {
