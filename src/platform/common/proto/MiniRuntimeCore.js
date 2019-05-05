@@ -164,8 +164,54 @@ export default class MiniRuntimeCore {
   start (name) {
     if (!this.context) return
     const context = this.context
+    const self = this
     // 渲染更新监听
-    const disposer = autorunThrottle(context.$setData, name)
+    // const disposer = autorunThrottle(context.$setData, name)
+
+    /**
+     * [computed description]
+     * @return {[type]} [description]
+     */
+    function dataExprFn() {
+      let properties = context.__cml_originOptions__[self.propsName]
+      let propKeys = enumerableKeys(properties)
+      // setData 的数据不包括 props
+      const obData = deleteProperties(context.__cml_ob_data__, propKeys)
+      
+      return toJS(obData)
+    }
+
+    let _cached = false
+    let cacheData
+    function sideEffect(curVal, reaction) {
+
+      let diffV
+      if (_cached) {
+        diffV = diff(curVal, cacheData)
+
+        // emit 'beforeUpdate' hook ，第一次不触发
+        emit('beforeUpdate', context, curVal, cacheData, diffV)
+      } else {
+        _cached = true
+        diffV = curVal
+      }
+
+      if (type(context.setData) === 'Function') {
+        context.setData(diffV, walkUpdatedCb(context))
+      }
+
+      cacheData = { ...curVal }
+    }
+
+    const options = {
+      fireImmediately: true,
+      name,
+      onError: function() {
+        warn('runtimeCore start reaction error!')
+      }
+    }
+    
+    const disposer = reaction(dataExprFn, sideEffect, options)
   
     context.__cml_disposerList__.push(disposer)
   }
