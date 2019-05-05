@@ -184,7 +184,6 @@ export default class MiniRuntimeCore {
     let _cached = false
     let cacheData
     function sideEffect(curVal, reaction) {
-
       let diffV
       if (_cached) {
         diffV = diff(curVal, cacheData)
@@ -255,13 +254,13 @@ function watchFnFactory (context) {
     function dataExprFn() {
       oldVal = curVal
       curVal = exprType === 'string' ? getByPath(context, expr) : expr.call(context)
-      if (handler.deep) {
-        curVal = toJS(curVal, false)
-      } else if (isObservableArray(curVal)) {
-        // 强制访问，让数组被观察
-        curVal.peek()
-      }
-      return curVal
+      // if (handler.deep) {
+      //   curVal = toJS(curVal, false)
+      // } else if (isObservableArray(curVal)) {
+      //   // 强制访问，让数组被观察
+      //   curVal = curVal.peek()
+      // }
+      return toJS(curVal)
     }
 
     function sideEffect(curVal, reaction) {
