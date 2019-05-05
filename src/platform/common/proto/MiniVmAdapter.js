@@ -1,10 +1,12 @@
 import BaseVmAdapter from './BaseVmAdapter'
 
-import { transferLifecycle, extend, extendWithIgnore, rename, enumerableKeys } from '../util/util'
+import { hasOwn, transferLifecycle, extend, extendWithIgnore, rename, enumerableKeys } from '../util/util'
 import { type } from '../util/type'
 import {mergeDefault, mergeHooks, mergeSimpleProps, mergeData, mergeWatch} from '../util/resolve'
 import { extras } from 'mobx'
 import KEY from '../util/KEY'
+import lifecycle from '../util/lifecycle'
+import { mergeOptions } from '../util/options'
 
 // 各种小程序options transform 基类
 class MiniVmAdapter extends BaseVmAdapter {
@@ -20,12 +22,13 @@ class MiniVmAdapter extends BaseVmAdapter {
 
   init () {
     this.propsName = this.platform ? KEY.get(`${this.platform}.props`) : ''
-    // 处理 props
-    this.needPropsHandler && this.initProps(this.options)
-    // 处理 生命周期映射
-    transferLifecycle(this.options, this.hooksMap)
-    // 处理 mixins 生命周期映射
-    this.handleMixins(this.options)
+
+    // 处理 CML hooks
+    initHooks(this.options)
+
+    this.initOptions(this.options)
+    // 处理 mixins 
+    this.initMixins(this.options)
     
     // 处理 生命周期多态
     this.extendPolyHooks()
@@ -43,22 +46,56 @@ class MiniVmAdapter extends BaseVmAdapter {
     this.needResolveAttrs && this.resolveAttrs()
     // 处理 props 添加监听
     this.needTransformProperties && this.transformProperties()
+  }
+
+  /**
+   * merge cml hooks from mixins
+   * @param {Object} options 
+   */
+  initHooks(options) {
+    if (!options.mixins) return
+    const cmlHooks = lifecycle.get('cml.hooks')
+    const mixins = options.mixins
+
+    mixins.forEach((mix) => {
+      Object.keys(mix).forEach(key => {
+        if (cmlHooks.indexOf(key) !== -1) {
+          if (hasOwn(options, key)) {
+            !Array.isArray(options[key]) && (options[key] = [options[key]])
+            
+            Array.isArray(mix[key])
+              ? options[key].concat(mix[key])
+              : options[key].push(mix[key])
+          } else {
+            options[key] = mix[key]
+          }
+          delete mix[key]
+        }
+      })
+    })
+  }
+
+  initOptions(options) {
+    // 处理 props
+    this.needPropsHandler && this.handleProps(options)
+    // 处理 生命周期映射
+    transferLifecycle(options, this.hooksMap)
 
     if (this.platform === 'alipay') {
-      delete this.options['computed']
+      delete options['computed']
     }
   }
 
-/**
+  /**
    * 处理组件props属性
-   * @param  {Object} vmObj 组件options
+   * @param  {Object} options 组件options
    * @return {[type]}     [description]
    */
-  initProps (vmObj) {
-    if (!vmObj['props']) return
+  handleProps (options) {
+    if (!options['props']) return
     
-    Object.getOwnPropertyNames(vmObj['props']).forEach((name) => {
-      let prop = vmObj['props'][name]
+    Object.getOwnPropertyNames(options['props']).forEach((name) => {
+      let prop = options['props'][name]
       // Number: 0
       // Boolean: false
       // Array: false
@@ -72,37 +109,37 @@ class MiniVmAdapter extends BaseVmAdapter {
 
         switch (type) {
           case Number:
-            prop = vmObj['props'][name] = {
+            prop = options['props'][name] = {
               type: Number,
               default: 0
             }
             break
           case Boolean:
-            prop = vmObj['props'][name] = {
+            prop = options['props'][name] = {
               type: Boolean,
               default: false
             }
             break
           case Array:
-            prop = vmObj['props'][name] = {
+            prop = options['props'][name] = {
               type: Array,
               default: []
             }
             break
           case String:
-            prop = vmObj['props'][name] = {
+            prop = options['props'][name] = {
               type: String,
               default: ''
             }
             break
           case Object:
-            prop = vmObj['props'][name] = {
+            prop = options['props'][name] = {
               type: Object,
               default: null
             }
             break
           case null:
-            prop = vmObj['props'][name] = {
+            prop = options['props'][name] = {
               type: null,
               default: null
             }
@@ -126,16 +163,16 @@ class MiniVmAdapter extends BaseVmAdapter {
             make(prop.type)
           }
           
-          vmObj['props'][name] = prop['default']
+          options['props'][name] = prop['default']
           
         } else {
-          rename(vmObj['props'][name], 'default', 'value')
+          rename(options['props'][name], 'default', 'value')
         }
       }
     })
 
     if (this.platform !== 'alipay') {
-      rename(vmObj, 'props', 'properties')
+      rename(options, 'props', 'properties')
     }
 
     function check(value, type) {
@@ -149,14 +186,13 @@ class MiniVmAdapter extends BaseVmAdapter {
     }
   }
 
-  handleMixins (VMObj) {
-    if (!VMObj.mixins) return
+  initMixins (options) {
+    if (!options.mixins) return
 
-    const mixins = VMObj.mixins
+    const mixins = options.mixins
 
     mixins.forEach((mix) => {
-      // 生命周期映射
-      transferLifecycle(mix, this.hooksMap)
+      this.initOptions(mix)
     })
   }
 

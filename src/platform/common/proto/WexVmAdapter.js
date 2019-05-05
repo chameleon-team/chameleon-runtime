@@ -11,14 +11,9 @@ class WexVmAdapter extends BaseVmAdapter {
   }
 
   init () {
-    // 处理 props
-    this.initProps(this.options)
-    // 处理 data
-    propToFn(this.options, 'data')
-    // 处理 生命周期映射
-    transferLifecycle(this.options, this.hooksMap)
-    // 处理 mixins 里的data 和lifecycle映射
-    this.handleMixins(this.options)
+    this.initOptions(this.options)
+    // 处理 mixins 
+    this.initMixins(this.options)
     // 处理 生命周期多态
     this.extendPolyHooks()
 
@@ -31,31 +26,37 @@ class WexVmAdapter extends BaseVmAdapter {
     this.needAddHookMixin && this.addHookMixin()
   }
 
+  initOptions(options) {
+    // 处理 props
+    this.handleProps(options)
+    // 处理 data
+    propToFn(options, 'data')
+    // 处理 生命周期映射
+    transferLifecycle(options, this.hooksMap)
+  }
+
   /**
    * 处理组件props属性
-   * @param  {Object} vmObj 组件options
+   * @param  {Object} options 组件options
    * @return {[type]}     [description]
    */
-  initProps (vmObj) {
-    if (!vmObj['props']) return
+  handleProps (options) {
+    if (!options['props']) return
     
-    Object.getOwnPropertyNames(vmObj['props']).forEach((name) => {
-      let prop = vmObj['props'][name]
-
-      if (type(prop) === 'Object' && isObject(prop['default'])) {
-        propToFn(prop, 'default')
-      }
+    Object.getOwnPropertyNames(options['props']).forEach((name) => {
+      let prop = options['props'][name]
+      
+      propToFn(prop, 'default')
     })
   }
 
-  handleMixins (vmObj) {
-    if (!vmObj.mixins) return
+  initMixins (options) {
+    if (!options.mixins) return
 
-    const mixins = vmObj.mixins
+    const mixins = options.mixins
 
     mixins.forEach((mix) => {
-      propToFn(mix, 'data')
-      transferLifecycle(mix, this.hooksMap)
+      this.initOptions(mix)
     })
   }
 
@@ -90,21 +91,7 @@ class WexVmAdapter extends BaseVmAdapter {
   
   
   resolveOptions () {
-    function mergeHook (parentVal, childVal) {
-      const res = childVal
-        ? parentVal
-          ? parentVal.concat(childVal)
-          : Array.isArray(childVal)
-            ? childVal
-            : [childVal]
-        : parentVal
-      return res
-    }
 
-    const strats = Vue.config.optionMergeStrategies
-    this.hooks.forEach(hook => {
-      strats[hook] = mergeHook
-    })
   }
 
   addHookMixin () {

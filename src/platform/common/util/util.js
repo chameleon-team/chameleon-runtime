@@ -1,6 +1,16 @@
 import { type, isObject } from './type'
 import { deepClone } from './clone'
 
+/**
+ * Check whether an object has the property.
+ */
+const hasOwnProperty = Object.prototype.hasOwnProperty
+export function hasOwn (obj, key) {
+  return hasOwnProperty.call(obj, key)
+}
+
+export function noop () {}
+
   // transfer 对象的`${name}`属性值 to function
 export function propToFn (obj, name) {
   if (obj && isObject(obj[name])) {
