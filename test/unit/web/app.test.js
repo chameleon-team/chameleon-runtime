@@ -56,7 +56,9 @@ describe('createApp', function () {
       it(`输入空options should `, function () {
         let app = createApp()
         let actualOut = app.getOptions()
-        expect(actualOut).to.deep.equal({})
+        expect(actualOut).to.deep.equal({
+          "mixins": []
+        })
       })
   })
 })

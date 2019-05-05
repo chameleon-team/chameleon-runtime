@@ -1,7 +1,7 @@
 import BaseCtor from '../../common/proto/BaseCtor'
 import lifecycle from '../../common/util/lifecycle'
-import OptTransformer from '../core/OptTransformer'
-import RuntimeWidget from '../../common/proto/RuntimeWidget'
+import VmAdapter from '../core/VmAdapter'
+import MiniRuntimeCore from '../../common/proto/MiniRuntimeCore'
 
 export class Page extends BaseCtor {
   constructor (options) {
@@ -9,33 +9,45 @@ export class Page extends BaseCtor {
 
     this.cmlType = 'baidu'
 
-    const runtimeWidget = new RuntimeWidget({
+    const runtimeCore = new MiniRuntimeCore({
       polyHooks: lifecycle.get('baidu.page.polyHooks'),
       platform: this.cmlType,
       options: this.options
     })
 
-    this.initOptTransformer(OptTransformer, {
+    this.initVmAdapter(VmAdapter, {
       options: this.options,
       type: 'page',
-      builtinMixins: {
+      runtimeMixins: {
         onLoad() {
           // 初始化
-          runtimeWidget
+          runtimeCore
             .setContext(this)
             .init()
             .start('page-view-render')
         },
         onReady() {
-          runtimeWidget
-            .setContext(this)
-            .initRefs()
+
         },
         onUnload() {
           // stop
-          runtimeWidget
+          runtimeCore
             .setContext(this)
             .destory()
+        },
+        onPullDownRefresh() {
+          const path = this.route
+          
+          this.$cmlEventBus.emit(`${path}_onPullDownRefresh`, {
+            path
+          })
+        },
+        onReachBottom() {
+          const path = this.route
+          
+          this.$cmlEventBus.emit(`${path}_onReachBottom`, {
+            path
+          })
         }
       },
       needResolveAttrs: ['methods'],

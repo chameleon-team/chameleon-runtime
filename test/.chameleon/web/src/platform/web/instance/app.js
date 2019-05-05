@@ -1,13 +1,13 @@
 import BaseCtor from '../../common/proto/BaseCtor'
 import lifecycle from '../../common/util/lifecycle'
-import OptTransformer from '../core/OptTransformer.js'
+import VmAdapter from '../core/VmAdapter.js'
 
 export class App extends BaseCtor {
   constructor (options) {
     super(options)
     this.cmlType = 'web'
 
-    this.initOptTransformer(OptTransformer, {
+    this.initVmAdapter(VmAdapter, {
       type: 'app',
       hooks: lifecycle.get('web.hooks'),
       hooksMap: lifecycle.get('web.hooksMap'),

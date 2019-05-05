@@ -10,24 +10,25 @@ import { type } from './type'
 
 import { pxTransform } from './style'
 
-export default function toJS(source, detectCycles, __alreadySeen, needPxTransfer = true) {
-  if (detectCycles === void 0) { detectCycles = true; }
-  if (__alreadySeen === void 0) { __alreadySeen = []; }
-  // optimization: using ES6 map would be more efficient!
-  // optimization: lift this function outside toJS, this makes recursion expensive
+export default function toJS(source, detectCycles = true, __alreadySeen = [], needPxTransfer = true) {
   function cache(value) {
-      if (detectCycles)
-          __alreadySeen.push([source, value]);
-      return value;
+    if (detectCycles) {
+      __alreadySeen.push([source, value])
+    }
+    return value
   }
 
-  if (detectCycles && __alreadySeen === null)
-          __alreadySeen = [];
-      if (detectCycles && source !== null && typeof source === "object") {
-          for (var i = 0, l = __alreadySeen.length; i < l; i++)
-              if (__alreadySeen[i][0] === source)
-                  return __alreadySeen[i][1];
+  if (detectCycles && __alreadySeen === null) {
+    __alreadySeen = []
+  }
+
+  if (detectCycles && source !== null && typeof source === "object") {
+      for (let i = 0, l = __alreadySeen.length; i < l; i++) {
+        if (__alreadySeen[i][0] === source) {
+          return __alreadySeen[i][1];
+        }
       }
+  }
       
   if (isObservable(source)) {
       if (isObservableArray(source)) {

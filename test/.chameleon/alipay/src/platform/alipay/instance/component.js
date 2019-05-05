@@ -1,7 +1,7 @@
 import BaseCtor from '../../common/proto/BaseCtor'
 import lifecycle from '../../common/util/lifecycle'
-import OptTransformer from '../core/OptTransformer'
-import RuntimeWidget from '../../common/proto/RuntimeWidget'
+import VmAdapter from '../core/VmAdapter'
+import MiniRuntimeCore from '../../common/proto/MiniRuntimeCore'
 
 import { extras } from 'mobx'
 
@@ -11,21 +11,20 @@ export class Component extends BaseCtor {
 
     this.cmlType = 'alipay'
 
-    const runtimeWidget = new RuntimeWidget({
+    const runtimeCore = new MiniRuntimeCore({
       polyHooks: lifecycle.get('alipay.component.polyHooks'),
       platform: this.cmlType,
       options: this.options
     })
 
-    this.initOptTransformer(OptTransformer, {
+    this.initVmAdapter(VmAdapter, {
       type: 'component',
-      builtinMixins: {
+      runtimeMixins: {
         didMount() {
           // 初始化
-          runtimeWidget
+          runtimeCore
             .setContext(this)
             .init()
-            .initRefs()
             .start('component-view-render')
         },
         didUpdate (preProps) {
@@ -41,7 +40,7 @@ export class Component extends BaseCtor {
         },
         didUnmount() {
           // stop
-          runtimeWidget
+          runtimeCore
             .setContext(this)
             .destory()
         }

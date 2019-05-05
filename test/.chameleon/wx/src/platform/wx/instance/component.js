@@ -1,7 +1,7 @@
 import BaseCtor from '../../common/proto/BaseCtor'
 import lifecycle from '../../common/util/lifecycle'
-import OptTransformer from '../core/OptTransformer'
-import RuntimeWidget from '../../common/proto/RuntimeWidget'
+import VmAdapter from '../core/VmAdapter'
+import MiniRuntimeCore from '../../common/proto/MiniRuntimeCore'
 
 export class Component extends BaseCtor {
   constructor (options) {
@@ -9,35 +9,33 @@ export class Component extends BaseCtor {
 
     this.cmlType = 'wx'
 
-    const runtimeWidget = new RuntimeWidget({
+    const runtimeCore = new MiniRuntimeCore({
       polyHooks: lifecycle.get('wx.component.polyHooks'),
       platform: this.cmlType,
       options: this.options
     })
 
-    this.initOptTransformer(OptTransformer, {
+    this.initVmAdapter(VmAdapter, {
       type: 'component',
-      builtinMixins: {
+      runtimeMixins: {
         created() {
           // 初始化
-          runtimeWidget
+          runtimeCore
             .setContext(this)
             .init()
             // .addPageHooks()
         },
         attached() {
-          runtimeWidget
+          runtimeCore
             .setContext(this)
             .start('component-view-render')
         },
         ready() {
-          runtimeWidget
-            .setContext(this)
-            .initRefs()
+
         },
         detached() {
           // stop
-          runtimeWidget
+          runtimeCore
             .setContext(this)
             .destory()
         }

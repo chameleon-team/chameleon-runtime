@@ -4,7 +4,7 @@
   "description": "多端代码框架运行时",
   "main": "index.js",
   "scripts": {
-    "test": "node test/build/index.js web && node test/build/index.js wx && node test/build/index.js weex && node test/build/index.js alipay && node test/build/index.js baidu",
+    "test-build": "node test/build/index.js web && node test/build/index.js wx && node test/build/index.js weex && node test/build/index.js alipay && node test/build/index.js baidu",
     "test-build-web": "node test/build/index.js web",
     "test-dev": "babel-node  ./node_modules/.bin/_mocha test/**/*.test.js --recursive --reporter spec",
     "test-debug": "babel-node ./node_modules/.bin/_mocha test/**/*.test.js --recursive --reporter debug spec",

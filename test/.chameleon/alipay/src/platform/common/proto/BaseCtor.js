@@ -11,12 +11,12 @@ class BaseCtor {
     this.originalOptions = options
   }
 
-  initOptTransformer (OptTransformer, config) {
-    const optTransformer = new OptTransformer({
+  initVmAdapter (VmAdapter, config) {
+    const vmAdapter = new VmAdapter({
       options: this.options,
       ...config,
     })
-    this.options = optTransformer.getOptions()
+    this.options = vmAdapter.getOptions()
   }
 
   getOptions () {
