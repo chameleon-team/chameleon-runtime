@@ -46,6 +46,10 @@ class MiniVmAdapter extends BaseVmAdapter {
     this.needResolveAttrs && this.resolveAttrs()
     // 处理 props 添加监听
     this.needTransformProperties && this.transformProperties()
+
+    if (this.platform === 'alipay') {
+      delete this.options['computed']
+    }
   }
 
   /**
@@ -85,10 +89,6 @@ class MiniVmAdapter extends BaseVmAdapter {
     this.needPropsHandler && this.handleProps(options)
     // 处理 生命周期映射
     transferLifecycle(options, this.hooksMap)
-
-    if (this.platform === 'alipay') {
-      delete options['computed']
-    }
   }
 
   /**
