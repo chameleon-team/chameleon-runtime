@@ -1,6 +1,6 @@
 import BaseCtor from '../../common/proto/BaseCtor'
 import lifecycle from '../../common/util/lifecycle'
-import OptTransformer from '../core/OptTransformer.js'
+import VmAdapter from '../core/VmAdapter.js'
 
 export class Page extends BaseCtor {
   constructor (options) {
@@ -8,7 +8,7 @@ export class Page extends BaseCtor {
 
     this.cmlType = 'weex'
 
-    this.initOptTransformer(OptTransformer, {
+    this.initVmAdapter(VmAdapter, {
       type: 'page',
       hooks: lifecycle.get('weex.hooks'),
       needAddHookMixin: true

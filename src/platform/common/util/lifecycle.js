@@ -11,6 +11,10 @@ const LIFECYCLE = {
       'updated',
       'beforeDestroy',
       'destroyed',
+      'activated',
+      'deactivated',
+      'errorCaptured',
+      'serverPrefetch',
       'beforeRouteEnter',
       'beforeRouteLeave',
       'beforeRouteUpdate'
@@ -28,6 +32,10 @@ const LIFECYCLE = {
       // 'onHide': 'beforeRouteLeave'
     },
     polyHooks: [
+      'activated',
+      'deactivated',
+      'errorCaptured',
+      'serverPrefetch',
       'beforeRouteEnter',
       'beforeRouteLeave',
       'beforeRouteUpdate'

@@ -12,11 +12,11 @@ class BaseCtor {
   }
 
   initVmAdapter (VmAdapter, config) {
-    const VmAdapter = new VmAdapter({
+    const vmAdapter = new VmAdapter({
       options: this.options,
       ...config,
     })
-    this.options = VmAdapter.getOptions()
+    this.options = vmAdapter.getOptions()
   }
 
   getOptions () {

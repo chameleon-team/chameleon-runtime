@@ -57,7 +57,9 @@ describe('createPage', function () {
       it(`输入空options should `, function () {
         let page = createPage()
         let actualOut = page.getOptions()
-        expect(actualOut).to.deep.equal({})
+        expect(actualOut).to.deep.equal({
+          "mixins": []
+        })
       })
 
       it('测试 beforeCreate hooksArgsMixin', function (done) {

@@ -78,11 +78,7 @@ function getPath(pathStr, key, type) {
     return `${pathStr}[${key}]`
   }
 
-  return isNum(key) ?
-          `${pathStr}[${key}]`
-            : pathStr ?
-              `${pathStr}.${key}`
-              : key
+  return pathStr ? `${pathStr}.${key}` : key
 }
 
 function isNaN(value) {

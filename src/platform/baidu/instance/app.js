@@ -17,7 +17,7 @@ export class App extends BaseCtor {
 
     this.initVmAdapter(VmAdapter, {
       type: 'app',
-      builtinMixins: {
+      runtimeMixins: {
         onLaunch() {
           // 初始化
           runtimeCore

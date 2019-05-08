@@ -114,6 +114,7 @@ export const case2 = new Config({
     props: {}
   },
   out: {
-    props: {}
+    props: {},
+    mixins: []
   }
 })

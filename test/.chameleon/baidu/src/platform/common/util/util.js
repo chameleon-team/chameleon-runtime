@@ -1,31 +1,34 @@
-import { type, isObject, isPlainObject } from './type'
+import { type, isObject } from './type'
+import { deepClone } from './clone'
+
+/**
+ * Check whether an object has the property.
+ */
+const hasOwnProperty = Object.prototype.hasOwnProperty
+export function hasOwn (obj, key) {
+  return hasOwnProperty.call(obj, key)
+}
+
+export function noop () {}
 
   // transfer 对象的`${name}`属性值 to function
 export function propToFn (obj, name) {
   if (obj && isObject(obj[name])) {
     var _temp = obj[name]
 
-    if (isPlainObject(_temp)) {
-      obj[name] = function() {
-        return {
-          ..._temp
-        }
-      }
-    } else {
-      obj[name] = function() {
-        return _temp
-      }
+    obj[name] = function() {
+      return deepClone(_temp)
     }
   }
 }
 
 /**
  * 生命周期映射
- * @param  {Object} VMObj vm对象
+ * @param  {Object} options options
  * @param  {Object} hooksMap 映射表
  * @return {Object}     修改后值
  */
-export function transferLifecycle (VMObj, hooksMap) {
+export function transferLifecycle (options, hooksMap) {
   if (!hooksMap) {
     return
   }
@@ -38,27 +41,26 @@ export function transferLifecycle (VMObj, hooksMap) {
     _hooksTemp.push(uniKey)
     _mapTemp[uniKey] = hooksMap[key]
     
-    if (VMObj.hasOwnProperty(key)) {
-      VMObj[uniKey] = VMObj[key]
-      delete VMObj[key]
+    if (hasOwn(options, key)) {
+      options[uniKey] = options[key]
+      delete options[key]
     }
   })
 
   _hooksTemp.forEach(function(uniKey) {
     const mapKey = _mapTemp[uniKey]
-    const hook = VMObj[uniKey]
+    let hook = options[uniKey]
+    !Array.isArray(hook) && (hook = [hook])
 
-    if (VMObj.hasOwnProperty(uniKey) && mapKey && hook) {
-      if (VMObj.hasOwnProperty(mapKey)) {
-        if (type(VMObj[mapKey]) !== 'Array') {
-          VMObj[mapKey] = [VMObj[mapKey], hook]
-        } else {
-          VMObj[mapKey].push(hook)
-        }
+    if (hasOwn(options, uniKey) && mapKey && hook) {
+      if (hasOwn(options, mapKey)) {
+        !Array.isArray(options[mapKey]) && (options[mapKey] = [options[mapKey]])
+        
+        options[mapKey] = options[mapKey].concat(hook)
       } else {
-        VMObj[mapKey] = [hook]
+        options[mapKey] = hook
       }
-      delete VMObj[uniKey]
+      delete options[uniKey]
     }
   })
 }
