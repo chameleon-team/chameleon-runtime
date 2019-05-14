@@ -158,7 +158,14 @@ export default class MiniRuntimeCore {
 
     let _cached = false
     let cacheData
-    function sideEffect(curVal, reaction) {
+    function sideEffect(curVal, reaction = {}) {
+      if (type(reaction.schedule) !== 'Function') {
+        return
+      }
+      // 缓存reaction
+      context.__cml_reaction__ = reaction
+
+
       let diffV
       if (_cached) {
         diffV = diff(curVal, cacheData)
