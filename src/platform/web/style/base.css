@@ -1,34 +1,22 @@
-.cml-root, .cml-view {
-    display: flex;
-    box-sizing: border-box;
-    position: relative;
-    flex-direction: column;
-    flex-shrink: 0;
-    flex-grow: 0;
-    flex-basis: auto;
-    align-items: stretch;
-    align-content: flex-start;
-    border: 0 solid black;
-    margin: 0;
-    padding: 0;
-    min-width: 0;
+.cml-root,
+.cml-view,
+.__shadow_root__ {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+
+  position: relative;
 }
 
 .cml-text {
-    display: block;
-    box-sizing: border-box;
-    position: relative;
-    white-space: pre-wrap;  /* not using 'pre': support auto line feed. */
-    word-wrap: break-word;
-    overflow: hidden; /* it'll be clipped if the height is not high enough. */
+  display: flex;
+  flex: 0 0 auto;
 
-    flex-shrink: 0;
-    flex-grow: 0;
-    flex-basis: auto;
-    border: 0 solid black;
-    margin: 0;
-    padding: 0;
-    min-width: 0;
+  position: relative;
+
+  white-space: pre-wrap; /* not using 'pre': support auto line feed. */
+  word-wrap: break-word;
+  overflow: hidden; /* it'll be clipped if the height is not high enough. */
 }
 
 .cml-border-1px,
