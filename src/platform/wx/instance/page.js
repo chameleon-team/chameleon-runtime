@@ -3,7 +3,7 @@ import lifecycle from '../../common/util/lifecycle'
 import VmAdapter from '../core/VmAdapter'
 import MiniRuntimeCore from '../../common/proto/MiniRuntimeCore'
 
-export class Page extends BaseCtor {
+export class _Page extends BaseCtor {
   constructor (options) {
     super(options)
 
@@ -54,6 +54,6 @@ export class Page extends BaseCtor {
       usedHooks: lifecycle.get('wx.page.usedHooks')
     })
 
-    __CML__GLOBAL.Page(this.options)
+    Page(this.options)
   }
 }

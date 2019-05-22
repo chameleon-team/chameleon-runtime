@@ -1,0 +1,18 @@
+{
+  "name": "chameleon-runtime-weex",
+  "version": "0.0.1",
+  "description": "chameleon框架weex端运行时",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chameleon",
+    "runtime",
+    "weex"
+  ],
+  "files": ["index.js"],
+  "author": "Chameleon-Team",
+  "license": "Apache",
+  "email": "ChameleonCore@didiglobal.com"
+}

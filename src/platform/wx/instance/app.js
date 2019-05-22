@@ -3,7 +3,7 @@ import lifecycle from '../../common/util/lifecycle'
 import VmAdapter from '../core/VmAdapter.js'
 import MiniRuntimeCore from '../../common/proto/MiniRuntimeCore'
 
-export class App extends BaseCtor {
+export class _App extends BaseCtor {
   constructor (options) {
     super(options)
 
@@ -33,6 +33,6 @@ export class App extends BaseCtor {
       usedHooks: lifecycle.get('wx.app.usedHooks')
     })
 
-    __CML__GLOBAL.App(this.options)
+    App(this.options)
   }
 }
