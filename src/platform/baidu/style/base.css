@@ -6,7 +6,6 @@
 
 .cml-text {
   display: block;
-  flex: 0 0 auto;
   
   word-wrap: break-word; /* 在长单词或 URL 地址内部进行换行。 */
   overflow: hidden; /* it'll be clipped if the height is not high enough. */
