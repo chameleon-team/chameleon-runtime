@@ -3,6 +3,8 @@
   border: 0 solid black;
   margin: 0;
   padding: 0;
+
+  position: relative;
   
   text-align: left;
   letter-spacing: 1rpx;

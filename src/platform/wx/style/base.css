@@ -7,15 +7,10 @@ page,
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
-
-  position: relative;
 }
 
 .cml-text {
   display: block;
-  flex: 0 0 auto;
-
-  position: relative;
   
   white-space: pre-wrap; /* not using 'pre': support auto line feed. 保留空白符序列，但是正常地进行换行 */
   word-wrap: break-word; /* 在长单词或 URL 地址内部进行换行。 */

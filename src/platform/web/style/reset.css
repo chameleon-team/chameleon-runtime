@@ -10,7 +10,9 @@
   border: 0 solid black;
   margin: 0;
   padding: 0;
-  
+
+  position: relative;
+
   text-align: left;
   font-size: 30cpx; /*15px*/
   letter-spacing: 1.5cpx;

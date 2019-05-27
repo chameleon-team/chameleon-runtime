@@ -4,15 +4,11 @@
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
-
-  position: relative;
 }
 
 .cml-text {
-  display: flex;
+  display: block;
   flex: 0 0 auto;
-
-  position: relative;
 
   white-space: pre-wrap; /* not using 'pre': support auto line feed. */
   word-wrap: break-word;
