@@ -53,7 +53,6 @@ export default class MiniRuntimeCore {
     }
 
     const context = this.context
-    let options = context.__cml_originOptions__
 
     this.extendContext()
     // 属性
@@ -66,7 +65,7 @@ export default class MiniRuntimeCore {
     this.proxyHandler()
   
     // watch 属性mobx转换
-    initWatch(context, options.watch)
+    initWatch(context, context.__cml_originOptions__.watch)
     return this
   }
 
