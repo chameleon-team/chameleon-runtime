@@ -1,3 +1,8 @@
+page {
+  height: 100%;
+}
+
+page,
 .cml-view {
   display: flex;
   flex-direction: column;
