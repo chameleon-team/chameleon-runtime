@@ -1,6 +1,4 @@
 ## [0.2.0]
-### Bug Fixes
-- 修复深层array结构无法监听问题
 ### Features
 - 新增 Page 页面独有生命周期 onShow、onHide，升级后请将页面的 mounted 改成 onShow
 - 优化运行代码性能
