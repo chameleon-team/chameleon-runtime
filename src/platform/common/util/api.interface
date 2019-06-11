@@ -57,3 +57,13 @@
 
     export default new Method();
 </script>
+<script cml-type="qq">
+
+    class Method implements getInstanceInterface {
+      getInstance() {
+        return qq
+      }
+    }
+
+    export default new Method();
+</script>

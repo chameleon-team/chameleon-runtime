@@ -15,6 +15,10 @@ const KEY = {
   baidu: {
     instance: instanceAPI,
     props: 'properties'
+  },
+  qq: {
+    instance: instanceAPI,
+    props: 'properties'
   }
 }
 

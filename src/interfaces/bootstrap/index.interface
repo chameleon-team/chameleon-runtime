@@ -127,3 +127,17 @@
 
     export default new Method();
 </script>
+<script cml-type="qq">
+    import './shim.js';
+    /* istanbul ignore next */
+    class Method implements bootstrapInterface {
+      bootstrap(options) {
+        //  小程序端启动入口为src/app/app.cml
+      }
+      getInfo() {
+        return {}
+      }
+    }
+
+    export default new Method();
+</script>
