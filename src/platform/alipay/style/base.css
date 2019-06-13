@@ -1,4 +1,11 @@
 .cml-view {
+  box-sizing: border-box;
+  border: 0 solid black;
+  margin: 0;
+  padding: 0;
+  
+  position: relative;
+
   display: flex;
   flex-direction: column;
 
@@ -6,10 +13,17 @@
 }
 
 .cml-text {
+  box-sizing: border-box;
+  border: 0 solid black;
+  margin: 0;
+  padding: 0;
+  
+  position: relative;
+  
   display: block;
   
   flex: 0 0 auto;
-  
+
   white-space: pre-wrap; /* not using 'pre': support auto line feed. 保留空白符序列，但是正常地进行换行 */
   word-wrap: break-word; /* 在长单词或 URL 地址内部进行换行。 */
   overflow: hidden; /* it'll be clipped if the height is not high enough. */

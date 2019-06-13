@@ -4,6 +4,13 @@ page {
 
 page,
 .cml-view {
+  box-sizing: border-box;
+  border: 0 solid black;
+  margin: 0;
+  padding: 0;
+  
+  position: relative;
+
   display: flex;
   flex-direction: column;
 
@@ -11,6 +18,13 @@ page,
 }
 
 .cml-text {
+  box-sizing: border-box;
+  border: 0 solid black;
+  margin: 0;
+  padding: 0;
+  
+  position: relative;
+  
   display: block;
 
   flex: 0 0 auto;
