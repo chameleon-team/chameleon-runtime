@@ -345,6 +345,100 @@ const LIFECYCLE = {
       polyHooks: []
     }
   },
+  qq: {
+    app: {
+      hooks: [
+        'onLaunch',
+        'onShow',
+        'onHide',
+        'onError',
+        'onPageNotFound'
+      ],
+      hooksMap: {
+        'beforeCreate': 'onLaunch',
+        'created': 'onLaunch',
+        'beforeMount': 'onLaunch',
+        'mounted': 'onShow',
+        'beforeDestroy': 'onHide',
+        'destroyed': 'onHide'
+      },
+      usedHooks: [
+        'onLaunch',
+        'onShow',
+        'onHide'
+      ],
+      polyHooks: [
+        'onError',
+        'onPageNotFound'
+      ]
+    },
+    page: {
+      hooks: [
+        'onLoad',
+        'onShow',
+        'onReady',
+        'onHide',
+        'onUnload',
+        'onPullDownRefresh',
+        'onReachBottom',
+        'onShareAppMessage',
+        'onPageScroll',
+        'onResize',
+        'onTabItemTap'
+      ],
+      hooksMap: {
+        'beforeCreate': 'onLoad',
+        'created': 'onLoad',
+        'beforeMount': 'onLoad',
+        'mounted': 'onReady',
+        'beforeDestroy': 'onUnload',
+        'destroyed': 'onUnload',
+        'onShow': 'onShow',
+        'onHide': 'onHide'
+      },
+      usedHooks: [
+        'onLoad',
+        'onReady',
+        'onShow',
+        'onHide',
+        'onUnload'
+      ],
+      polyHooks: [
+        'onPullDownRefresh',
+        'onReachBottom',
+        'onShareAppMessage',
+        'onPageScroll',
+        'onResize',
+        'onTabItemTap'
+      ]
+    },
+    component: {
+      hooks: [
+        'created',
+        'attached',
+        'ready',
+        'detached',
+        'moved'
+      ],
+      hooksMap: {
+        'beforeCreate': 'created',
+        'created': 'attached',
+        'beforeMount': 'attached',
+        'mounted': 'ready',
+        'beforeDestroy': 'detached',
+        'destroyed': 'detached'
+      },
+      usedHooks: [
+        'created',
+        'attached',
+        'ready',
+        'detached'
+      ],
+      polyHooks: [
+        'moved'
+      ]
+    }
+  },
   cml: {
     hooks: [
       'beforeCreate',

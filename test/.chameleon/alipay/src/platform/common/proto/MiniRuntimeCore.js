@@ -17,7 +17,7 @@ import {
   enumerableKeys
 } from '../util/util'
 
-import { type } from '../util/type'
+import { type, isPlainObject } from '../util/type'
 
 import lifecycle from '../util/lifecycle'
 
@@ -52,6 +52,8 @@ export default class MiniRuntimeCore {
         invariant(!!this.context, "【chameleon-runtime】runtime context should not undefined")
     }
 
+    const context = this.context
+
     this.extendContext()
     // 属性
     this.initData()
@@ -63,7 +65,7 @@ export default class MiniRuntimeCore {
     this.proxyHandler()
   
     // watch 属性mobx转换
-    this.watchesHandler()
+    initWatch(context, context.__cml_originOptions__.watch)
     return this
   }
 
@@ -118,34 +120,6 @@ export default class MiniRuntimeCore {
     proxy(context, context.__cml_ob_data__)
   }
   
-  /**
-   * watch 属性转换
-   * @param  {Object} context 上下文
-   * @return {[type]}       [description]
-   */
-  watchesHandler () {
-    const context = this.context
-    let options = context.__cml_originOptions__
-  
-    let watches = options.watch
-  
-    if (type(watches) !== 'Object') {
-      return
-    }
-  
-    enumerableKeys(watches).forEach(key => {
-      const handler = watches[key]
-      if (type(handler) === 'Array') {
-        // mobx的reaction执行是倒序的，顾为保证watch正常次序，需倒序注册
-        for (let i = handler.length - 1; i >= 0 ; i--) {
-          context.$watch(key, handler[i])
-        }
-      } else {
-        context.$watch(key, handler)
-      }
-    })
-  }
-  
   addPageHooks () {
     const context = this.context
     const originOptions = context.__cml_originOptions__
@@ -183,7 +157,14 @@ export default class MiniRuntimeCore {
 
     let _cached = false
     let cacheData
-    function sideEffect(curVal, reaction) {
+    function sideEffect(curVal, r = {}) {
+      if (type(r.schedule) !== 'Function') {
+        return
+      }
+      // 缓存reaction
+      context.__cml_reaction__ = r
+
+
       let diffV
       if (_cached) {
         diffV = diff(curVal, cacheData)
@@ -206,7 +187,7 @@ export default class MiniRuntimeCore {
       fireImmediately: true,
       name,
       onError: function() {
-        warn('runtimeCore start reaction error!')
+        warn('RuntimeCore start reaction error!')
       }
     }
     
@@ -425,36 +406,35 @@ function transformComputed(context) {
 }
 
 /**
- * [autorunThrottle description]
- * @param  {[type]} fnc  [description]
- * @param  {[type]} name [description]
- * @return {function}      unwatch函数
+ * watch 属性转换
+ * @param  {Object} context 上下文
+ * @return {[type]}       [description]
  */
-function autorunThrottle(fnc, name) {
-  // 首次同步执行，之后异步处理
-  let isScheduled = false
-  let first = true
-  const r = new Reaction(name, function () {
+function initWatch (vm, watch) {
+  if (type(watch) !== 'Object') {
+    return
+  }
 
-    if (!isScheduled) {
-      isScheduled = true
-      if (first) {
-        reactionRunner()
-        first = false
-      } else {
-        setTimeout(reactionRunner, 0)
+  for (const key in watch) {
+    const handler = watch[key]
+    if (Array.isArray(handler)) {
+      // mobx的reaction执行是倒序的，顾为保证watch正常次序，需倒序注册
+      for (let i = handler.length - 1; i >= 0 ; i--) {
+        createWatcher(vm, key, handler[i])
       }
-    }
-  })
-  function reactionRunner() {
-    isScheduled = false
-    if (!r.isDisposed) {
-      r.track(() => {
-
-        fnc(r)
-      })
+    } else {
+      createWatcher(vm, key, handler)
     }
   }
-  r.schedule()
-  return r.getDisposer()
+}
+
+function createWatcher (vm, expOrFn, handler, options) {
+  if (isPlainObject(handler)) {
+    options = handler
+    handler = handler.handler
+  }
+  if (typeof handler === 'string') {
+    handler = vm[handler]
+  }
+  return vm.$watch(expOrFn, handler, options)
 }

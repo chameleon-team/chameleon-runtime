@@ -21,3 +21,15 @@ export function isObject (obj) {
 export function isPlainObject (obj) {
   return type(obj) === 'Object'
 }
+
+export function isDef (v) {
+  return v !== undefined && v !== null
+}
+
+export function isPromise (v) {
+  return (
+    isDef(v) &&
+    typeof v.then === 'function' &&
+    typeof v.catch === 'function'
+  )
+}
