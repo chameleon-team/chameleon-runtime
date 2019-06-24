@@ -1,6 +1,6 @@
 import BaseVmAdapter from './BaseVmAdapter'
 import { type, isObject } from '../util/type'
-import { propToFn, transferLifecycle } from '../util/util'
+import { propToFn, transferLifecycle, noop } from '../util/util'
 import { mergeHooks } from '../util/resolve'
 
 // web&&weex options transform 基类
@@ -99,7 +99,13 @@ class WexVmAdapter extends BaseVmAdapter {
     
     let self = this
     this.hooks.forEach(key => {
-      const hook = this.options[key]
+      let hook = this.options[key]
+
+      if (key === 'mounted' || key === 'beforeDestroy') {
+        // 预置空function
+        hook = hook || noop
+      }
+      
       hook && (this.options[key] = function (...args) {
         let result
         if (type(hook) === 'Function' || type(hook) === 'Array') {
