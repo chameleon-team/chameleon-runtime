@@ -72,6 +72,16 @@
         cmlApi.navigateTo({
           path
         });
+
+        const cmlBridge = require('chameleon-bridge').default;
+
+        cmlBridge.listenNative('cml', 'onBackPressed', res => {
+          if (router && router.history && router.history.index) {
+            cmlApi.navigateBack()
+          } else {
+            cmlApi.close()
+          }
+        })
       }
     }
     getInfo() {
