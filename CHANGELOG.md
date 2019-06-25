@@ -1,3 +1,9 @@
+## [0.2.1]
+### Features
+- 支持点击 Android 物理返回键返回上级页面
+- 支持 qq 小程序
+- 基础样式字符间距letter-space默认变为初始值
+
 ## [0.2.0]
 ### Features
 - 新增 Page 页面独有生命周期 onShow、onHide，升级后请将页面的 mounted 改成 onShow
