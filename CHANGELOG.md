@@ -1,3 +1,12 @@
+## [0.2.2-alpha.0]
+### Features
+- watch 属性支持配置项`handler、deep、immediate`能力，如，`watch = {a: { handler: function(){}, deep: true, immediate: true }}`
+
+含义如下：
+- handler：回调函数
+- deep：深度监听，默认为false
+- immediate：立即执行，默认为false
+
 ## [0.2.1]
 ### Features
 - 支持点击 Android 物理返回键返回上级页面
