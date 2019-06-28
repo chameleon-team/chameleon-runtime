@@ -71,6 +71,9 @@ export default class MiniRuntimeCore {
 
   extendContext() {
     this.context['$cmlEventBus'] = EventBus
+    this.context['$set'] = function(target, propertyName, value) {
+      // target[propertyName] = value
+    }
   }
   
   initData () {
