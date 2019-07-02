@@ -33,6 +33,7 @@ export default class MiniRuntimeCore {
   constructor(config) {
     this.platform = config.platform || ''
     this.options = config.options
+
     this.polyHooks = config.polyHooks
 
     this.propsName = KEY.get(`${this.platform}.props`)
@@ -123,16 +124,6 @@ export default class MiniRuntimeCore {
     proxy(context, context.__cml_ob_data__)
   }
   
-  addPageHooks () {
-    const context = this.context
-    const originOptions = context.__cml_originOptions__
-    // 使用createComponent创建page时，页面的事件直接写在options里是不生效的，必须注入到this上
-    lifecycle.get(`${this.platform}.page.hooks`).forEach(key => {
-      if (typeof originOptions[key] === 'function') {
-        context[key] = originOptions[key]
-      }
-    })
-  }
   /**
    * 启动器
    * @param  {[type]} context [description]

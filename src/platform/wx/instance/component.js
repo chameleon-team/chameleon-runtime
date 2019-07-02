@@ -23,7 +23,6 @@ export class Component extends BaseCtor {
           runtimeCore
             .setContext(this)
             .init()
-            // .addPageHooks()
         },
         attached() {
           runtimeCore
