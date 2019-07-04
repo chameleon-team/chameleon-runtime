@@ -3,7 +3,7 @@ import lifecycle from '../../common/util/lifecycle'
 import VmAdapter from '../core/VmAdapter'
 import MiniRuntimeCore from '../../common/proto/MiniRuntimeCore'
 
-export class Component extends BaseCtor {
+export class _Component extends BaseCtor {
   constructor (options) {
     super(options)
 
@@ -48,6 +48,6 @@ export class Component extends BaseCtor {
       needTransformProperties: true
     })
 
-    __CML__GLOBAL.Component(this.options)
+    Component(this.options)
   }
 }

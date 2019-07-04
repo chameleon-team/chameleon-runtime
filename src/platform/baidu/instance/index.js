@@ -1,3 +1,3 @@
-export { App } from './app'
-export { Page } from './page'
-export { Component } from './component'
+export { _App as App } from './app'
+export { _Page as Page } from './page'
+export { _Component as Component } from './component'

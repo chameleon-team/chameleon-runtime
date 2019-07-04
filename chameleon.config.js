@@ -17,6 +17,30 @@ cml.config.merge({
       hash: false
     }
   },
+  alipay: {
+    dev: {
+    },
+    build: {
+    },
+    export: {
+      entry: ['index.js'],
+      publicPath: '/',
+      outputPath: path.resolve(__dirname, 'dist/alipay'),
+      hash: false
+    }
+  },
+  baidu: {
+    dev: {
+    },
+    build: {
+    },
+    export: {
+      entry: ['index.js'],
+      publicPath: '/',
+      outputPath: path.resolve(__dirname, 'dist/baidu'),
+      hash: false
+    }
+  },
   web: {
     dev: {
       analysis: false,
@@ -57,15 +81,17 @@ cml.utils.plugin('webpackConfig', function({ type, media, webpackConfig }, cb) {
   if (type === 'weex') {
     webpackConfig.resolve.alias['chameleon-runtime'] = path.resolve(__dirname, 'index.js');
   }
-  if (type === 'wx') {
+  if (['wx', 'alipay', 'baidu'].indexOf(type) !== -1) {
     delete webpackConfig.target;
     delete webpackConfig.output.jsonpFunction;
     webpackConfig.output.libraryTarget = 'umd';
     webpackConfig.output.filename = '[name].js';
     let index  = webpackConfig.plugins.findIndex(item => item.constructor.name === 'CommonsChunkPlugin')
     webpackConfig.plugins.splice(index, 1);
-    webpackConfig.externals = {
-      'mobx': 'mobx'
+    if (type === 'wx') {
+      webpackConfig.externals = {
+        'mobx': 'mobx'
+      }
     }
   }
   webpackConfig.entry = {
