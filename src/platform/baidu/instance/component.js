@@ -48,6 +48,6 @@ export class _Component extends BaseCtor {
       needTransformProperties: true
     })
 
-    Component(this.options)
+    __CML__GLOBAL.Component(this.options)
   }
 }
