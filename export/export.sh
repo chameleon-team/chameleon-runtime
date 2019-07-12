@@ -22,6 +22,7 @@ cp -R ./index.js ./export/index.js
 cp -R ./package.json ./export/package.json
 
 cd export
+npm i
 changeFileContent
 exportPlatformRuntime $1
 

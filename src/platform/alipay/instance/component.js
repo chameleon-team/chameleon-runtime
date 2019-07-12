@@ -5,7 +5,7 @@ import MiniRuntimeCore from '../../common/proto/MiniRuntimeCore'
 
 import { extras } from 'mobx'
 
-export class Component extends BaseCtor {
+export class CMLComponent extends BaseCtor {
   constructor (options) {
     super(options)
 

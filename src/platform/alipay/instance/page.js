@@ -3,7 +3,7 @@ import lifecycle from '../../common/util/lifecycle'
 import VmAdapter from '../core/VmAdapter'
 import MiniRuntimeCore from '../../common/proto/MiniRuntimeCore'
 
-export class Page extends BaseCtor {
+export class CMLPage extends BaseCtor {
   constructor (options) {
     super(options)
 
