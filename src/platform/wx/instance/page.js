@@ -54,6 +54,6 @@ export class _Page extends BaseCtor {
       usedHooks: lifecycle.get('wx.page.usedHooks')
     })
 
-    Page(this.options)
+    __CML__GLOBAL.Page(this.options)
   }
 }

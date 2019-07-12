@@ -33,6 +33,6 @@ export class _App extends BaseCtor {
       usedHooks: lifecycle.get('wx.app.usedHooks')
     })
 
-    App(this.options)
+    __CML__GLOBAL.App(this.options)
   }
 }

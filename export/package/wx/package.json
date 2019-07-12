@@ -1,7 +1,7 @@
 {
-  "name": "chameleon-runtime-wx",
+  "name": "chameleon-runtime-mpx",
   "version": "0.0.1",
-  "description": "chameleon框架wx端运行时",
+  "description": "chameleon框架mpx端运行时",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,7 +9,7 @@
   "keywords": [
     "chameleon",
     "runtime",
-    "wx"
+    "mpx"
   ],
   "dependencies": {
     "mobx": "3.6.1"

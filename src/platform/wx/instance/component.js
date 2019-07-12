@@ -52,6 +52,6 @@ export class _Component extends BaseCtor {
       multipleSlots: true // 在组件定义时的选项中启用多slot支持
     }
 
-    Component(this.options)
+    __CML__GLOBAL.Component(this.options)
   }
 }

@@ -13,8 +13,10 @@ cml.config.merge({
     export: {
       entry: ['index.js'],
       publicPath: '/',
-      outputPath: path.resolve(__dirname, 'dist/wx'),
-      hash: false
+      hash: false,
+      externals: {
+        'mobx': 'mobx'
+      }
     }
   },
   alipay: {
@@ -25,7 +27,6 @@ cml.config.merge({
     export: {
       entry: ['index.js'],
       publicPath: '/',
-      outputPath: path.resolve(__dirname, 'dist/alipay'),
       hash: false
     }
   },
@@ -37,7 +38,6 @@ cml.config.merge({
     export: {
       entry: ['index.js'],
       publicPath: '/',
-      outputPath: path.resolve(__dirname, 'dist/baidu'),
       hash: false
     }
   },
@@ -54,11 +54,7 @@ cml.config.merge({
     export: {
       entry: ['index.js'],
       publicPath: '/',
-      outputPath: path.resolve(__dirname, 'dist/web'),
-      hash: false,
-      externals: {
-        'chameleon-api': 'chameleon-api'
-      }
+      hash: false
     }
   },
   weex: {
@@ -88,19 +84,15 @@ cml.utils.plugin('webpackConfig', function({ type, media, webpackConfig }, cb) {
     webpackConfig.output.filename = '[name].js';
     let index  = webpackConfig.plugins.findIndex(item => item.constructor.name === 'CommonsChunkPlugin')
     webpackConfig.plugins.splice(index, 1);
-    if (type === 'wx') {
-      webpackConfig.externals = {
-        'mobx': 'mobx'
-      }
-    }
   }
   webpackConfig.entry = {
     'index': path.resolve(__dirname, 'index.js')
   }
+  webpackConfig.output.path = path.resolve(__dirname, `dist/${type}`)
   webpackConfig.module.rules.push({
     test: /\.js$/,
     // 不能babel babel-runtime
-    include: [path.join(cml.projectRoot, 'src'), path.join(cml.projectRoot, 'index.js')],
+    include: [path.join(cml.projectRoot, 'node_modules/chameleon-mixins'), path.join(cml.projectRoot, 'src'), path.join(cml.projectRoot, 'index.js')],
     use: [{
       loader: 'babel-loader',
       options: {
