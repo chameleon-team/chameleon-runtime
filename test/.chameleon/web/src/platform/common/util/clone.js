@@ -1,44 +1,48 @@
 import { type } from './type'
+/**
+ * Get the first item that pass the test
+ * by second argument function
+ *
+ * @param {Array} list
+ * @param {Function} f
+ * @return {*}
+ */
+export function find (list, f) {
+  return list.filter(f)[0]
+}
 
-export function deepClone(source, detectCycles = true, __alreadySeen = []) {
-  function cache(value) {
-    if (detectCycles) {
-      __alreadySeen.push([source, value])
-    }
-    return value
+/**
+ * Deep copy the given object considering circular structure.
+ * This function caches all nested objects and its copies.
+ * If it detects circular structure, use cached copy to avoid infinite loop.
+ *
+ * @param {*} obj
+ * @param {Array<Object>} cache
+ * @return {*}
+ */
+export function deepClone (obj, cache = []) {
+  // just return if obj is immutable value
+  if (type(obj) !== 'Object' && type(obj) !== 'Array') {
+    return obj
   }
 
-  if (detectCycles && __alreadySeen === null) {
-    __alreadySeen = []
+  // if obj is hit, it is in circular structure
+  const hit = find(cache, c => c.original === obj)
+  if (hit) {
+    return hit.copy
   }
 
-  if (detectCycles && source !== null && typeof source === "object") {
-    for (let i = 0, l = __alreadySeen.length; i < l; i++) {
-      if (__alreadySeen[i][0] === source) {
-        return __alreadySeen[i][1];
-      }
-    }
-  }
+  const copy = Array.isArray(obj) ? [] : {}
+  // put the copy into cache at first
+  // because we want to refer it in recursive deepClone
+  cache.push({
+    original: obj,
+    copy
+  })
 
-  if (type(source) === 'Array') {
-    let res = cache([]);
-    let toAdd = source.map((value) => {
-      return deepClone(value, detectCycles, __alreadySeen)
-    });
+  Object.keys(obj).forEach(key => {
+    copy[key] = deepClone(obj[key], cache)
+  })
 
-    res.length = toAdd.length;
-    for (let i = 0, l = toAdd.length; i < l; i++) {
-      res[i] = toAdd[i]
-    }
-
-    return res;
-  } else if (type(source) === 'Object') {
-    let res = cache({});
-    for (let key in source) {
-      res[key] = deepClone(source[key], detectCycles, __alreadySeen)
-    }
-    return res;
-  } else {
-    return source
-  }
+  return copy
 }

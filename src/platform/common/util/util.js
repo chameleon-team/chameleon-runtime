@@ -148,12 +148,18 @@ export function isExistAttr(obj, attr) {
   }
 }
 
-export function getByPath(data, pathStr, notExistOutput) {
-  if (!pathStr) return data
-  const path = pathStr.split('.')
+export function parsePath (path) {
+  return function (obj) {
+    return getByPath(obj, path)
+  }
+}
+
+export function getByPath(data, path, notExistOutput) {
+  if (!path) return data
+  const segments = path.split('.')
   let notExist = false
   let value = data
-  for (let key of path) {
+  for (let key of segments) {
     if (isExistAttr(value, key)) {
       value = value[key]
     } else {
