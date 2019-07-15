@@ -1,0 +1,9 @@
+@import './reset.css';
+@import './base.css';
+
+page {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
