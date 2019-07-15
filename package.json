@@ -10,7 +10,7 @@
     "test-debug": "babel-node ./node_modules/.bin/_mocha test/**/*.test.js --recursive --reporter debug spec",
     "test-inspect": "babel-node ./node_modules/.bin/_mocha test/**/*.test.js --recursive --reporter --inspect-brk spec",
     "cover": "babel-node ./node_modules/.bin/istanbul cover --report lcov --root test/.chameleon node_modules/mocha/bin/_mocha -- -R spec --colors --recursive test/**/*.test.js",
-    "test-karma": "babel ./node_modules/.bin/karma start ./test/karma.conf.js",
+    "test:karma": "babel ./node_modules/.bin/karma start ./test/karma.conf.js",
     "export": "sh ./export/export.sh"
   },
   "babel": {
