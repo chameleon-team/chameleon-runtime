@@ -10,7 +10,8 @@
     "test:debug": "babel-node ./node_modules/.bin/_mocha test/**/*.test.js --recursive --reporter debug spec",
     "test:inspect": "babel-node ./node_modules/.bin/_mocha test/**/*.test.js --recursive --reporter --inspect-brk spec",
     "cover": "babel-node ./node_modules/.bin/istanbul cover --report lcov --root test/.chameleon node_modules/mocha/bin/_mocha -- -R spec --colors --recursive test/**/*.test.js",
-    "test:karma": "babel ./node_modules/.bin/karma start ./test/karma.conf.js"
+    "test:karma": "babel ./node_modules/.bin/karma start ./test/karma.conf.js",
+    "export": "sh ./export/export.sh"
   },
   "babel": {
     "presets": [
@@ -40,9 +41,6 @@
     "mobx": "3.6.1"
   },
   "devDependencies": {
-    "chameleon-mixins": "0.1.0-alpha.4",
-    "chameleon-css-loader": "0.1.0-alpha.4",
-    "chameleon-api": "^0.3.0-alpha.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-plugin-istanbul": "^5.1.0",
@@ -51,22 +49,25 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
     "chai": "^4.2.0",
+    "chameleon-api": "^0.4.11",
+    "chameleon-css-loader": "0.1.0-alpha.4",
+    "chameleon-mixins": "0.1.0-alpha.4",
+    "eslint": "^5.6.0",
+    "fs-extra": "^7.0.1",
+    "glob": "^7.1.3",
+    "istanbul": "^1.1.0-alpha.1",
     "karma": "^3.1.4",
     "karma-babel-preprocessor": "^6.0.0",
     "karma-chai": "^0.1.0",
     "karma-coverage": "^1.1.2",
     "karma-mocha": "^1.3.0",
     "karma-mocha-reporter": "^2.2.5",
+    "karma-sinon-chai": "^1.3.3",
     "karma-sourcemap-loader": "^0.3.7",
     "mocha": "^5.2.0",
-    "eslint": "^5.6.0",
-    "fs-extra": "^7.0.1",
-    "glob": "^7.1.3",
-    "karma-sinon-chai": "^1.3.3",
     "shelljs": "0.7.4",
     "sinon": "^4.1.3",
     "sinon-chai": "^2.14.0",
-    "vue": "^2.5.17",
-    "istanbul": "^1.1.0-alpha.1"
+    "vue": "^2.5.17"
   }
 }

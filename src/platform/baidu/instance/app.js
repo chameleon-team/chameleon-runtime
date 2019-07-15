@@ -3,7 +3,7 @@ import lifecycle from '../../common/util/lifecycle'
 import VmAdapter from '../core/VmAdapter.js'
 import MiniRuntimeCore from '../../common/proto/MiniRuntimeCore'
 
-export class App extends BaseCtor {
+export class CMLApp extends BaseCtor {
   constructor (options) {
     super(options)
 
