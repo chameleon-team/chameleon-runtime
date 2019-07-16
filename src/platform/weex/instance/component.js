@@ -2,7 +2,7 @@ import BaseCtor from '../../common/proto/BaseCtor'
 import lifecycle from '../../common/util/lifecycle'
 import VmAdapter from '../core/VmAdapter.js'
 
-export class Component extends BaseCtor {
+export class CMLComponent extends BaseCtor {
   constructor (options) {
     super(options)
 

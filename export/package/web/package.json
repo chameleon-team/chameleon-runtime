@@ -1,0 +1,17 @@
+{
+  "name": "chameleon-runtime-web",
+  "version": "0.0.2",
+  "description": "chameleon框架web端运行时",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chameleon",
+    "runtime"
+  ],
+  "files": ["index.js"],
+  "author": "Chameleon-Team",
+  "license": "Apache",
+  "email": "ChameleonCore@didiglobal.com"
+}
