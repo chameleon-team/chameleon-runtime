@@ -1,3 +1,10 @@
+## [0.2.3-alpha.0]
+### Bug Fixes
+修复微信小程序 mixins 中 computed 和 watch 不工作的问题
+
+## [0.2.2]
+- 0.2.2-alpha.0灰度完成发正式版
+
 ## [0.2.2-alpha.0]
 ### Features
 - watch 属性支持配置项`handler、deep、immediate`能力，如，`watch = {a: { handler: function(){}, deep: true, immediate: true }}`
