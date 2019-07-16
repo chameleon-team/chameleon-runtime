@@ -66,7 +66,7 @@ export default class MiniRuntimeCore {
     this.proxyHandler()
   
     // watch 属性mobx转换
-    initWatch(context, context.__cml_originOptions__.watch)
+    initWatch(context, context.watch)
     return this
   }
 
@@ -385,7 +385,7 @@ function forceUpdateFactory(context) {
 function transformComputed(context) {
   const options = context.__cml_originOptions__
 
-  const origComputed = options.computed
+  const origComputed = extend(options.computed, context.computed || {})
   const origComputedKeys = origComputed ? enumerableKeys(origComputed) : []
 
   const newComputed = {}
