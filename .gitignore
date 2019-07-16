@@ -73,3 +73,5 @@ dist/
 .temp/
 
 package-lock.json
+
+test/.chameleon/
