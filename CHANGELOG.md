@@ -1,6 +1,10 @@
+## [0.3.0-alpha.0]
+### Features
+- 微信小程序基础样式区分page、component
+
 ## [0.2.3-alpha.0]
 ### Bug Fixes
-修复微信小程序 mixins 中 computed 和 watch 不工作的问题
+- 修复微信小程序 mixins 中 computed 和 watch 不工作的问题
 
 ## [0.2.2]
 - 0.2.2-alpha.0灰度完成发正式版
