@@ -11,6 +11,7 @@ cml.config.merge({
     build: {
     },
     export: {
+      // minimize: false,
       entry: ['index.js'],
       publicPath: '/',
       hash: false,
