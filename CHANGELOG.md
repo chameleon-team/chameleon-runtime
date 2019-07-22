@@ -1,3 +1,7 @@
+## [0.3.0]
+### Features
+- 0.3.0-alpha.0灰度完成发正式版
+
 ## [0.3.0-alpha.0]
 ### Features
 - 微信小程序基础样式区分page、component
