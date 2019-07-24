@@ -84,6 +84,10 @@ cml.utils.plugin('webpackConfig', function({ type, media, webpackConfig }, cb) {
     webpackConfig.output.filename = '[name].js';
     let index  = webpackConfig.plugins.findIndex(item => item.constructor.name === 'CommonsChunkPlugin')
     webpackConfig.plugins.splice(index, 1);
+    // 在小程序导出组件时，将externals包裹成了 mobx: require('mobx')；不符合预期；所以这里重新设置。
+    webpackConfig.externals = {
+      mobx: 'mobx'
+    }
   }
   webpackConfig.entry = {
     'index': path.resolve(__dirname, 'index.js')
