@@ -1,6 +1,6 @@
 {
   "name": "chameleon-runtime-mpx",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "chameleon框架mpx端运行时",
   "main": "index.js",
   "scripts": {
