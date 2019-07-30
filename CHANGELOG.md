@@ -1,3 +1,7 @@
+## [0.3.1]
+### Bug Fixes
+- 修复props watch不到问题
+
 ## [0.3.0]
 ### Features
 - 0.3.0-alpha.0灰度完成发正式版
