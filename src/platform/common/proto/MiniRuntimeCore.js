@@ -66,7 +66,8 @@ export default class MiniRuntimeCore {
     this.proxyHandler()
   
     // watch 属性mobx转换
-    initWatch(context, context.watch)
+    const mergeWatches = extend(context.__cml_originOptions__.watch, context.watch || {})
+    initWatch(context, mergeWatches)
     return this
   }
 
