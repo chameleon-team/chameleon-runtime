@@ -1,3 +1,7 @@
+## [0.3.2-alpha.0]
+### Bug Fixes
+- 修复多组件 mixins 串扰问题 
+- 
 ## [0.3.1]
 ### Bug Fixes
 - 修复props watch不到问题
