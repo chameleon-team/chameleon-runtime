@@ -6,7 +6,7 @@ import {mergeDefault, mergeHooks, mergeSimpleProps, mergeData, mergeWatch} from 
 import { extras } from 'mobx'
 import KEY from '../util/KEY'
 import lifecycle from '../util/lifecycle'
-import { mergeOptions } from '../util/options'
+import { deepClone } from '../util/clone'
 
 // 各种小程序options transform 基类
 class MiniVmAdapter extends BaseVmAdapter {
@@ -61,6 +61,8 @@ class MiniVmAdapter extends BaseVmAdapter {
    */
   initHooks(options) {
     if (!options.mixins) return
+    options.mixins = deepClone(options.mixins)
+
     const cmlHooks = lifecycle.get('cml.hooks')
     const mixins = options.mixins
 
