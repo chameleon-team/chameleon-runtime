@@ -385,7 +385,8 @@ function forceUpdateFactory(context) {
  */
 function transformComputed(context) {
   const options = context.__cml_originOptions__
-
+  options.computed = options.computed || {}
+  
   const origComputed = extend(options.computed, context.computed || {})
   const origComputedKeys = origComputed ? enumerableKeys(origComputed) : []
 

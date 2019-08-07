@@ -111,7 +111,7 @@ export function merge(to, from) {
   return to
 }
 
-export function extend(target, ...froms) {
+export function extend(target = {}, ...froms) {
   for (const from of froms) {
     if (type(from) === 'Object') {
       // for in 能遍历原型链上的属性
