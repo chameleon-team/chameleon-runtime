@@ -1,3 +1,7 @@
+## [0.3.2]
+### Features
+- web 根节点字体添加 'PingFang SC'
+  
 ## [0.3.2-alpha.1]
 ### Bug Fixes
 - 修复组件无computed mixins无效问题
