@@ -1,3 +1,7 @@
+## [0.3.3-alpha.0]
+### Bug Fixes
+- 解决组件mixins的computed 合并不生效问题
+  
 ## [0.3.2]
 ### Features
 - web 根节点字体添加 'PingFang SC'
