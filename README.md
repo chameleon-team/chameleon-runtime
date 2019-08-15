@@ -1,4 +1,4 @@
-# chameleon-runtime
+# chameleon-runtime [![version](https://img.shields.io/npm/v/chameleon-tool.svg?style=flat)](https://www.npmjs.com/package/chameleon-runtime)
 本仓库为 `cml` 框架的运行时相关代码
 
 ## 提供运行时能力
