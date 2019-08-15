@@ -54,6 +54,8 @@ export class Page extends BaseCtor {
       usedHooks: lifecycle.get('qq.page.usedHooks')
     })
 
+    runtimeCore.setOptions(this.options)
+
     __CML__GLOBAL.Page(this.options)
   }
 }

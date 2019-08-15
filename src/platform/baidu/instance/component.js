@@ -47,6 +47,8 @@ export class CMLComponent extends BaseCtor {
       needTransformProperties: true
     })
 
+    runtimeCore.setOptions(this.options)
+
     __CML__GLOBAL.Component(this.options)
   }
 }

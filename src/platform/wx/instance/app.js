@@ -33,6 +33,8 @@ export class CMLApp extends BaseCtor {
       usedHooks: lifecycle.get('wx.app.usedHooks')
     })
 
+    runtimeCore.setOptions(this.options)
+
     __CML__GLOBAL.App(this.options)
   }
 }

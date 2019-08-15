@@ -54,6 +54,8 @@ export class CMLPage extends BaseCtor {
       usedHooks: lifecycle.get('wx.page.usedHooks')
     })
 
+    runtimeCore.setOptions(this.options)
+
     __CML__GLOBAL.Page(this.options)
   }
 }

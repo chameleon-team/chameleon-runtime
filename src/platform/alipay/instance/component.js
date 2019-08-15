@@ -53,6 +53,8 @@ export class CMLComponent extends BaseCtor {
       needTransformProperties: false
     })
 
+    runtimeCore.setOptions(this.options)
+
     __CML__GLOBAL.Component(this.options)
   }
 }

@@ -33,6 +33,8 @@ export class App extends BaseCtor {
       usedHooks: lifecycle.get('qq.app.usedHooks')
     })
 
+    runtimeCore.setOptions(this.options)
+
     __CML__GLOBAL.App(this.options)
   }
 }
