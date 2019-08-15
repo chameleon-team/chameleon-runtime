@@ -8,6 +8,8 @@ import KEY from '../util/KEY'
 import lifecycle from '../util/lifecycle'
 import { deepClone } from '../util/clone'
 
+const KEY_COMPUTED = KEY.get('computed')
+
 // 各种小程序options transform 基类
 class MiniVmAdapter extends BaseVmAdapter {
   constructor(config) {
@@ -46,10 +48,6 @@ class MiniVmAdapter extends BaseVmAdapter {
     this.needResolveAttrs && this.resolveAttrs()
     // 处理 props 添加监听
     this.needTransformProperties && this.transformProperties()
-
-    if (this.platform === 'alipay') {
-      delete this.options['computed']
-    }
   }
 
   /**
@@ -91,6 +89,7 @@ class MiniVmAdapter extends BaseVmAdapter {
     this.needPropsHandler && this.handleProps(options)
     // 处理 生命周期映射
     transferLifecycle(options, this.hooksMap)
+    this.handleComputed(options)
   }
 
   /**
@@ -193,6 +192,12 @@ class MiniVmAdapter extends BaseVmAdapter {
     }
   }
 
+  handleComputed (options) {
+    options.computed = options.computed || {}
+    // handle computed to $cmlComputed
+    rename(options, 'computed', KEY_COMPUTED)
+  }
+
   initMixins (options) {
     if (!options.mixins) return
 
@@ -271,7 +276,7 @@ class MiniVmAdapter extends BaseVmAdapter {
     }
 
     let testProps = function (key) {
-      let regExp = new RegExp('computed|methods|proto|' + self.propsName)
+      let regExp = new RegExp(KEY_COMPUTED + '|methods|proto|' + self.propsName)
       return regExp.test(key)
     }  
   

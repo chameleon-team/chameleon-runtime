@@ -29,6 +29,8 @@ import { invariant } from '../util/warn'
 
 import EventBus from '../util/EventBus'
 
+const KEY_COMPUTED = KEY.get('computed')
+
 export default class MiniRuntimeCore {
   constructor(config) {
     this.platform = config.platform || ''
@@ -117,7 +119,7 @@ export default class MiniRuntimeCore {
     const context = this.context
     context.__cml_ob_data__ = observable(context.__cml_data__)
   
-    const origComputed = context.__cml_originOptions__.computed
+    const origComputed = context.__cml_originOptions__[KEY_COMPUTED]
     const origComputedKeys = origComputed ? enumerableKeys(origComputed) : []
     /* 计算属性在mobx里面是不可枚举的，所以篡改下*/
     enumerable(context.__cml_ob_data__, origComputedKeys)
@@ -385,9 +387,8 @@ function forceUpdateFactory(context) {
  */
 function transformComputed(context) {
   const options = context.__cml_originOptions__
-  options.computed = options.computed || {}
   
-  const origComputed = extend(options.computed, context.computed || {})
+  const origComputed = extend(options[KEY_COMPUTED], context[KEY_COMPUTED] || {})
   const origComputedKeys = origComputed ? enumerableKeys(origComputed) : []
 
   const newComputed = {}
