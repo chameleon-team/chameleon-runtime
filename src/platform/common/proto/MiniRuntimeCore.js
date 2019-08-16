@@ -1,9 +1,7 @@
 import {
   observable,
-  computed,
   reaction,
-  isObservableArray,
-  Reaction
+  isObservableArray
 } from 'mobx'
 
 import toJS from '../util/toJS'
@@ -19,15 +17,17 @@ import {
 
 import { type, isPlainObject } from '../util/type'
 
-import lifecycle from '../util/lifecycle'
-
 import KEY from '../util/KEY'
 
 import diff from '../util/diff'
 
 import { invariant } from '../util/warn'
 
+import { warn } from '../util/debug'
+
 import EventBus from '../util/EventBus'
+
+import { defineGetterSetter } from '../util/proto'
 
 const KEY_COMPUTED = KEY.get('computed')
 
@@ -89,15 +89,14 @@ export default class MiniRuntimeCore {
     context.__cml_cbCollection__ = []
 
     context['$cmlPolyHooks'] = this.polyHooks
-  
-    //  effect computed
-    context.__cml_computed__ = transformComputed(context)
     
     if (this.platform === 'alipay') {
-      context.__cml_data__ = extend({}, context.data, context.props, context.__cml_computed__)
+      context.__cml_data__ = extend({}, context.data, context.props)
     } else {
-      context.__cml_data__ = extend({}, context.data, context.__cml_computed__)
+      context.__cml_data__ = extend({}, context.data)
     }
+
+    transformComputed(context.__cml_data__, context)
   }
   
   initInterface () {
@@ -381,22 +380,27 @@ function forceUpdateFactory(context) {
 
 /**
  * computed 属性mobx转换
- * @param  {Object} computedExpr 组件实例computed集合
+ * @param  {Object} __cml_data__ 当前实例响应式数据
  * @param  {Object} context      上下文
  * @return {Object}              转换后computed
  */
-function transformComputed(context) {
+function transformComputed(__cml_data__, context) {
   const options = context.__cml_originOptions__
   
   const origComputed = extend(options[KEY_COMPUTED], context[KEY_COMPUTED] || {})
   const origComputedKeys = origComputed ? enumerableKeys(origComputed) : []
 
-  const newComputed = {}
   origComputedKeys.forEach(key => {
-    newComputed[key] = computed(origComputed[key], {context: context})
-  })
 
-  return newComputed
+    if (key in __cml_data__) {
+      console.error('【chameleon-runtime ERROR】', `the computed key 【${key}】 is duplicated, please check`)
+    }
+
+    const getter = origComputed[key].get || origComputed[key]
+    const setter = origComputed[key].set
+
+    defineGetterSetter(__cml_data__, key, getter, setter, context)
+  })
 }
 
 /**

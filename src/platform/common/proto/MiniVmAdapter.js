@@ -3,7 +3,7 @@ import BaseVmAdapter from './BaseVmAdapter'
 import { hasOwn, transferLifecycle, extend, extendWithIgnore, rename, enumerableKeys } from '../util/util'
 import { type } from '../util/type'
 import {mergeDefault, mergeHooks, mergeSimpleProps, mergeData, mergeWatch} from '../util/resolve'
-import { extras } from 'mobx'
+import { comparer } from 'mobx'
 import KEY from '../util/KEY'
 import lifecycle from '../util/lifecycle'
 import { deepClone } from '../util/clone'
@@ -364,7 +364,7 @@ class MiniVmAdapter extends BaseVmAdapter {
       }
       newFiled.observer = function(value, oldValue) {
         // 小程序内部数据使用了JSON.parse(JSON.stringify(x))的方式，导致每次引用都会变化
-        if (extras.deepEqual(value, oldValue)) return
+        if (comparer.structural(value, oldValue)) return
         this[key] = value
         typeof rawObserver === 'function' && rawObserver.call(this, value, oldValue)
       }

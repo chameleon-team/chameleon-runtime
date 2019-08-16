@@ -3,7 +3,7 @@ import lifecycle from '../../common/util/lifecycle'
 import VmAdapter from '../core/VmAdapter'
 import MiniRuntimeCore from '../../common/proto/MiniRuntimeCore'
 
-import { extras } from 'mobx'
+import { comparer } from 'mobx'
 
 export class CMLComponent extends BaseCtor {
   constructor (options) {
@@ -32,7 +32,7 @@ export class CMLComponent extends BaseCtor {
 
           if (preProps && preProps !== this.props) {
             Object.keys(nextProps).forEach(key => {
-              if (!extras.deepEqual(nextProps[key], preProps[key])) {
+              if (!comparer.structural(nextProps[key], preProps[key])) {
                 this[key] = nextProps[key]
               }
             })
