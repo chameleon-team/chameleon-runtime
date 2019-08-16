@@ -14,10 +14,7 @@ cml.config.merge({
       // minimize: false,
       entry: ['index.js'],
       publicPath: '/',
-      hash: false,
-      externals: {
-        'mobx': 'mobx'
-      }
+      hash: false
     }
   },
   alipay: {
@@ -81,7 +78,7 @@ cml.utils.plugin('webpackConfig', function({ type, media, webpackConfig }, cb) {
   if (['wx', 'alipay', 'baidu'].indexOf(type) !== -1) {
     delete webpackConfig.target;
     delete webpackConfig.output.jsonpFunction;
-    webpackConfig.output.libraryTarget = 'umd';
+    webpackConfig.output.libraryTarget = 'commonjs2';
     webpackConfig.output.filename = '[name].js';
     let index  = webpackConfig.plugins.findIndex(item => item.constructor.name === 'CommonsChunkPlugin')
     webpackConfig.plugins.splice(index, 1);
