@@ -39,7 +39,6 @@ export default class MiniRuntimeCore {
     this.polyHooks = config.polyHooks
 
     this.propsName = KEY.get(`${this.platform}.props`)
-    this.instance = KEY.get(`${this.platform}.instance`)
   }
 
   setOptions (options) {
