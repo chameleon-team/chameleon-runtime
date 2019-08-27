@@ -1,4 +1,4 @@
-## [0.3.3-alpha.0]
+## [0.3.3]
 ### Bug Fixes
 - 解决组件mixins的computed 合并不生效问题
   
