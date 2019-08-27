@@ -1,6 +1,6 @@
 
 import { type } from './type'
-import { extras } from 'mobx'
+import { comparer } from 'mobx'
 
 export default function diff(current, old) {
   let out = {}
@@ -16,7 +16,7 @@ export default function diff(current, old) {
 }
 
 function prefill(current, old) {
-    if (extras.deepEqual(current, old)) return
+    if (comparer.structural(current, old)) return
 
     if (type(current) === 'Object' && type(old) === 'Object') {
       const curLength = Object.keys(current).length
@@ -42,7 +42,7 @@ function prefill(current, old) {
 }
 
 function iDiff(current, old, path, result) {
-  if (extras.deepEqual(current, old)) return
+  if (comparer.structural(current, old)) return
     
     if (type(current) === 'Object' && type(old) === 'Object') {
       const curLength = Object.keys(current).length

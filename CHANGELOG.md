@@ -1,3 +1,7 @@
+## [0.4.0]
+### Features
+- update mobx@3.x to mobx@4.x
+
 ## [0.3.3]
 ### Bug Fixes
 - 解决组件mixins的computed 合并不生效问题

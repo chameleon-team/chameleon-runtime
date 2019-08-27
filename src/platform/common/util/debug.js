@@ -21,8 +21,8 @@ if (process.env.media !== "build") {
       console.error(`[CML tip]: ${msg}${trace}`)
     }
   }
+}
 
-  generateComponentTrace = vm => {
-    return ''
-  }
+function generateComponentTrace (vm) {
+  return ''
 }
