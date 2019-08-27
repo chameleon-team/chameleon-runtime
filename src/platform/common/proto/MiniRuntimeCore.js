@@ -74,9 +74,6 @@ export default class MiniRuntimeCore {
 
   extendContext() {
     this.context['$cmlEventBus'] = EventBus
-    this.context['$set'] = function(target, propertyName, value) {
-      // target[propertyName] = value
-    }
   }
   
   initData () {
@@ -134,8 +131,6 @@ export default class MiniRuntimeCore {
     if (!this.context) return
     const context = this.context
     const self = this
-    // 渲染更新监听
-    // const disposer = autorunThrottle(context.$setData, name)
 
     /**
      * [computed description]
