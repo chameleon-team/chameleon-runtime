@@ -67,3 +67,14 @@
 
     export default new Method();
 </script>
+
+<script cml-type="tt">
+    import {Component} from '../../platform/tt'
+    class Method implements createCmptInterface {
+       createComponent(options) {
+        return new Component(options)
+      }
+    }
+
+    export default new Method();
+</script>

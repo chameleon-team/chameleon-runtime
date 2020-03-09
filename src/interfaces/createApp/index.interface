@@ -73,3 +73,15 @@
 
     export default new Method();
 </script>
+
+<script cml-type="tt">
+    import {App} from '../../platform/tt'
+
+    class Method implements createAppInterface {
+      createApp(options) {
+        return new App(options)
+      }
+    }
+
+    export default new Method();
+</script>

@@ -71,3 +71,14 @@
 
     export default new Method();
 </script>
+<script cml-type="tt">
+    import {Page} from '../../platform/tt'
+
+    class Method implements createPgInterface {
+      createPage(options) {
+        return new Page(options)
+      }
+    }
+
+    export default new Method();
+</script>
