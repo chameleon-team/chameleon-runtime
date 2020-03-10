@@ -22,6 +22,13 @@ export function propToFn (obj, name) {
   }
 }
 
+export function fnToProp (fn, ctx) {
+  if (typeof fn === 'function') {
+    fn = fn.call(ctx, ctx)
+  }
+  return fn
+}
+
 /**
  * 生命周期映射
  * @param  {Object} options options
