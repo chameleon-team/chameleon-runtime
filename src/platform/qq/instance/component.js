@@ -47,10 +47,10 @@ export class Component extends BaseCtor {
       needTransformProperties: true
     })
     
-    this.options['options'] = {
-      multipleSlots: true // 在组件定义时的选项中启用多slot支持
-    }
-
+    this.options['options'] = {...{
+      multipleSlots: true
+    }, ...(this.options['options'] || {})}
+    
     runtimeCore.setOptions(this.options)
 
     __CML__GLOBAL.Component(this.options)
