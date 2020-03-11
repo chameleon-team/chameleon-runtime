@@ -2,7 +2,8 @@
 // import './style'
 
 import chameleon from './render'
-chameleon.init(Vue)
+
+chameleon.init(Vue);
 
 export {
   App,
