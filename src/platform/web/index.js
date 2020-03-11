@@ -3,7 +3,8 @@
 
 import chameleon from './render'
 
-chameleon.init(Vue);
+// eslint-disable-next-line no-undef
+chameleon.init(Vue)
 
 export {
   App,
