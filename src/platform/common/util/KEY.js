@@ -13,6 +13,9 @@ const KEY = {
   },
   qq: {
     props: 'properties'
+  },
+  tt: {
+    props: 'properties'
   }
 }
 
