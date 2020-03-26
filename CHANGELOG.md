@@ -1,3 +1,8 @@
+## [1.0.1]
+### Features
+- 支持小程序 options 不覆盖 multipleSlots 字段 issue:363
+- 支持头条小程序
+
 ## [1.0.0]
 ### Features
 - 发布1.0正式版本
