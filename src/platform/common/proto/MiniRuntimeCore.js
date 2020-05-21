@@ -32,7 +32,7 @@ import { defineGetterSetter } from '../util/proto'
 const KEY_COMPUTED = KEY.get('computed')
 
 export default class MiniRuntimeCore {
-  constructor(config) {
+  constructor (config) {
     this.platform = config.platform || ''
     this.options = config.options
 
@@ -43,15 +43,16 @@ export default class MiniRuntimeCore {
 
   setOptions (options) {
     this.options = options
-  
   }
+
   setContext (context) {
     this.context = context
     return this
   }
+
   init () {
-    if (process.env.media !== "build") {
-        invariant(!!this.context, "【chameleon-runtime】runtime context should not undefined")
+    if (process.env.media !== 'build') {
+      invariant(!!this.context, '【chameleon-runtime】runtime context should not undefined')
     }
 
     const context = this.context
@@ -59,23 +60,23 @@ export default class MiniRuntimeCore {
     this.extendContext()
     // 属性
     this.initData()
-  
+
     // 方法
     this.initInterface()
-  
+
     // 数据劫持
     this.proxyHandler()
-  
+
     // watch 属性mobx转换
     const mergeWatches = extend(context.__cml_originOptions__.watch, context.watch || {})
     initWatch(context, mergeWatches)
     return this
   }
 
-  extendContext() {
-    this.context['$cmlEventBus'] = EventBus
+  extendContext () {
+    this.context.$cmlEventBus = EventBus
   }
-  
+
   initData () {
     const context = this.context
     context.__cml_originOptions__ = this.options
@@ -84,8 +85,8 @@ export default class MiniRuntimeCore {
     // update后，回调函数收集器
     context.__cml_cbCollection__ = []
 
-    context['$cmlPolyHooks'] = this.polyHooks
-    
+    context.$cmlPolyHooks = this.polyHooks
+
     if (this.platform === 'alipay') {
       context.__cml_data__ = extend({}, context.data, context.props)
     } else {
@@ -94,34 +95,34 @@ export default class MiniRuntimeCore {
 
     transformComputed(context.__cml_data__, context)
   }
-  
+
   initInterface () {
     const context = this.context
     // 构造 watch 能力
     context.$watch = watchFnFactory(context)
-  
+
     // 构造 updated callback 收集能力
     context.$collect = updatedCbFactory(context)
-  
+
     // 构造数据更新能力
     context.$setData = setDataFactory(context, this)
-  
+
     // 构造强制更新能力
     context.$forceUpdate = forceUpdateFactory(context)
   }
-  
+
   proxyHandler () {
     const context = this.context
     context.__cml_ob_data__ = observable(context.__cml_data__)
-  
+
     const origComputed = context.__cml_originOptions__[KEY_COMPUTED]
     const origComputedKeys = origComputed ? enumerableKeys(origComputed) : []
-    /* 计算属性在mobx里面是不可枚举的，所以篡改下*/
+    /* 计算属性在mobx里面是不可枚举的，所以篡改下 */
     enumerable(context.__cml_ob_data__, origComputedKeys)
-  
+
     proxy(context, context.__cml_ob_data__)
   }
-  
+
   /**
    * 启动器
    * @param  {[type]} context [description]
@@ -136,24 +137,23 @@ export default class MiniRuntimeCore {
      * [computed description]
      * @return {[type]} [description]
      */
-    function dataExprFn() {
-      let properties = context.__cml_originOptions__[self.propsName]
-      let propKeys = enumerableKeys(properties)
+    function dataExprFn () {
+      const properties = context.__cml_originOptions__[self.propsName]
+      const propKeys = enumerableKeys(properties)
       // setData 的数据不包括 props
       const obData = deleteProperties(context.__cml_ob_data__, propKeys)
-      
+
       return toJS(obData)
     }
 
     let _cached = false
     let cacheData
-    function sideEffect(curVal, r = {}) {
+    function sideEffect (curVal, r = {}) {
       if (type(r.schedule) !== 'Function') {
         return
       }
       // 缓存reaction
       context.__cml_reaction__ = r
-
 
       let diffV
       if (_cached) {
@@ -176,16 +176,16 @@ export default class MiniRuntimeCore {
     const options = {
       fireImmediately: true,
       name,
-      onError: function() {
+      onError: function () {
         warn('RuntimeCore start reaction error!')
       }
     }
-    
+
     const disposer = reaction(dataExprFn, sideEffect, options)
-  
+
     context.__cml_disposerList__.push(disposer)
   }
-  
+
   /**
    * 销毁器
    * @param  {[type]} context [description]
@@ -221,7 +221,7 @@ function watchFnFactory (context) {
      * [computed description]
      * @return {[type]} [description]
      */
-    function dataExprFn() {
+    function dataExprFn () {
       oldVal = curVal
       curVal = exprType === 'string' ? getByPath(context, expr) : expr.call(context)
       if (options.deep) {
@@ -233,7 +233,7 @@ function watchFnFactory (context) {
       return curVal
     }
 
-    function sideEffect(curVal, reaction) {
+    function sideEffect (curVal, reaction) {
       handler.call(context, curVal, oldVal)
     }
 
@@ -253,7 +253,7 @@ function watchFnFactory (context) {
  * @param  {function} disposer     清理函数
  * @return {function}              清理函数包装方法
  */
-function disposerFactory(disposerList, disposer) {
+function disposerFactory (disposerList, disposer) {
   return function () {
     if (disposer) {
       const index = disposerList.indexOf(disposer)
@@ -273,7 +273,7 @@ function disposerFactory(disposerList, disposer) {
  * @param  {[type]} context [description]
  * @return {[type]}       [description]
  */
-function updatedCbFactory(context) {
+function updatedCbFactory (context) {
   return function (cb) {
     context.__cml_cbCollection__.push(cb)
   }
@@ -283,7 +283,7 @@ function updatedCbFactory(context) {
  * 设置数据工厂函数
  * @param {[type]} context [description]
  */
-function setDataFactory(context, self) {
+function setDataFactory (context, self) {
   let _cached = false
   let cacheData
 
@@ -294,9 +294,9 @@ function setDataFactory(context, self) {
     // 缓存reaction
     context.__cml_reaction__ = reaction
 
-    let properties = context.__cml_originOptions__[self.propsName]
-    let propKeys = enumerableKeys(properties)
-    
+    const properties = context.__cml_originOptions__[self.propsName]
+    const propKeys = enumerableKeys(properties)
+
     const obData = deleteProperties(context.__cml_ob_data__, propKeys)
 
     // setData 的数据不包括 props
@@ -317,14 +317,14 @@ function setDataFactory(context, self) {
     cacheData = { ...data }
   }
 
-  function update(diff) {
+  function update (diff) {
     if (type(context.setData) === 'Function') {
       context.setData(diff, walkUpdatedCb(context))
     }
   }
 }
 
-function emit(name, context, ...data) {
+function emit (name, context, ...data) {
   const cmlVM = context.__cml_originOptions__
 
   if (typeof cmlVM[name] === 'function') {
@@ -337,7 +337,7 @@ function emit(name, context, ...data) {
  * @param  {[type]} context [description]
  * @return {[type]}       [description]
  */
-function walkUpdatedCb(context) {
+function walkUpdatedCb (context) {
   // emit 'updated' hook
   emit('updated', context)
 
@@ -354,9 +354,8 @@ function walkUpdatedCb(context) {
  * @param  {[type]} context [description]
  * @return {[type]}       [description]
  */
-function forceUpdateFactory(context) {
+function forceUpdateFactory (context) {
   return function (data, cb) {
-
     const dataType = type(data)
     if (dataType === 'Function') {
       cb = data
@@ -378,14 +377,13 @@ function forceUpdateFactory(context) {
  * @param  {Object} context      上下文
  * @return {Object}              转换后computed
  */
-function transformComputed(__cml_data__, context) {
+function transformComputed (__cml_data__, context) {
   const options = context.__cml_originOptions__
-  
+
   const origComputed = extend(options[KEY_COMPUTED], context[KEY_COMPUTED] || {})
   const origComputedKeys = origComputed ? enumerableKeys(origComputed) : []
 
   origComputedKeys.forEach(key => {
-
     if (key in __cml_data__) {
       console.error('【chameleon-runtime ERROR】', `the computed key 【${key}】 is duplicated, please check`)
     }
@@ -413,7 +411,7 @@ function initWatch (vm, watch) {
       // mobx的reaction执行是倒序的，顾为保证watch正常次序，需倒序注册
       // 这里只解决了watch = {'a':[cb1,cb2]} 的倒序问题，对于$watch方式调用还是倒序
       // 需要改成mobx.observe的方案
-      for (let i = handler.length - 1; i >= 0 ; i--) {
+      for (let i = handler.length - 1; i >= 0; i--) {
         createWatcher(vm, key, handler[i])
       }
     } else {
