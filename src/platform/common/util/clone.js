@@ -46,3 +46,33 @@ export function deepClone (obj, cache = []) {
 
   return copy
 }
+
+export function deepClone2 (obj) {
+  let cache = new WeakMap()
+  const clone = baseClone(obj, cache)
+
+  // 清空cache
+  cache = new WeakMap()
+
+  return clone
+}
+
+export function baseClone (obj, cache = new WeakMap()) {
+  if (type(obj) !== 'Object' && type(obj) !== 'Array') {
+    return obj
+  }
+
+  if (cache.has(obj)) {
+    return cache.get(obj)
+  }
+
+  const copy = Array.isArray(obj) ? [] : {}
+
+  cache.set(obj, copy)
+
+  Object.keys(obj).forEach(key => {
+    copy[key] = baseClone(obj[key], cache)
+  })
+
+  return copy
+}

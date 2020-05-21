@@ -1,33 +1,32 @@
 import '../../global/web/index'
-import chai from 'chai';
-const expect = chai.expect
+import chai from 'chai'
 
 import { resolveTestSrc } from '../../build/util'
+
+import * as mock from '../../mock/common/diff'
+const expect = chai.expect
 
 const utilModulePath = resolveTestSrc('platform/common/util/diff', 'wx')
 
 const diff = require(utilModulePath).default
 
-import * as mock from '../../mock/common/diff'
-
 describe('common diff 工具方法', function () {
   it('should correct out diff', function () {
-    
-    for (let key in mock) {
-      let input = mock[key].get('in')
-      let output = mock[key].get('out')
-      let act = diff(input['new'], input['old'])
+    for (const key in mock) {
+      const input = mock[key].get('in')
+      const output = mock[key].get('out')
+      const act = diff(input.new, input.old)
 
       expect(output).to.deep.equal(act)
     }
   })
   // 0 new old path result
   // 1.new = old
-  // new = 'a' old = 'a' return 
+  // new = 'a' old = 'a' return
   // new = { a: 'a', b: 'b'} old = { a: 'a', b: 'b'}
   // new = ['a', 'b'] old = ['a', 'b']
   //
-  // 2. new != old 
+  // 2. new != old
   // 2.1 nType、oType
   // nType = obj oType = obj
   //
@@ -36,10 +35,10 @@ describe('common diff 工具方法', function () {
   // new = { a: 'a', b: {b1: 'b.b1',b2: 'b.b2'}, c: 'c', d: 'd'} old = { a: 'a', b: {b1: 'b.b1',b3: 'b.b3'}, e: 'e'}
 
   // for in new 回到0
-  // 
+  //
   // new.len < old.len
   // new = { a: 'a', b: ['b[0]','b[1]'], d: 'd'} old = { a: 'a', b: ['b[0]','b[1]','b[2]'], c: 'c', e: 'e'}
-  // set path new 
+  // set path new
   //
   // nType = arr oType = arr
   // new = [ 'a', 'b', 'c', 'd'] old = [ 'a', 'b', 'e']
@@ -50,7 +49,7 @@ describe('common diff 工具方法', function () {
 
   // nType = obj oType != obj
   // set path new
-  
+
   // nType = arr oType != arr
   // set path new
 
@@ -59,5 +58,3 @@ describe('common diff 工具方法', function () {
 
   // new = { a: 'a'} old = { a: 'a'}
 })
-
-

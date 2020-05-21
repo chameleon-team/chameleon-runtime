@@ -1,49 +1,48 @@
 import '../../global/web/index'
-import chai from 'chai';
-const expect = chai.expect
+import chai from 'chai'
 
 import { resolveTestSrc } from '../../build/util'
+const expect = chai.expect
 
 const utilModulePath = resolveTestSrc('platform/common/util/util', 'wx')
 
 const utils = require(utilModulePath)
 
 describe('common utils 工具方法', function () {
-
   describe('utils.normalizeMap', function () {
     it('should transfrom array to map', function () {
-      let obj = {
-        a: 'a',
-        b: 'b',
-        c: 'c',
-        d: 'd=',
-      }
-
-      let arr = ['a', 'b', 'c', 'd']
-
-      expect(utils.normalizeMap(arr)).to.deep.equal({
-        a: 'a',
-        b: 'b',
-        c: 'c',
-        d: 'd'
-      });
-    })
-  
-    it('should transfrom object return itself', function () {
-      let obj = {
+      const obj = {
         a: 'a',
         b: 'b',
         c: 'c',
         d: 'd='
       }
 
-      expect(utils.normalizeMap(obj)).to.deep.equal(obj);
+      const arr = ['a', 'b', 'c', 'd']
+
+      expect(utils.normalizeMap(arr)).to.deep.equal({
+        a: 'a',
+        b: 'b',
+        c: 'c',
+        d: 'd'
+      })
+    })
+
+    it('should transfrom object return itself', function () {
+      const obj = {
+        a: 'a',
+        b: 'b',
+        c: 'c',
+        d: 'd='
+      }
+
+      expect(utils.normalizeMap(obj)).to.deep.equal(obj)
     })
   })
 
   describe('utils.merge', function () {
     it('should merge deeply', function () {
-      let to = {
+      const to = {
         a: 'a',
         b: 'b',
         c: 'c',
@@ -54,7 +53,7 @@ describe('common utils 工具方法', function () {
         }
       }
 
-      let from = {
+      const from = {
         a: 'a',
         b: 'c',
         c: 'd',
@@ -65,7 +64,7 @@ describe('common utils 工具方法', function () {
         }
       }
 
-      let ret = {
+      const ret = {
         a: 'a',
         b: 'c',
         c: 'd',
@@ -77,17 +76,17 @@ describe('common utils 工具方法', function () {
         }
       }
 
-      expect(utils.merge(to, from)).to.deep.equal(ret);
+      expect(utils.merge(to, from)).to.deep.equal(ret)
     })
 
     it('should return empty string', function () {
-      expect(utils.merge('')).to.equal('');
+      expect(utils.merge('')).to.equal('')
     })
   })
 
   describe('utils.extend', function () {
     it('should extend', function () {
-      let to = {
+      const to = {
         a: 'a',
         b: 'b',
         c: 'c',
@@ -98,7 +97,7 @@ describe('common utils 工具方法', function () {
         }
       }
 
-      let from1 = {
+      const from1 = {
         a: 'a',
         b: 'c',
         c: 'd',
@@ -109,7 +108,7 @@ describe('common utils 工具方法', function () {
         }
       }
 
-      let from2 = {
+      const from2 = {
         a: 'a',
         b: 'c',
         c: 'd',
@@ -120,7 +119,7 @@ describe('common utils 工具方法', function () {
         }
       }
 
-      let ret = {
+      const ret = {
         a: 'a',
         b: 'c',
         c: 'd',
@@ -131,11 +130,11 @@ describe('common utils 工具方法', function () {
         }
       }
 
-      expect(utils.extend(to, from1, from2)).to.deep.equal(ret);
+      expect(utils.extend(to, from1, from2)).to.deep.equal(ret)
     })
 
     it('should return self', function () {
-      let to = {
+      const to = {
         a: 'a',
         b: 'b',
         c: 'c',
@@ -146,10 +145,7 @@ describe('common utils 工具方法', function () {
         }
       }
 
-      expect(utils.extend(to, '')).to.deep.equal(to);
+      expect(utils.extend(to, '')).to.deep.equal(to)
     })
   })
-
 })
-
-

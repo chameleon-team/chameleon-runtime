@@ -1,8 +1,8 @@
 import '../../global/web/index'
-import chai from 'chai';
-const expect = chai.expect
+import chai from 'chai'
 
 import { resolveTestSrc } from '../../build/util'
+const expect = chai.expect
 
 const modulePath = resolveTestSrc('platform/web/render/lib/gesture', 'web')
 

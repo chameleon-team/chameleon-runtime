@@ -48,16 +48,16 @@ export const case5 = new Config({
 // Object
 export const case8 = new Config({
   in: {
-    new: { a: 'a', b: 'b'},
-    old: { a: 'a', b: 'b'}
+    new: { a: 'a', b: 'b' },
+    old: { a: 'a', b: 'b' }
   },
   out: {}
 })
 
 export const case8_1 = new Config({
   in: {
-    new: { a: 'a', b: 'b', c: 'c', d: 'd'},
-    old: { a: 'a', b: 'b', e: 'e'}
+    new: { a: 'a', b: 'b', c: 'c', d: 'd' },
+    old: { a: 'a', b: 'b', e: 'e' }
   },
   out: {
     c: 'c',
@@ -68,8 +68,8 @@ export const case8_1 = new Config({
 
 export const case8_2 = new Config({
   in: {
-    new: { a: 'a', b: {b1: 'b.b1',b2: 'b.b2', 1: '1'}, c: 'c', d: 'd', 1: '1'},
-    old: { a: 'a', b: {b1: 'b.b1',b3: 'b.b3'}, e: 'e'}
+    new: { a: 'a', b: { b1: 'b.b1', b2: 'b.b2', 1: '1' }, c: 'c', d: 'd', 1: '1' },
+    old: { a: 'a', b: { b1: 'b.b1', b3: 'b.b3' }, e: 'e' }
   },
   out: {
     'b.b2': 'b.b2',
@@ -78,16 +78,16 @@ export const case8_2 = new Config({
     c: 'c',
     d: 'd',
     e: '',
-    '1': '1'
+    1: '1'
   }
 })
 
 export const case8_3 = new Config({
   in: {
-    new: { a: 'a', b: ['b[0]','b[1]'], d: 'd'},
-    old: { a: 'a', b: ['b[0]','b[1]','b[2]'], c: 'c', e: 'e'}
+    new: { a: 'a', b: ['b[0]', 'b[1]'], d: 'd' },
+    old: { a: 'a', b: ['b[0]', 'b[1]', 'b[2]'], c: 'c', e: 'e' }
   },
-  out: { a: 'a', b: ['b[0]','b[1]'], d: 'd'}
+  out: { a: 'a', b: ['b[0]', 'b[1]'], d: 'd' }
 })
 
 // Array
@@ -101,8 +101,8 @@ export const case9 = new Config({
 
 export const case9_1 = new Config({
   in: {
-    new: [ 'a', {b: '[0].b', c: '[1].c'}, 'c', 'd'],
-    old: [ 'a', {b: '[0].b', d: '[1].d'}, 'e']
+    new: ['a', { b: '[0].b', c: '[1].c' }, 'c', 'd'],
+    old: ['a', { b: '[0].b', d: '[1].d' }, 'e']
   },
   out: {
     '[1].c': '[1].c',
@@ -114,16 +114,16 @@ export const case9_1 = new Config({
 
 export const case9_2 = new Config({
   in: {
-    new: [ 'a', {b: '[0].b', c: '[1].c'}],
-    old: [ 'a', {b: '[0].b', d: '[1].d'}, 'e']
+    new: ['a', { b: '[0].b', c: '[1].c' }],
+    old: ['a', { b: '[0].b', d: '[1].d' }, 'e']
   },
-  out: [ 'a', {b: '[0].b', c: '[1].c'}]
+  out: ['a', { b: '[0].b', c: '[1].c' }]
 })
 
 export const case9_3 = new Config({
   in: {
-    new: [ 'a', 'b', 'c', 'd'],
-    old: [ 'a', 'b', 'e']
+    new: ['a', 'b', 'c', 'd'],
+    old: ['a', 'b', 'e']
   },
   out: {
     '[2]': 'c',

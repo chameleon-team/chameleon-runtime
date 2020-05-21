@@ -1,24 +1,24 @@
 import Config from '../../lib/config'
 
 class Button {
-  constructor(props) {
+  constructor (props) {
     this.data = {
       checkedImg: 'http://172.22.13'
     }
     this.computed = {
-      computedChecked: function(){}
+      computedChecked: function () {}
     }
     this.watch = {
-      checked: function(){}
+      checked: function () {}
     }
     this.methods = {
-      changeCheck: function(){},
-      onLaunch: function() {}
+      changeCheck: function () {},
+      onLaunch: function () {}
     }
     this.components = {}
   }
 
-  beforeCreate(res) {return res;}
+  beforeCreate (res) { return res }
   created () {}
   beforeMount () {}
   mounted () {}
@@ -30,22 +30,22 @@ export const case1 = new Config({
   in: new Button(),
   out: {
     data: {
-        checkedImg: 'http://172.22.13'
+      checkedImg: 'http://172.22.13'
     },
-    computed: {
-      computedChecked: function(){}
+    _cmlComputed: {
+      computedChecked: function () {}
     },
     watch: {
-      checked: function(){}
+      checked: function () {}
     },
-    changeCheck: function(){},
-    onLaunch: function() {},
-    onShow: function() {},
-    onHide: function() {},
+    changeCheck: function () {},
+    onLaunch: function () {},
+    onShow: function () {},
+    onHide: function () {},
     components: {},
-    _cmlInlineStatementEventProxy: function(){},
-    _cmlModelEventProxy: function(){},
-    _cmlEventProxy: function(){},
-    $cmlEmit: function(){}
+    _cmlInline: function () {},
+    _cmlModelEventProxy: function () {},
+    _cmlEventProxy: function () {},
+    $cmlEmit: function () {}
   }
 })

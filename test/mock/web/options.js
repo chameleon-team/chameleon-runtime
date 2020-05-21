@@ -1,7 +1,7 @@
 import Config from '../lib/config'
 
 class Button {
-  constructor(props) {
+  constructor (props) {
     this.mixins = [
       {
         methods: {},
@@ -32,18 +32,18 @@ class Button {
       checkedImg: 'http://172.22.13'
     }
     this.computed = {
-      computedChecked: function(){}
+      computedChecked: function () {}
     }
     this.watch = {
-      checked: function(){}
+      checked: function () {}
     }
     this.methods = {
-      changeCheck: function(){}
+      changeCheck: function () {}
     }
     this.components = {}
   }
 
-  beforeCreate(res) {return res;}
+  beforeCreate (res) { return res }
   created () {}
   beforeMount () {}
   mounted () {}
@@ -73,38 +73,38 @@ export const case1 = new Config({
       },
       list: {
         type: Array,
-        default: function() {
+        default: function () {
           return []
         }
       },
       datas: {
         type: Object,
-        default: function() {
+        default: function () {
           return {}
         }
       }
     },
-    data: function() {
+    data: function () {
       return {
         checkedImg: 'http://172.22.13'
       }
     },
     computed: {
-      computedChecked: function(){}
+      computedChecked: function () {}
     },
     watch: {
-      checked: function(){}
+      checked: function () {}
     },
     methods: {
-      changeCheck: function(){},
-      runtimeMethod: function(){}
+      changeCheck: function () {},
+      runtimeMethod: function () {}
     },
-    beforeCreate: function() {},
-    created: function() {},
-    beforeMount: function() {},
-    mounted: function() {},
-    beforeDestroy: function() {},
-    destroyed: function() {},
+    beforeCreate: function () {},
+    created: function () {},
+    beforeMount: function () {},
+    mounted: function () {},
+    beforeDestroy: function () {},
+    destroyed: function () {},
     components: {}
   }
 })
@@ -116,5 +116,7 @@ export const case2 = new Config({
   out: {
     props: {},
     mixins: []
+    // mounted: function(){},
+    // beforeDestroy: function(){}
   }
 })

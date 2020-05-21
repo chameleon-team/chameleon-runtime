@@ -1,7 +1,7 @@
 import Config from '../../lib/config'
 
 class Button {
-  constructor(props) {
+  constructor (props) {
     this.data = {
       checkedImg: 'http://172.22.13'
     }
@@ -18,19 +18,19 @@ class Button {
       }
     }
     this.computed = {
-      computedChecked: function(){}
+      computedChecked: function () {}
     }
     this.watch = {
-      checked: function(){}
+      checked: function () {}
     }
     this.methods = {
-      changeCheck: function(){},
-      attached: function() {}
+      changeCheck: function () {},
+      attached: function () {}
     }
     this.components = {}
   }
 
-  beforeCreate(res) {return res;}
+  beforeCreate (res) { return res }
   created () {}
   beforeMount () {}
   mounted () {}
@@ -42,42 +42,42 @@ export const case1 = new Config({
   in: new Button(),
   out: {
     data: {
-        checkedImg: 'http://172.22.13'
+      checkedImg: 'http://172.22.13'
     },
-    computed: {
-      computedChecked: function(){}
+    _cmlComputed: {
+      computedChecked: function () {}
     },
     watch: {
-      checked: function(){}
+      checked: function () {}
     },
-    
-    created: function() {},
-    attached: function() {},
-    ready: function() {},
-    detached: function() {},
+
+    created: function () {},
+    attached: function () {},
+    ready: function () {},
+    detached: function () {},
     components: {},
     properties: {
       text: {
         type: String,
         value: '确认',
-        observer: function() {}
+        observer: function () {}
       },
       textNoType: {
         value: '确认',
-        observer: function() {}
+        observer: function () {}
       },
       textNoDefault: {
         type: Number,
-        observer: function() {}
+        observer: function () {}
       }
     },
     methods: {
-      _cmlInlineStatementEventProxy: function(){},
-      _cmlModelEventProxy: function(){},
-      _cmlEventProxy: function(){},
-      $cmlEmit: function(){},
-      _animationCb: function(){},
-      changeCheck: function(){}
+      _cmlInline: function () {},
+      _cmlModelEventProxy: function () {},
+      _cmlEventProxy: function () {},
+      $cmlEmit: function () {},
+      _animationCb: function () {},
+      changeCheck: function () {}
     }
   }
 })

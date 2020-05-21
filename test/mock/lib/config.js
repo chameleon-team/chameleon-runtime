@@ -1,5 +1,5 @@
 class Config {
-  constructor(data) {
+  constructor (data) {
     this.data = data
   }
 
@@ -23,11 +23,11 @@ class Config {
     } else {
       path = String(path || '').trim()
       if (path) {
-        let paths = path.split('.')
-        let last = paths.pop()
+        const paths = path.split('.')
+        const last = paths.pop()
         let data = this.data || {}
         paths.forEach((key) => {
-          let type = data[key]
+          const type = data[key]
           if (typeof type === 'object') {
             data = data[key]
           } else if (typeof type === 'undefined') {
