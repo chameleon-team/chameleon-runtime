@@ -4,7 +4,7 @@ import { invariant } from '../util/warn'
 
 // options transform 基类
 class BaseVmAdapter {
-  constructor(config) {
+  constructor (config) {
     this.type = config.type
     this.options = config.options
     this.injectMixins = config.injectMixins || []
@@ -15,10 +15,10 @@ class BaseVmAdapter {
     this.usedHooks = config.usedHooks
     this.platform = ''
 
-    if (process.env.media !== "build") {
-        const mix = this.options.mixins
-        invariant(type(mix) === 'Undefined' || type(mix) === "Array",
-        "mixins expects an Array")
+    if (process.env.media !== 'build') {
+      const mix = this.options.mixins
+      invariant(type(mix) === 'Undefined' || type(mix) === 'Array',
+        'mixins expects an Array')
     }
   }
 
