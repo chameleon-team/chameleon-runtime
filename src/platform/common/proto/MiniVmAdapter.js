@@ -1,6 +1,6 @@
 import BaseVmAdapter from './BaseVmAdapter'
 
-import { hasOwn, transferLifecycle, extend, extendWithIgnore, rename, enumerableKeys } from '../util/util'
+import { hasOwn, transferLifecycle, extend, extendWithIgnore, rename, enumerableKeys, fnToProp } from '../util/util'
 import { type } from '../util/type'
 import { mergeDefault, mergeHooks, mergeSimpleProps, mergeData, mergeWatch } from '../util/resolve'
 import { comparer } from 'mobx'
@@ -85,6 +85,8 @@ class MiniVmAdapter extends BaseVmAdapter {
   }
 
   initOptions (options) {
+    // 处理 data
+    this.handleData(options)
     // 处理 props
     this.needPropsHandler && this.handleProps(options)
     // 处理 生命周期映射
@@ -92,6 +94,18 @@ class MiniVmAdapter extends BaseVmAdapter {
     this.handleComputed(options)
   }
 
+  /**
+   * 处理组件data属性
+   * @param  {Object} options 组件options
+   * @return {[type]}     [description]
+   */
+  handleData (options) {
+    const data = options.data
+
+    if (type(data) === 'Function') {
+      options.data = fnToProp(data, this)
+    }
+  }
   /**
    * 处理组件props属性
    * @param  {Object} options 组件options
