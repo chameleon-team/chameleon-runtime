@@ -8,7 +8,7 @@ const utilModulePath = resolveTestSrc('platform/common/util/type', 'wx')
 
 const utils = require(utilModulePath)
 
-describe('common utils 工具方法', function () {
+describe('【common】 type 工具方法', function () {
   describe('utils.type', function () {
     it('should judge {} is Object', function () {
       expect(utils.type({})).to.equal('Object')

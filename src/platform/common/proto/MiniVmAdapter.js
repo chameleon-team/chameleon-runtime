@@ -106,6 +106,7 @@ class MiniVmAdapter extends BaseVmAdapter {
       options.data = fnToProp(data, this)
     }
   }
+
   /**
    * 处理组件props属性
    * @param  {Object} options 组件options

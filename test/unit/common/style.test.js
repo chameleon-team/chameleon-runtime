@@ -95,7 +95,7 @@ const output = {
   k: 'px2cpx'
 }
 
-describe('wx style util', function () {
+describe('【common】 style transform', function () {
   it('should cpx transform to rpx', function () {
     const actualOut = util.styleHandle(input)
     expect(actualOut).to.deep.equal(output)

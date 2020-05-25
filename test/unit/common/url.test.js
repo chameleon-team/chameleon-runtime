@@ -8,7 +8,7 @@ const urlModulePath = resolveTestSrc('platform/common/util/url', 'web')
 
 const url = require(urlModulePath)
 
-describe('common url 工具方法', function () {
+describe('【common】 url 工具方法', function () {
   describe('url.isObject', function () {
     it('should judge {} is an object', function () {
       expect(url.isObject({})).to.equal(true)

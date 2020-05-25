@@ -12,7 +12,7 @@ const deepClone = require(utilModulePath).deepClone
 const deepClone2 = require(utilModulePath).deepClone2
 const find = require(utilModulePath).find
 
-describe('深拷贝clone', function () {
+describe('【common】深拷贝clone', function () {
   it('find', () => {
     const list = [33, 22, 112, 222, 43]
     expect(find(list, function (a) {

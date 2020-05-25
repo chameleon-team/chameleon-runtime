@@ -10,7 +10,7 @@ const utilModulePath = resolveTestSrc('platform/common/util/diff', 'wx')
 
 const diff = require(utilModulePath).default
 
-describe('common diff 工具方法', function () {
+describe('【common】 diff 工具方法', function () {
   it('should correct out diff', function () {
     for (const key in mock) {
       const input = mock[key].get('in')

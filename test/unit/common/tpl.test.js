@@ -8,7 +8,7 @@ const modulePath = resolveTestSrc('platform/web/render/utils/event', 'web')
 
 const mod = require(modulePath)
 
-describe('module', function () {
+describe('【common】module', function () {
   describe('child', () => {
     it('case1', () => {
       expect(mod).to.be.a('object')

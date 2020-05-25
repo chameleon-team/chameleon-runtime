@@ -8,7 +8,7 @@ const utilModulePath = resolveTestSrc('platform/common/util/util', 'wx')
 
 const utils = require(utilModulePath)
 
-describe('common utils 工具方法', function () {
+describe('【common】 utils 工具方法', function () {
   describe('utils.normalizeMap', function () {
     it('should transfrom array to map', function () {
       const obj = {

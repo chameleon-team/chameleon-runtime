@@ -8,7 +8,7 @@ const evtModulePath = resolveTestSrc('platform/web/render/utils/event', 'web')
 
 const event = require(evtModulePath)
 
-describe('event', function () {
+describe('【web】-【Event】', function () {
   it('createEvent', () => {
     const {
       createEvent

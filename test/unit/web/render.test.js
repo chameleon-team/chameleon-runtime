@@ -11,7 +11,7 @@ const cmlPath = resolveTestOutput('index', 'web')
 
 const cml = require(cmlPath).default
 
-describe('render 模块', function () {
+describe('【web】-【Render】', function () {
   const _case = mock.case1
   const input = _case.get('in')
   const shouldOut = _case.get('out')
