@@ -1,49 +1,13 @@
 /* eslint-disable no-undef */
 import '../../global/web/index'
 
-import chai from 'chai'
-
-import { resolveTestOutput } from '../../build/util'
-
 import * as mock from '../../mock/web/options'
+import { createPage } from '../../mock/web/util'
+
+import chai from 'chai'
 const expect = chai.expect
 
-const cmlPath = resolveTestOutput('index', 'web')
-
-const { createPage } = require(cmlPath).default
-
 describe('【web】-【createPage】', function () {
-  const _case = mock.case1
-  const input = _case.get('in')
-  const shouldOut = _case.get('out')
-
-  const page = createPage(input)
-  const actualOut = page.getOptions()
-
-  it('should data return equal', function () {
-    const data = actualOut.data()
-    expect(data).to.deep.equal(input.data)
-  })
-
-  Object.keys(shouldOut).forEach(function (key) {
-    it(`should has ${key} property`, function () {
-      expect(actualOut[key]).to.not.equal(undefined)
-    })
-
-    const type = typeof actualOut[key]
-    it(`should ${key} value type is ${type}`, function () {
-      expect(type).to.equal(typeof shouldOut[key])
-    })
-  })
-
-  it('should return an object', function () {
-    expect(page).to.be.a('object')
-  })
-
-  it('should return page.cmlType is "web"', function () {
-    expect(page.cmlType).to.equal('web')
-  })
-
   it('default options should have mounted and beforeDestroy methods', function () {
     const page = createPage({ props: {} })
     const actualOut = page.getOptions()
@@ -60,7 +24,6 @@ describe('【web】-【createPage】', function () {
   it('测试 beforeCreate hooksArgsMixin', function (done) {
     const _case = mock.case1
     const input = _case.get('in')
-    const shouldOut = _case.get('out')
 
     const page = createPage(input)
     const actualOut = page.getOptions()

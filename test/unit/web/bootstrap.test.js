@@ -1,8 +1,8 @@
 import '../../global/web/index'
 
-import chai from 'chai'
-
 import { resolveTestOutput } from '../../build/util'
+
+import chai from 'chai'
 const expect = chai.expect
 
 const bootPath = resolveTestOutput('src/interfaces/bootstrap', 'web')

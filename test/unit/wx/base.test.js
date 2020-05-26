@@ -4,7 +4,7 @@ import * as appMock from '../../mock/wx/app/options'
 import * as pageMock from '../../mock/wx/page/options'
 import * as componentMock from '../../mock/wx/component/options'
 import * as baseMock from '../../mock/wx/base'
-import { createApp, createPage, createComponent } from '../../mock/wx/base'
+import { createApp, createPage, createComponent } from '../../mock/wx/util'
 
 import chai from 'chai'
 const expect = chai.expect

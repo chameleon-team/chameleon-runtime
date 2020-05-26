@@ -1,7 +1,7 @@
 import '../../global/wx/index'
 
 import * as mock from '../../mock/wx/page/options'
-import { createPage } from '../../mock/wx/base'
+import { createPage } from '../../mock/wx/util'
 
 import chai from 'chai'
 const expect = chai.expect

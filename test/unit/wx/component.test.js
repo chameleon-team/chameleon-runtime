@@ -1,7 +1,7 @@
 import '../../global/wx/index'
 
 import * as mock from '../../mock/wx/component/options'
-import { createComponent } from '../../mock/wx/base'
+import { createComponent } from '../../mock/wx/util'
 
 import chai from 'chai'
 const expect = chai.expect
