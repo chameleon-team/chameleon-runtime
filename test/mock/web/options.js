@@ -120,3 +120,20 @@ export const case2 = new Config({
     // beforeDestroy: function(){}
   }
 })
+
+class Button2 {
+  constructor () {
+    this.data = function() {
+      return 'test data'
+    }
+  }
+}
+
+export const case3 = new Config({
+  in: new Button2(),
+  out: {
+    data: function () {
+      return 'test data'
+    }
+  }
+})

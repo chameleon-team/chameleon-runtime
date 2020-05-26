@@ -60,20 +60,14 @@ function runTest (name, config) {
         expect(instance.cmlType).to.equal('web')
       })
 
-      // it('[data] should fit "Function" type', function () {
-      //   const _case = baseMock.case1
-      //   const input = _case.get('in')
-      //   const shouldOut = _case.get('out')
-      //   const page = createPage(input)
-      //   const actualOut = page.getOptions()
-
-      //   const shouldData = shouldOut.data
-      //   const actualData = actualOut.data
-
-      //   Object.keys(shouldData).forEach(function (key) {
-      //     expect(actualData[key]).to.equal(shouldData[key])
-      //   })
-      // })
+      it('[data] should fit "Function" type', function () {
+        const _case = mock.case3
+        const input = _case.get('in')
+        const shouldOut = _case.get('out')
+        const instance = Ctor(input)
+        const actualOut = instance.getOptions()
+        expect(actualOut.data()).to.deep.equal(shouldOut.data())
+      })
 
       if (name === 'app' || name === 'component') {
         it('test input {props:{}}', function () {
@@ -84,7 +78,7 @@ function runTest (name, config) {
           const actualOut = instance.getOptions()
           expect(actualOut).to.deep.equal(shouldOut)
         })
-      
+
         it('test create without input', function () {
           const instance = Ctor()
           const actualOut = instance.getOptions()
