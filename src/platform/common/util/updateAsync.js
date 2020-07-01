@@ -10,6 +10,7 @@ function resetQueue () {
   has = {}
   queue = []
   waiting = false
+  updating = false
   waitingTasks.forEach(({
     id,
     curData,
