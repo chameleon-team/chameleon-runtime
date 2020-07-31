@@ -15,21 +15,34 @@ import {
   enumerableKeys
 } from '../util/util'
 
-import { type, isPlainObject } from '../util/type'
+import {
+  type,
+  isPlainObject
+} from '../util/type'
 
 import KEY from '../util/KEY'
 
 import diff from '../util/diff'
 
-import { invariant } from '../util/warn'
+import {
+  invariant
+} from '../util/warn'
 
-import { warn } from '../util/debug'
+import {
+  warn
+} from '../util/debug'
 
 import EventBus from '../util/EventBus'
 
-import { defineGetterSetter } from '../util/proto'
+import {
+  defineGetterSetter
+} from '../util/proto'
+
+import updateAsync from '../util/updateAsync'
 
 const KEY_COMPUTED = KEY.get('computed')
+
+let uid = 0
 
 export default class MiniRuntimeCore {
   constructor (config) {
@@ -39,6 +52,7 @@ export default class MiniRuntimeCore {
     this.polyHooks = config.polyHooks
 
     this.propsName = KEY.get(`${this.platform}.props`)
+    this.id = uid++
   }
 
   setOptions (options) {
@@ -148,6 +162,7 @@ export default class MiniRuntimeCore {
 
     let _cached = false
     let cacheData
+
     function sideEffect (curVal, r = {}) {
       if (type(r.schedule) !== 'Function') {
         return
@@ -157,27 +172,37 @@ export default class MiniRuntimeCore {
 
       let diffV
       if (_cached) {
-        diffV = diff(curVal, cacheData)
+        updateAsync(self.id, curVal, (finalVal) => {
+          diffV = diff(finalVal, cacheData)
+          // emit 'beforeUpdate' hook ，第一次不触发
+          emit('beforeUpdate', context, finalVal, cacheData, diffV)
+          if (type(context.setData) === 'Function') {
+            context.setData(diffV, walkUpdatedCb(context))
+          }
 
-        // emit 'beforeUpdate' hook ，第一次不触发
-        emit('beforeUpdate', context, curVal, cacheData, diffV)
+          cacheData = {
+            ...finalVal
+          }
+        })
       } else {
         _cached = true
         diffV = curVal
-      }
+        if (type(context.setData) === 'Function') {
+          context.setData(diffV, walkUpdatedCb(context))
+        }
 
-      if (type(context.setData) === 'Function') {
-        context.setData(diffV, walkUpdatedCb(context))
+        cacheData = {
+          ...curVal
+        }
       }
-
-      cacheData = { ...curVal }
     }
 
     const options = {
       fireImmediately: true,
       name,
-      onError: function () {
+      onError: function (err) {
         warn('RuntimeCore start reaction error!')
+        warn(err)
       }
     }
 
@@ -261,7 +286,7 @@ function disposerFactory (disposerList, disposer) {
       disposer()
     } else {
       let disposer
-      while (disposer = disposerList.shift()) {
+      while ((disposer = disposerList.shift())) {
         disposer()
       }
     }
@@ -314,7 +339,9 @@ function setDataFactory (context, self) {
     }
 
     update(diffV)
-    cacheData = { ...data }
+    cacheData = {
+      ...data
+    }
   }
 
   function update (diff) {
@@ -344,7 +371,7 @@ function walkUpdatedCb (context) {
   let cb
   const pendingList = context.__cml_cbCollection__.slice(0)
   context.__cml_cbCollection__.length = 0
-  while (cb = pendingList.shift()) {
+  while ((cb = pendingList.shift())) {
     typeof cb === 'function' && cb.apply(context)
   }
 }
@@ -377,13 +404,15 @@ function forceUpdateFactory (context) {
  * @param  {Object} context      上下文
  * @return {Object}              转换后computed
  */
+// eslint-disable-next-line camelcase
 function transformComputed (__cml_data__, context) {
   const options = context.__cml_originOptions__
 
   const origComputed = extend(options[KEY_COMPUTED], context[KEY_COMPUTED] || {})
   const origComputedKeys = origComputed ? enumerableKeys(origComputed) : []
 
-  origComputedKeys.forEach(key => {
+  origComputedKeys.forEach((key) => {
+    // eslint-disable-next-line camelcase
     if (key in __cml_data__) {
       console.error('【chameleon-runtime ERROR】', `the computed key 【${key}】 is duplicated, please check`)
     }
